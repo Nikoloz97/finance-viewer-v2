@@ -2,8 +2,27 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+interface IStatement {
+  depositAmount: object;
+  endBalance: object;
+  endDate: string;
+  startBalance: object;
+  startDate: string;
+  statementId: string;
+  withdrawalAmount: object;
+}
+
+interface IInvestment {
+  _id: string;
+  brokerageName: string;
+  color: string;
+  statements: IStatement;
+  type: string;
+  userId: string;
+}
+
 export default function Home() {
-  const [investments, setInvestments] = useState<any>();
+  const [investments, setInvestments] = useState<IInvestment[]>();
 
   const getInvestments = async () => {
     const res = await fetch("http://localhost:3001/api/investments", {
@@ -47,7 +66,9 @@ export default function Home() {
         <div>
           {investments &&
             investments.length &&
-            investments.map((investment: any) => investment.brokerageName)}
+            investments.map(
+              (investment: IInvestment) => investment.brokerageName
+            )}
         </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
