@@ -1,48 +1,9 @@
-"use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { fetchInvestments } from "./lib/data";
+import { Investment } from "./lib/definitions";
 
-interface IStatement {
-  depositAmount: object;
-  endBalance: object;
-  endDate: string;
-  startBalance: object;
-  startDate: string;
-  statementId: string;
-  withdrawalAmount: object;
-}
-
-interface IInvestment {
-  _id: string;
-  brokerageName: string;
-  color: string;
-  statements: IStatement;
-  type: string;
-  userId: string;
-}
-
-export default function Home() {
-  const [investments, setInvestments] = useState<IInvestment[]>();
-
-  const getInvestments = async () => {
-    const res = await fetch(
-      "https://finance-viewer-v2.vercel.app/api/investments",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const allInvestments = await res.json();
-
-    setInvestments(allInvestments.data);
-    console.log(allInvestments.data);
-  };
-
-  useEffect(() => {
-    getInvestments();
-  }, []);
+export default async function Home() {
+  const investments = await fetchInvestments();
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -70,7 +31,7 @@ export default function Home() {
           {investments &&
             investments.length &&
             investments.map(
-              (investment: IInvestment) => investment.brokerageName
+              (investment: Investment) => investment.brokerageName
             )}
         </div>
 
