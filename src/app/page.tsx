@@ -25,12 +25,15 @@ export default function Home() {
   const [investments, setInvestments] = useState<IInvestment[]>();
 
   const getInvestments = async () => {
-    const res = await fetch("http://localhost:3001/api/investments", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      "https://finance-viewer-v2.vercel.app/api/investments",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const allInvestments = await res.json();
 
     setInvestments(allInvestments.data);
