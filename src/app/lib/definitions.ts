@@ -16,3 +16,27 @@ export type Investment = {
   type: string;
   userId: string;
 };
+
+export type ParsedInvestmentData = {
+  brokerageName: string;
+  type: string;
+  subtype: string;
+  startDate: Date;
+  startBalance: number;
+  endDate: Date;
+  endBalance: number;
+  depositAmount: number;
+  withdrawalAmount: number;
+};
+
+export type NewInvestment = {
+  brokerageName: string;
+  type: string;
+  subtype: string;
+  startBalance: number;
+  startDate: Date;
+  endBalance: number;
+  endDate: Date;
+  depositAmount: number;
+  withdrawalAmount: number;
+};

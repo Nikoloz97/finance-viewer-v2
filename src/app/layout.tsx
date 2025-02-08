@@ -24,8 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* TODO: a variable that conditionally adds dark class here = controls light/dark mode */}
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
         {children}
       </body>
