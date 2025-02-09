@@ -1,4 +1,5 @@
-import { NewInvestment, ParsedInvestmentData } from "@/app/lib/definitions";
+"use client";
+import { ParsedInvestmentData } from "@/app/lib/definitions";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -38,16 +39,13 @@ import { DayPicker } from "react-day-picker";
 import { Input } from "@/components/ui/input";
 import { brokerages } from "@/app/lib/brokerages";
 import { colors } from "@/app/lib/colors";
+import { createInvestment } from "@/app/lib/actions";
 
 type InvestmentAddFormProps = {
   parsedData?: ParsedInvestmentData;
-  handleAdd: (newInvestment: NewInvestment) => void;
 };
 
-export default function CreateForm({
-  parsedData,
-  handleAdd,
-}: InvestmentAddFormProps) {
+export default function CreateForm({ parsedData }: InvestmentAddFormProps) {
   // TODO: work on adding this check back in
   // Min + max possible value for type int32
   //   const MIN_INT32 = -(2 ** 31);
@@ -177,7 +175,8 @@ export default function CreateForm({
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleAdd)}>
+        {/* TODO: note, this used to be onSubmit instead of action */}
+        <form action={createInvestment}>
           <div className="Signup-Grid-Container">
             <FormField
               control={form.control}

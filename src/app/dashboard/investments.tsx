@@ -2,7 +2,7 @@ import { fetchInvestments } from "../lib/data";
 import { Investment } from "../lib/definitions";
 
 export default async function Investments() {
-  const investments = await fetchInvestments(); // Fetch data inside the component
+  const investments = await fetchInvestments();
 
   return (
     <div>

@@ -1,12 +1,12 @@
-import { fetchInvestments } from "@/app/lib/data";
+// import { fetchInvestments } from "@/app/lib/data";
 import CreateForm from "@/app/ui/dashboard/create-form";
 
 export default async function Page() {
-  const customers = await fetchInvestments();
+  //   const investments = await fetchInvestments();
 
   return (
     <main>
-      {/* TODO: Im not sure what the purpose of this is */}
+      {/* TODO: Im not sure what the purpose of this is (pasted in from next.js docs) */}
       {/* <Breadcrumbs
           breadcrumbs={[
             { label: 'Invoices', href: '/dashboard/invoices' },
@@ -17,7 +17,7 @@ export default async function Page() {
             },
           ]}
         /> */}
-      <CreateForm customers={customers} />
+      <CreateForm />
     </main>
   );
 }
