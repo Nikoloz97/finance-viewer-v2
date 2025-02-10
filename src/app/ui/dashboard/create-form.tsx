@@ -39,7 +39,7 @@ import { DayPicker } from "react-day-picker";
 import { Input } from "@/components/ui/input";
 import { brokerages } from "@/app/lib/brokerages";
 import { colors } from "@/app/lib/colors";
-import { createInvestment } from "@/app/lib/actions";
+import { createInvestment } from "@/app/dashboard/create/actions";
 
 type InvestmentAddFormProps = {
   parsedData?: ParsedInvestmentData;

@@ -3,7 +3,6 @@ import clientPromise from "./mongodb";
 import { Investment } from "./definitions";
 
 const client = await clientPromise;
-// TODO: reminder that you tweeked with this
 const investments = client
   .db("FinanceViewer")
   .collection<Investment>("Investments");

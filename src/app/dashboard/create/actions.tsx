@@ -1,9 +1,9 @@
 "use server";
 
-import clientPromise from "./mongodb";
-import { Investment } from "./definitions";
+import clientPromise from "../../lib/mongodb";
+import { Investment } from "../../lib/definitions";
 import { ObjectId } from "mongodb";
-import { toDollarAmount } from "../utils/formatters";
+import { toDollarAmount } from "../../utils/formatters";
 
 const client = await clientPromise;
 const investments = client
