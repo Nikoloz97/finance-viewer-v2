@@ -45,6 +45,90 @@ type InvestmentAddFormProps = {
   parsedData?: ParsedInvestmentData;
 };
 
+export const addFormSchema = z
+  .object({
+    brokerageName: z.string().min(1, {
+      message: "Please select a brokerage",
+    }),
+    type: z.string().min(1, {
+      message: "Please select an investment type",
+    }),
+    subtype: z.string().min(1, {
+      message: "Please select an investment subtype",
+    }),
+    color: z.string().min(1, {
+      message: "Please select a color to represent your investment",
+    }),
+    startDate: z
+      .date({
+        message: "Please select a start date",
+      })
+      .refine(
+        (date) => {
+          const day = date.getDate();
+          return day >= 25 || day <= 5;
+        },
+        {
+          message:
+            "Day must be equal or less than the 5th or equal or greater than the 25th",
+        }
+      ),
+    startBalance: z.preprocess(
+      (input) => (typeof input === "number" ? input.toString() : input),
+      z
+        .string()
+        .transform((value) => parseFloat(value))
+        .refine((value) => !isNaN(value), {
+          message: "Please enter a valid number",
+        })
+    ),
+    endDate: z
+      .date({
+        message: "Please select an end date",
+      })
+      .refine(
+        (date) => {
+          const day = date.getDate();
+          return day >= 25 || day <= 5;
+        },
+        {
+          message:
+            "Day must be equal or less than the 5th or equal or greater than the 25th",
+        }
+      ),
+    endBalance: z.preprocess(
+      (input) => (typeof input === "number" ? input.toString() : input),
+      z
+        .string()
+        .transform((value) => parseFloat(value))
+        .refine((value) => !isNaN(value), {
+          message: "Please enter a valid number",
+        })
+    ),
+    depositAmount: z.preprocess(
+      (input) => (typeof input === "number" ? input.toString() : input),
+      z
+        .string()
+        .transform((value) => parseFloat(value))
+        .refine((value) => !isNaN(value), {
+          message: "Please enter a valid number",
+        })
+    ),
+    withdrawalAmount: z.preprocess(
+      (input) => (typeof input === "number" ? input.toString() : input),
+      z
+        .string()
+        .transform((value) => parseFloat(value))
+        .refine((value) => !isNaN(value), {
+          message: "Please enter a valid number",
+        })
+    ),
+  })
+  .refine((data) => data.endDate > data.startDate, {
+    message: "End date must be after the start date",
+    path: ["endDate"],
+  });
+
 export default function CreateForm({ parsedData }: InvestmentAddFormProps) {
   // TODO: work on adding this check back in
   // Min + max possible value for type int32
@@ -60,90 +144,6 @@ export default function CreateForm({ parsedData }: InvestmentAddFormProps) {
   ];
 
   const investmentSubtypes = ["Individual", "ETF"];
-
-  const addFormSchema = z
-    .object({
-      brokerageName: z.string().min(1, {
-        message: "Please select a brokerage",
-      }),
-      type: z.string().min(1, {
-        message: "Please select an investment type",
-      }),
-      subtype: z.string().min(1, {
-        message: "Please select an investment subtype",
-      }),
-      color: z.string().min(1, {
-        message: "Please select a color to represent your investment",
-      }),
-      startDate: z
-        .date({
-          message: "Please select a start date",
-        })
-        .refine(
-          (date) => {
-            const day = date.getDate();
-            return day >= 25 || day <= 5;
-          },
-          {
-            message:
-              "Day must be equal or less than the 5th or equal or greater than the 25th",
-          }
-        ),
-      startBalance: z.preprocess(
-        (input) => (typeof input === "number" ? input.toString() : input),
-        z
-          .string()
-          .transform((value) => parseFloat(value))
-          .refine((value) => !isNaN(value), {
-            message: "Please enter a valid number",
-          })
-      ),
-      endDate: z
-        .date({
-          message: "Please select an end date",
-        })
-        .refine(
-          (date) => {
-            const day = date.getDate();
-            return day >= 25 || day <= 5;
-          },
-          {
-            message:
-              "Day must be equal or less than the 5th or equal or greater than the 25th",
-          }
-        ),
-      endBalance: z.preprocess(
-        (input) => (typeof input === "number" ? input.toString() : input),
-        z
-          .string()
-          .transform((value) => parseFloat(value))
-          .refine((value) => !isNaN(value), {
-            message: "Please enter a valid number",
-          })
-      ),
-      depositAmount: z.preprocess(
-        (input) => (typeof input === "number" ? input.toString() : input),
-        z
-          .string()
-          .transform((value) => parseFloat(value))
-          .refine((value) => !isNaN(value), {
-            message: "Please enter a valid number",
-          })
-      ),
-      withdrawalAmount: z.preprocess(
-        (input) => (typeof input === "number" ? input.toString() : input),
-        z
-          .string()
-          .transform((value) => parseFloat(value))
-          .refine((value) => !isNaN(value), {
-            message: "Please enter a valid number",
-          })
-      ),
-    })
-    .refine((data) => data.endDate > data.startDate, {
-      message: "End date must be after the start date",
-      path: ["endDate"],
-    });
 
   const form = useForm<z.infer<typeof addFormSchema>>({
     resolver: zodResolver(addFormSchema),
@@ -172,11 +172,15 @@ export default function CreateForm({ parsedData }: InvestmentAddFormProps) {
           withdrawalAmount: 0,
         },
   });
+
+  function onSubmit(data: z.infer<typeof addFormSchema>) {
+    createInvestment(data);
+  }
+
   return (
     <div>
       <Form {...form}>
-        {/* TODO: note, this used to be onSubmit instead of action */}
-        <form action={createInvestment}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="Signup-Grid-Container">
             <FormField
               control={form.control}

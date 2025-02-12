@@ -1,7 +1,7 @@
 import { Decimal128 } from "mongodb";
 
-export function toDollarAmount(param: string) {
-  const formattedValue = Number(param).toFixed(2);
+export function toDollarAmount(amount: number) {
+  const formattedValue = amount.toFixed(2);
   return Decimal128.fromString(formattedValue);
 }
 
