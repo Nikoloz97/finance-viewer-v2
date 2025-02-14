@@ -2,7 +2,25 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+First, this project runs optimally with pnpm, so run: 
+
+npm install -g pnpm
+
+Make sure next is installed: 
+
+pnpm install next 
+
+For next to properly run, make sure you node version greater than 18.18
+
+Make sure you have mongo installed:
+
+pnpm install mongodb
+
+Then, make sure to create a .env file and create a variable that holds mongodb uri called MONGODB_URI. Here's an example:
+
+MONGODB_URI=mongodb+srv://username:password@testcluster.abc123.mongodb.net/
+
+Finally, you can run the development server:
 
 ```bash
 npm run dev
