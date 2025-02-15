@@ -12,6 +12,7 @@ const investments = client
   .db("FinanceViewer")
   .collection<Investment>("Investments");
 
+// TODO: rename this file? This function does not get passed into an actions attribute (see create-form)
 export async function createInvestment(
   formData: z.infer<typeof addFormSchema>
 ) {
