@@ -3,11 +3,14 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  height: 100%;
+  width: 12%;
+  margin-right: 3rem;
 }
 
 .navbar {
   background-color: var(--primary-background-color);
-  height: 90%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,6 +25,7 @@
   flex-direction: column;
   background: none;
   width: 100%;
+  height: 100%;
 }
 
 .navbar-options a {

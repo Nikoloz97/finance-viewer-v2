@@ -1,8 +1,8 @@
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  height: 90%;
-  width: 90%;
+  height: 100%;
+  width: 100%;
   gap: 20px;
 }
 
@@ -27,7 +27,7 @@
   width: 20%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: var(--primary-background-color);
   border-radius: var(--primary-border-radius);

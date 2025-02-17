@@ -28,13 +28,11 @@ export default function RootLayout({
     <html lang="en">
       {/* TODO: create dark mode button, which works by conditionally adding "dark" classname here */}
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark flex h-screen items-center gap-40`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark flex h-screen items-center p-10`}
       >
-        <div>
-          <Sidebar />
-        </div>
+        <Sidebar />
         {/* flex-1 = takes up rest of container */}
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 h-full flex items-center">{children}</div>
       </body>
     </html>
   );
