@@ -5,7 +5,7 @@ export default function Sidebar() {
   return (
     <div className="navbar-container">
       <div className="navbar">
-        <h2 style={{ marginTop: "10px" }}>Finance Viewer</h2>
+        <h2 className="mt-5 mb-3">Finance Viewer</h2>
         <div className="navbar-options">
           <Link href={"/"}>Dashboard</Link>
           <Link href={"/budget"}>Budget</Link>
