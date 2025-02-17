@@ -8,9 +8,15 @@ export default function Sidebar() {
         <h2 className="mt-5 mb-3">Finance Viewer</h2>
         <div className="navbar-options">
           <Link href={"/"}>Dashboard</Link>
-          <Link href={"/budget"}>Budget</Link>
-          <Link href={"/allocation"}>Allocation</Link>
-          <Link href={"/debt"}>Debt</Link>
+          <Link className="navbar-disabled" aria-disabled href={"/budget"}>
+            Budget
+          </Link>
+          <Link className="navbar-disabled" aria-disabled href={"/allocation"}>
+            Allocation
+          </Link>
+          <Link className="navbar-disabled" aria-disabled href={"/debt"}>
+            Debt
+          </Link>
           <Link href={"/investments"}>Investments</Link>
           {/* TODO: set this up once useContext is set up */}
           {/* {user ? (
@@ -18,7 +24,9 @@ export default function Sidebar() {
       ) : (
         <Link href={"user/login"}>Login</Link>
       )} */}
-          <Link href={"/settings"}>Settings</Link>
+          <Link className="navbar-disabled" aria-disabled href={"/settings"}>
+            Settings
+          </Link>
         </div>
       </div>
     </div>
