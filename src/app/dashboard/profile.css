@@ -1,0 +1,7 @@
+.avatar-caption-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 5em;
+  width: 5em;
+}
