@@ -1,4 +1,5 @@
 import "./dashboard.css";
+import Investments from "./investments";
 import Networth from "./networth";
 import Profile from "./profile";
 import RecentActivity from "./recentactivity";
@@ -18,12 +19,10 @@ export default function Dashboard() {
         <div className="recent-activity-container">
           <RecentActivity />
         </div>
-        <div className="investments-summary-container">Investments</div>
+        <div className="investments-summary-container">
+          <Investments />
+        </div>
       </div>
-      {/* TODO: move this out eventually */}
-      {/* <Suspense fallback={<RevenueChartSkeleton />}>
-        <Investments />
-      </Suspense> */}
     </div>
   );
 }

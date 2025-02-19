@@ -2,7 +2,7 @@
 
 import { createContext, useState, useContext, ReactNode } from "react";
 import { useMediaQuery } from "react-responsive";
-import { User } from "./lib/models";
+import { User } from "./lib/models/user";
 
 interface UserContextType {
   user: User | undefined;

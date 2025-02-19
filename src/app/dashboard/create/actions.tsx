@@ -1,11 +1,11 @@
-"use server";
-
-import clientPromise from "../../lib/mongodb";
-import { Investment } from "../../lib/definitions";
+import clientPromise from "../../api/mongodb";
+import { Investment } from "@/lib/models/investments";
 import { ObjectId } from "mongodb";
 import { toDollarAmount } from "../../utils/formatters";
 import { z } from "zod";
 import { addFormSchema } from "@/app/ui/dashboard/create-form";
+
+// TODO: get rid of this file (copy it over somewhere)
 
 const client = await clientPromise;
 const investments = client
