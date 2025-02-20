@@ -1,3 +1,5 @@
+"use client";
+
 import { Investment, SelectedInvestment } from "@/lib/models/investments";
 import { Plus } from "lucide-react";
 import ComingSoonOverlay from "../utils/comingSoonOverlay";

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./ui/sidebar";
+import { Providers } from "./providers";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -24,9 +25,11 @@ export default function RootLayout({
       <body
         className={`${openSans.className} antialiased dark flex h-screen items-center p-10`}
       >
-        <Sidebar />
-        {/* flex-1 = takes up rest of container */}
-        <div className="flex-1 h-full flex items-center">{children}</div>
+        <Providers>
+          <Sidebar />
+          {/* flex-1 = takes up rest of container */}
+          <div className="flex-1 h-full flex items-center">{children}</div>
+        </Providers>
       </body>
     </html>
   );

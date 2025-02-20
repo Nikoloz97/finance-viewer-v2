@@ -1,3 +1,5 @@
+"use client";
+
 import "./dashboard.css";
 import Investments from "./investments";
 import Networth from "./networth";

@@ -6,12 +6,11 @@ import { UseContextCheck } from "@/usecontextcheck";
 import { useEffect, useState } from "react";
 
 export default function Investments() {
-  // const { user } = UseContextCheck();
+  const { user } = UseContextCheck();
 
   const [investments, setInvestments] = useState<Investment[]>([]);
 
   const fetchInvestments = async () => {
-    // if (user?._id) {
     const response = await fetch(`/api/investments`);
 
     if (!response.ok) {
@@ -20,24 +19,25 @@ export default function Investments() {
 
     const data = await response.json();
     setInvestments(data);
-    // }
   };
 
   useEffect(() => {
-    fetchInvestments();
+    if (user?._id) fetchInvestments();
   }, []);
 
   return (
-    <div className="Investments-List-Container">
-      <InvestmentsList
-        investments={investments}
-        // handleAllClick={handleAllClick}
-        // handleInvestmentCardClick={handleInvestmentCardClick}
-        // selectedInvestment={selectedInvestment}
-        // setIsInvestmentAddDialogCarouselOpen={
-        //   setIsInvestmentAddDialogCarouselOpen
-        // }
-      />
+    <div className="investments-page">
+      <div className="investments-list-container">
+        <InvestmentsList
+          investments={investments}
+          // handleAllClick={handleAllClick}
+          // handleInvestmentCardClick={handleInvestmentCardClick}
+          // selectedInvestment={selectedInvestment}
+          // setIsInvestmentAddDialogCarouselOpen={
+          //   setIsInvestmentAddDialogCarouselOpen
+          // }
+        />
+      </div>
     </div>
   );
 }
