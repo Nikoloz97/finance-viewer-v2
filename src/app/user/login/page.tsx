@@ -127,7 +127,7 @@ export default function Login() {
       </Form>
 
       <Link className="No-Account-Container" href={"/user/signup"}>
-        Don't have an account? Sign up here
+        {`Don't have an account? Sign up here`}
       </Link>
 
       {/* TODO: create this component */}
