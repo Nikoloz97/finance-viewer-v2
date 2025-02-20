@@ -4,6 +4,7 @@ import { Investment } from "@/lib/models/investments";
 import InvestmentsList from "./investmentsList";
 import { UseContextCheck } from "@/usecontextcheck";
 import { useEffect, useState } from "react";
+import InvestmentAddDialogCarousel from "./investmentAddDialogCarousel";
 
 export default function Investments() {
   const { user } = UseContextCheck();
@@ -27,6 +28,7 @@ export default function Investments() {
 
   return (
     <div className="investments-page">
+      <InvestmentAddDialogCarousel />
       <div className="investments-list-container">
         <InvestmentsList
           investments={investments}

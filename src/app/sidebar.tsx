@@ -1,7 +1,12 @@
+"use client";
+
+import { UseContextCheck } from "@/usecontextcheck";
 import "./sidebar.css";
 import Link from "next/link";
 
 export default function Sidebar() {
+  const { user } = UseContextCheck();
+
   return (
     <div className="navbar-container">
       <div className="navbar">
@@ -18,12 +23,11 @@ export default function Sidebar() {
             Debt
           </Link>
           <Link href={"/investments"}>Investments</Link>
-          {/* TODO: set this up once useContext is set up */}
-          {/* {user ? (
-        <Link href={"/profile"}>Profile</Link>
-      ) : (
-        <Link href={"user/login"}>Login</Link>
-      )} */}
+          {user ? (
+            <Link href={"/profile"}>Profile</Link>
+          ) : (
+            <Link href={"/user/login"}>Login</Link>
+          )}
           <Link className="navbar-disabled" aria-disabled href={"/settings"}>
             Settings
           </Link>

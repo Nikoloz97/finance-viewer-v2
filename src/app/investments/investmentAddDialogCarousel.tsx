@@ -1,5 +1,6 @@
 "use client";
-import { ParsedInvestmentData } from "@/app/lib/definitions";
+
+import { ParsedInvestmentData } from "@/lib/models/investments";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -39,97 +40,15 @@ import { DayPicker } from "react-day-picker";
 import { Input } from "@/components/ui/input";
 import { brokerages } from "@/app/lib/brokerages";
 import { colors } from "@/app/lib/colors";
-import { createInvestment } from "@/app/dashboard/create/actions";
+import { investmentAddFormSchema } from "./formSchemas";
 
 type InvestmentAddFormProps = {
   parsedData?: ParsedInvestmentData;
 };
 
-export const addFormSchema = z
-  .object({
-    brokerageName: z.string().min(1, {
-      message: "Please select a brokerage",
-    }),
-    type: z.string().min(1, {
-      message: "Please select an investment type",
-    }),
-    subtype: z.string().min(1, {
-      message: "Please select an investment subtype",
-    }),
-    color: z.string().min(1, {
-      message: "Please select a color to represent your investment",
-    }),
-    startDate: z
-      .date({
-        message: "Please select a start date",
-      })
-      .refine(
-        (date) => {
-          const day = date.getDate();
-          return day >= 25 || day <= 5;
-        },
-        {
-          message:
-            "Day must be equal or less than the 5th or equal or greater than the 25th",
-        }
-      ),
-    startBalance: z.preprocess(
-      (input) => (typeof input === "number" ? input.toString() : input),
-      z
-        .string()
-        .transform((value) => parseFloat(value))
-        .refine((value) => !isNaN(value), {
-          message: "Please enter a valid number",
-        })
-    ),
-    endDate: z
-      .date({
-        message: "Please select an end date",
-      })
-      .refine(
-        (date) => {
-          const day = date.getDate();
-          return day >= 25 || day <= 5;
-        },
-        {
-          message:
-            "Day must be equal or less than the 5th or equal or greater than the 25th",
-        }
-      ),
-    endBalance: z.preprocess(
-      (input) => (typeof input === "number" ? input.toString() : input),
-      z
-        .string()
-        .transform((value) => parseFloat(value))
-        .refine((value) => !isNaN(value), {
-          message: "Please enter a valid number",
-        })
-    ),
-    depositAmount: z.preprocess(
-      (input) => (typeof input === "number" ? input.toString() : input),
-      z
-        .string()
-        .transform((value) => parseFloat(value))
-        .refine((value) => !isNaN(value), {
-          message: "Please enter a valid number",
-        })
-    ),
-    withdrawalAmount: z.preprocess(
-      (input) => (typeof input === "number" ? input.toString() : input),
-      z
-        .string()
-        .transform((value) => parseFloat(value))
-        .refine((value) => !isNaN(value), {
-          message: "Please enter a valid number",
-        })
-    ),
-  })
-  .refine((data) => data.endDate > data.startDate, {
-    message: "End date must be after the start date",
-    path: ["endDate"],
-  });
-
-export default function CreateForm({ parsedData }: InvestmentAddFormProps) {
+export default function InvestmentAddDialogCarousel({
+  parsedData,
+}: InvestmentAddFormProps) {
   // TODO: work on adding this check back in
   // Min + max possible value for type int32
   //   const MIN_INT32 = -(2 ** 31);
@@ -145,8 +64,8 @@ export default function CreateForm({ parsedData }: InvestmentAddFormProps) {
 
   const investmentSubtypes = ["Individual", "ETF"];
 
-  const form = useForm<z.infer<typeof addFormSchema>>({
-    resolver: zodResolver(addFormSchema),
+  const form = useForm<z.infer<typeof investmentAddFormSchema>>({
+    resolver: zodResolver(investmentAddFormSchema),
     defaultValues: parsedData
       ? {
           brokerageName: parsedData.brokerageName,
@@ -173,8 +92,16 @@ export default function CreateForm({ parsedData }: InvestmentAddFormProps) {
         },
   });
 
-  function onSubmit(data: z.infer<typeof addFormSchema>) {
-    createInvestment(data);
+  // TODO: make sure this works
+  async function onSubmit(formData: z.infer<typeof investmentAddFormSchema>) {
+    try {
+      const response = await fetch(`/api/investments`, {
+        method: "POST",
+        body: JSON.stringify(formData),
+      });
+    } catch (error) {
+      console.error();
+    }
   }
 
   return (
