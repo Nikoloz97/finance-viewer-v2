@@ -38,8 +38,8 @@ import {
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import { Input } from "@/components/ui/input";
-import { brokerages } from "@/app/lib/brokerages";
-import { colors } from "@/app/lib/colors";
+import { brokerages } from "@/lib/brokerages";
+import { colors } from "@/lib/colors";
 import { investmentAddFormSchema } from "./formSchemas";
 
 type InvestmentAddFormProps = {

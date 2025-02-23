@@ -11,7 +11,7 @@ const openSans = Open_Sans({
 
 export const metadata: Metadata = {
   title: "Finance Viewer",
-  description: "Fintech app that displays",
+  description: "Fintech app for investment, budget, and debt management",
 };
 
 export default function RootLayout({
@@ -28,7 +28,9 @@ export default function RootLayout({
         <Providers>
           <Sidebar />
           {/* flex-1 = takes up rest of container */}
-          <div className="flex-1 h-full flex items-center">{children}</div>
+          <div className="flex-1 h-full flex justify-center items-center">
+            {children}
+          </div>
         </Providers>
       </body>
     </html>

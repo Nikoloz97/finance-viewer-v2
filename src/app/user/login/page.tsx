@@ -18,6 +18,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { loginFormSchema } from "../formSchemas";
+import "../user.css";
 
 export default function Login() {
   const { setUser } = UseContextCheck();
@@ -38,7 +39,7 @@ export default function Login() {
     },
   });
 
-  const fetchUser = async (loginFields: z.infer<typeof loginFormSchema>) => {
+  const handleLogin = async (loginFields: z.infer<typeof loginFormSchema>) => {
     const response = await fetch("/api/user/login", {
       method: "POST",
       headers: {
@@ -78,7 +79,7 @@ export default function Login() {
     <div className="Login-Form">
       <h1>Welcome Back</h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(fetchUser)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-8">
           <FormField
             control={form.control}
             name="username"
