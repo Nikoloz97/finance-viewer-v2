@@ -38,10 +38,7 @@ export default function Login() {
     },
   });
 
-  // TODO: make sure this works
-  const onSubmit = async (loginFields: z.infer<typeof loginFormSchema>) => {
-    console.log(loginFields);
-
+  const fetchUser = async (loginFields: z.infer<typeof loginFormSchema>) => {
     const response = await fetch("/api/user/login", {
       method: "POST",
       headers: {
@@ -54,9 +51,8 @@ export default function Login() {
 
     if (response.ok) {
       // Handle login
-      setUser(responseJson);
+      setUser(responseJson.user);
       router.push("/");
-      console.log(responseJson);
     } else {
       // Specific message
       if (responseJson.message) {
@@ -82,7 +78,7 @@ export default function Login() {
     <div className="Login-Form">
       <h1>Welcome Back</h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(fetchUser)} className="space-y-8">
           <FormField
             control={form.control}
             name="username"
