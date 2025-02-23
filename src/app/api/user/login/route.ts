@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/app/api/mongodb";
-import { compare } from "bcryptjs";
 import { User } from "@/lib/models/user";
+import { compare } from "bcryptjs";
 
 const client = await clientPromise;
 const users = client.db("FinanceViewer").collection<User>("Users");

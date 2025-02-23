@@ -90,7 +90,7 @@ export default function Login() {
               <FormItem>
                 <FormLabel>Username:</FormLabel>
                 <FormControl>
-                  <Input {...field} className="text-black" />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -103,7 +103,7 @@ export default function Login() {
               <FormItem>
                 <FormLabel>Password:</FormLabel>
                 <FormControl>
-                  <Input {...field} className="text-black" />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
