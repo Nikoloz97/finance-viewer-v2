@@ -34,6 +34,7 @@ import { occupations } from "@/lib/occupations";
 // import ErrorPopup from "../CustomHooks/ErrorPopup/ErrorPopup";
 import "../user.css";
 import { signupFormSchema } from "../formSchemas";
+import { toast } from "react-toastify";
 
 export default function Signup() {
   const router = useRouter();
@@ -71,8 +72,11 @@ export default function Signup() {
 
     if (response.ok) {
       router.push("/user/login");
-      // TODO: eventually remove this line
-      console.log(responseJson);
+      if (responseJson.message) {
+        toast.success(responseJson.message);
+      } else {
+        toast.success("Success!");
+      }
     } else {
       // Specific message
       if (responseJson.message) {

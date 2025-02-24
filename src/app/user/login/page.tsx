@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { loginFormSchema } from "../formSchemas";
 import "../user.css";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const { setUser } = UseContextCheck();
@@ -51,11 +52,14 @@ export default function Login() {
     const responseJson = await response.json();
 
     if (response.ok) {
-      // Handle login
       setUser(responseJson.user);
       router.push("/");
+      if (responseJson.message) {
+        toast.success(responseJson.message);
+      } else {
+        toast.success("Success!");
+      }
     } else {
-      // Specific message
       if (responseJson.message) {
         setError((prev) => ({
           ...prev,
@@ -63,7 +67,6 @@ export default function Login() {
           isErrorFadingIn: true,
           message: responseJson.message,
         }));
-        // Non-specific message
       } else {
         setError((prev) => ({
           ...prev,

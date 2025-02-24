@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
-import "./globals.css";
 import Sidebar from "./sidebar";
 import { Providers } from "./providers";
+import { Slide, ToastContainer } from "react-toastify";
+import { Check, CircleAlert, Info, TriangleAlert } from "lucide-react";
+import "./globals.css";
+import { ToastProvider } from "@/toastprovider";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -31,6 +34,7 @@ export default function RootLayout({
           <div className="flex-1 h-full flex justify-center items-center">
             {children}
           </div>
+          <ToastProvider />
         </Providers>
       </body>
     </html>
