@@ -12,9 +12,9 @@ export async function POST(req: NextRequest) {
     const username = body.username;
     const password = body.password;
 
-    // Find user by username
-    const user = await users.findOne({ username, password });
+    const user = await users.findOne({ username });
 
+    // Intentionally same message as to increase security
     if (!user) {
       return NextResponse.json(
         { message: "Invalid credentials." },
@@ -22,16 +22,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // TODO: eventually integrate this
-    // // Compare password (assuming stored as hashed)
-    // const isMatch = await compare(password, user.password);
+    const isMatch = await compare(password, user.password);
 
-    // if (!isMatch) {
-    //   return NextResponse.json(
-    //     { message: "Invalid credentials." },
-    //     { status: 401 }
-    //   );
-    // }
+    if (!isMatch) {
+      return NextResponse.json(
+        { message: "Invalid credentials." },
+        { status: 401 }
+      );
+    }
 
     return NextResponse.json({ message: "Login successful", user });
   } catch (error) {
