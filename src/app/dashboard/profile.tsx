@@ -1,7 +1,7 @@
 "use client";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import "./profile.css";
-import { UseContextCheck } from "@/usecontextcheck";
+import { UseContextCheck } from "@/use-context-check";
 
 export default function Profile() {
   const { user } = UseContextCheck();

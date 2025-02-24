@@ -1,6 +1,6 @@
 "use client";
 
-import { UserProvider } from "@/usercontext";
+import { UserProvider } from "@/user-context";
 import { ReactNode } from "react";
 
 export function Providers({ children }: { children: ReactNode }) {

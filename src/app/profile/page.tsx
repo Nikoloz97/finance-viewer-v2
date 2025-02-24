@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { UseContextCheck } from "@/usecontextcheck";
+import { UseContextCheck } from "@/use-context-check";
 import { useRouter } from "next/navigation";
 
 export default function Profile() {

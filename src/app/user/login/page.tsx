@@ -10,14 +10,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { UseContextCheck } from "@/usecontextcheck";
+import { UseContextCheck } from "@/use-context-check";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { loginFormSchema } from "../formSchemas";
+import { loginFormSchema } from "../form-schemas";
 import "../user.css";
 import { toast } from "react-toastify";
 

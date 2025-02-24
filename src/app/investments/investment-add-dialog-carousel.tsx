@@ -40,7 +40,7 @@ import { DayPicker } from "react-day-picker";
 import { Input } from "@/components/ui/input";
 import { brokerages } from "@/lib/brokerages";
 import { colors } from "@/lib/colors";
-import { investmentAddFormSchema } from "./formSchemas";
+import { investmentAddFormSchema } from "./form-schemas";
 
 type InvestmentAddFormProps = {
   parsedData?: ParsedInvestmentData;

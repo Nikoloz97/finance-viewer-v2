@@ -4,7 +4,7 @@ import "./dashboard.css";
 import Investments from "./investments";
 import Networth from "./networth";
 import Profile from "./profile";
-import RecentActivity from "./recentactivity";
+import RecentActivity from "./recent-activity";
 
 export default function Dashboard() {
   return (

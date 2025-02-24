@@ -1,5 +1,5 @@
 import { CSSProperties, ReactNode } from "react";
-import "./comingSoonOverlay.css";
+import "./coming-soon-overlay.css";
 
 interface ComingSoonOverlayProps {
   children: ReactNode;

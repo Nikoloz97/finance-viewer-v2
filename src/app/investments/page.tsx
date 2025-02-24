@@ -1,10 +1,10 @@
 "use client";
 
 import { Investment } from "@/lib/models/investments";
-import InvestmentsList from "./investmentsList";
-import { UseContextCheck } from "@/usecontextcheck";
+import InvestmentsList from "./investments-list";
+import { UseContextCheck } from "@/use-context-check";
 import { useEffect, useState } from "react";
-import InvestmentAddDialogCarousel from "./investmentAddDialogCarousel";
+import InvestmentAddDialogCarousel from "./investment-add-dialog-carousel";
 
 export default function Investments() {
   const { user } = UseContextCheck();

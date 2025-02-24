@@ -2,7 +2,7 @@
 
 import { Investment, SelectedInvestment } from "@/lib/models/investments";
 import { Plus } from "lucide-react";
-import ComingSoonOverlay from "../utils/comingSoonOverlay";
+import ComingSoonOverlay from "../utils/coming-soon-overlay";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {

@@ -33,7 +33,7 @@ import {
 import { occupations } from "@/lib/occupations";
 // import ErrorPopup from "../CustomHooks/ErrorPopup/ErrorPopup";
 import "../user.css";
-import { signupFormSchema } from "../formSchemas";
+import { signupFormSchema } from "../form-schemas";
 import { toast } from "react-toastify";
 
 export default function Signup() {
