@@ -1,9 +1,9 @@
 export interface User {
-  _id: string;
+  _id?: string;
   username: string;
   password: string;
   firstName: string;
   lastName: string;
-  occupation: string;
-  profileImgUrl: string;
+  occupation?: string;
+  profileImagePath?: string | null;
 }

@@ -33,7 +33,7 @@ import { occupations } from "@/lib/occupations";
 import "../user.css";
 import { signupFormSchema } from "../form-schemas";
 import { responseMessage } from "@/app/utils/default-response-message";
-import { post } from "@/app/utils/http-request-service";
+import { formDataPost } from "@/app/utils/http-request-service";
 
 export default function Signup() {
   const router = useRouter();
@@ -46,13 +46,13 @@ export default function Signup() {
       email: "",
       firstName: "",
       lastName: "",
-      occupation: "",
-      profileImagePath: "",
+      occupation: undefined,
+      profileImageFile: undefined,
     },
   });
 
   const handleSignup = async (signUpInfo: z.infer<typeof signupFormSchema>) => {
-    const response = await post(signUpInfo, "/api/user/signup");
+    const response = await formDataPost(signUpInfo, "/api/user/signup");
 
     responseMessage(response);
     if (response.ok) {
@@ -195,7 +195,7 @@ export default function Signup() {
 
           <FormField
             control={form.control}
-            name="profileImagePath"
+            name="profileImageFile"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Profile Image:</FormLabel>
@@ -206,8 +206,8 @@ export default function Signup() {
                     name={field.name}
                     ref={field.ref}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const filePath = e.target.value;
-                      field.onChange(filePath);
+                      const file = e.target.files ? e.target.files[0] : null;
+                      field.onChange(file);
                     }}
                   />
                 </FormControl>

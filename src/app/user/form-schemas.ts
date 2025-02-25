@@ -48,13 +48,13 @@ export const signupFormSchema = z.object({
     })
     .max(50),
   occupation: z.string().optional(),
-  profileImagePath: z
+  profileImageFile: z
     .custom(
-      (filePath) => {
-        if (!filePath) return true;
+      (file) => {
+        if (!file) return true;
         const allowedExtensions = [".jpeg", ".jpg", ".png"];
         return allowedExtensions.some((extension) =>
-          filePath.toLowerCase().endsWith(extension)
+          file.name.toLowerCase().endsWith(extension)
         );
       },
       {

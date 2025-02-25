@@ -9,7 +9,13 @@ export default function Profile() {
   return (
     <div className="avatar-caption-container text-center">
       <Avatar className="w-full h-full">
-        <AvatarImage src="/default_avatar.png" />
+        <AvatarImage
+          src={
+            user?.profileImagePath
+              ? user.profileImagePath
+              : "/default_avatar.png"
+          }
+        />
       </Avatar>
       <p>{`Welcome, ${user ? user.firstName : "Guest"}`}</p>
     </div>
