@@ -47,18 +47,19 @@ export const signupFormSchema = z.object({
       message: "Last name must be at least 5 characters",
     })
     .max(50),
-  occupation: z.string().min(1, {
-    message: "Please select an occupation",
-  }),
-  profileImagePath: z.custom(
-    (filePath) => {
-      const allowedExtensions = [".jpeg", ".jpg", ".png"];
-      return allowedExtensions.some((extension) =>
-        filePath.toLowerCase().endsWith(extension)
-      );
-    },
-    {
-      message: "Invalid file type",
-    }
-  ),
+  occupation: z.string().optional(),
+  profileImagePath: z
+    .custom(
+      (filePath) => {
+        if (!filePath) return true;
+        const allowedExtensions = [".jpeg", ".jpg", ".png"];
+        return allowedExtensions.some((extension) =>
+          filePath.toLowerCase().endsWith(extension)
+        );
+      },
+      {
+        message: "Invalid file type",
+      }
+    )
+    .optional(),
 });

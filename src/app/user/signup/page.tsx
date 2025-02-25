@@ -200,7 +200,16 @@ export default function Signup() {
               <FormItem>
                 <FormLabel>Profile Image:</FormLabel>
                 <FormControl>
-                  <Input {...field} type="file" />
+                  <Input
+                    type="file"
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    ref={field.ref}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      const filePath = e.target.value;
+                      field.onChange(filePath);
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
