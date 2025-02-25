@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   Form,
   FormControl,
@@ -34,6 +33,7 @@ import { occupations } from "@/lib/occupations";
 import "../user.css";
 import { signupFormSchema } from "../form-schemas";
 import { responseMessage } from "@/app/utils/default-response-message";
+import { post } from "@/app/utils/http-request-service";
 
 export default function Signup() {
   const router = useRouter();
@@ -52,13 +52,7 @@ export default function Signup() {
   });
 
   const handleSignup = async (signUpInfo: z.infer<typeof signupFormSchema>) => {
-    const response = await fetch("/api/user/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(signUpInfo),
-    });
+    const response = await post(signUpInfo, "/api/user/signup");
 
     responseMessage(response);
     if (response.ok) {

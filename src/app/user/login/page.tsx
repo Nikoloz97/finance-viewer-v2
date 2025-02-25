@@ -19,6 +19,7 @@ import { z } from "zod";
 import { loginFormSchema } from "../form-schemas";
 import "../user.css";
 import { responseMessage } from "@/app/utils/default-response-message";
+import { post } from "@/app/utils/http-request-service";
 
 export default function Login() {
   const { setUser } = useContextCheck();
@@ -33,13 +34,7 @@ export default function Login() {
   });
 
   const handleLogin = async (loginFields: z.infer<typeof loginFormSchema>) => {
-    const response = await fetch("/api/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginFields),
-    });
+    const response = await post(loginFields, "/api/user/login");
 
     const responseJson = await responseMessage(response);
 
