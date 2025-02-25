@@ -31,7 +31,6 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { occupations } from "@/lib/occupations";
-// import ErrorPopup from "../CustomHooks/ErrorPopup/ErrorPopup";
 import "../user.css";
 import { signupFormSchema } from "../form-schemas";
 import { toast } from "react-toastify";
@@ -70,6 +69,7 @@ export default function Signup() {
 
     const responseJson = await response.json();
 
+    // TODO: put in a reusable formatter
     if (response.ok) {
       router.push("/user/login");
       if (responseJson.message) {
@@ -78,22 +78,10 @@ export default function Signup() {
         toast.success("Success!");
       }
     } else {
-      // Specific message
       if (responseJson.message) {
-        setError((prev) => ({
-          ...prev,
-          isErrorShowing: true,
-          isErrorFadingIn: true,
-          message: responseJson.message,
-        }));
-        // Non-specific message
+        toast.warning(responseJson.message);
       } else {
-        setError((prev) => ({
-          ...prev,
-          isErrorShowing: true,
-          message: "See console log for details",
-        }));
-        console.log(responseJson);
+        toast.warning("Something went wrong...");
       }
     }
   };
@@ -252,9 +240,6 @@ export default function Signup() {
           </div>
         </form>
       </Form>
-
-      {/* TODO: eventually add this */}
-      {/* <ErrorPopup error={error} setError={setError} /> */}
     </div>
   );
 }

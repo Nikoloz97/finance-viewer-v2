@@ -51,6 +51,7 @@ export default function Login() {
 
     const responseJson = await response.json();
 
+    // TODO: put in a reusable formatter
     if (response.ok) {
       setUser(responseJson.user);
       router.push("/");
@@ -61,19 +62,9 @@ export default function Login() {
       }
     } else {
       if (responseJson.message) {
-        setError((prev) => ({
-          ...prev,
-          isErrorShowing: true,
-          isErrorFadingIn: true,
-          message: responseJson.message,
-        }));
+        toast.warning(responseJson.message);
       } else {
-        setError((prev) => ({
-          ...prev,
-          isErrorShowing: true,
-          message: "See console log for details",
-        }));
-        console.log(responseJson);
+        toast.warning("Something went wrong...");
       }
     }
   };
@@ -129,9 +120,6 @@ export default function Login() {
       <Link className="No-Account-Container" href={"/user/signup"}>
         {`Don't have an account? Sign up here`}
       </Link>
-
-      {/* TODO: create this component */}
-      {/* <ErrorPopup error={error} setError={setError} /> */}
     </div>
   );
 }
