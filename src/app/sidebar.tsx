@@ -1,11 +1,11 @@
 "use client";
 
-import { UseContextCheck } from "@/use-context-check";
+import { useContextCheck } from "@/use-context-check";
 import "./sidebar.css";
 import Link from "next/link";
 
 export default function Sidebar() {
-  const { user } = UseContextCheck();
+  const { user } = useContextCheck();
 
   return (
     <div className="navbar-container">

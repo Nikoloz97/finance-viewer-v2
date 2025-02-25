@@ -33,17 +33,10 @@ import {
 import { occupations } from "@/lib/occupations";
 import "../user.css";
 import { signupFormSchema } from "../form-schemas";
-import { toast } from "react-toastify";
+import { responseMessage } from "@/app/utils/default-response-message";
 
 export default function Signup() {
   const router = useRouter();
-
-  const [error, setError] = useState({
-    isErrorFadingIn: false,
-    isErrorFadingOut: false,
-    isErrorShowing: false,
-    message: "",
-  });
 
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
@@ -67,22 +60,9 @@ export default function Signup() {
       body: JSON.stringify(signUpInfo),
     });
 
-    const responseJson = await response.json();
-
-    // TODO: put in a reusable formatter
+    responseMessage(response);
     if (response.ok) {
       router.push("/user/login");
-      if (responseJson.message) {
-        toast.success(responseJson.message);
-      } else {
-        toast.success("Success!");
-      }
-    } else {
-      if (responseJson.message) {
-        toast.warning(responseJson.message);
-      } else {
-        toast.warning("Something went wrong...");
-      }
     }
   };
 

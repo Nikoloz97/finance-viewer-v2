@@ -1,11 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { UseContextCheck } from "@/use-context-check";
+import { useContextCheck } from "@/use-context-check";
 import { useRouter } from "next/navigation";
 
 export default function Profile() {
-  const { setUser, setIsUserSignedIn } = UseContextCheck();
+  const { setUser, setIsUserSignedIn } = useContextCheck();
   const router = useRouter();
 
   const handleLogOut = () => {

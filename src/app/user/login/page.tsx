@@ -10,27 +10,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { UseContextCheck } from "@/use-context-check";
+import { useContextCheck } from "@/use-context-check";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { loginFormSchema } from "../form-schemas";
 import "../user.css";
-import { toast } from "react-toastify";
+import { responseMessage } from "@/app/utils/default-response-message";
 
 export default function Login() {
-  const { setUser } = UseContextCheck();
+  const { setUser } = useContextCheck();
   const router = useRouter();
-
-  const [error, setError] = useState({
-    isErrorFadingIn: false,
-    isErrorFadingOut: false,
-    isErrorShowing: false,
-    message: "",
-  });
 
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
@@ -49,23 +41,11 @@ export default function Login() {
       body: JSON.stringify(loginFields),
     });
 
-    const responseJson = await response.json();
+    const responseJson = await responseMessage(response);
 
-    // TODO: put in a reusable formatter
     if (response.ok) {
-      setUser(responseJson.user);
       router.push("/");
-      if (responseJson.message) {
-        toast.success(responseJson.message);
-      } else {
-        toast.success("Success!");
-      }
-    } else {
-      if (responseJson.message) {
-        toast.warning(responseJson.message);
-      } else {
-        toast.warning("Something went wrong...");
-      }
+      setUser(responseJson.user);
     }
   };
 
