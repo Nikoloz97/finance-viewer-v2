@@ -34,9 +34,12 @@ import "../user.css";
 import { signupFormSchema } from "../form-schemas";
 import { responseMessage } from "@/app/utils/default-response-message";
 import { formDataPost } from "@/app/utils/http-request-service";
+import { useState } from "react";
 
 export default function Signup() {
   const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
@@ -52,6 +55,7 @@ export default function Signup() {
   });
 
   const handleSignup = async (signUpInfo: z.infer<typeof signupFormSchema>) => {
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("username", signUpInfo.username);
     formData.append("password", signUpInfo.password);
@@ -71,6 +75,7 @@ export default function Signup() {
     if (response.ok) {
       router.push("/user/login");
     }
+    setIsLoading(false);
   };
 
   return (

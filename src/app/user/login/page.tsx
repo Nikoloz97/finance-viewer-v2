@@ -20,10 +20,14 @@ import { loginFormSchema } from "../form-schemas";
 import "../user.css";
 import { responseMessage } from "@/app/utils/default-response-message";
 import { post } from "@/app/utils/http-request-service";
+import LoadingOverlay from "@/app/utils/loading-overlay/loading-overlay";
+import { useState } from "react";
 
 export default function Login() {
   const { setUser } = useContextCheck();
   const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
@@ -34,6 +38,7 @@ export default function Login() {
   });
 
   const handleLogin = async (loginFields: z.infer<typeof loginFormSchema>) => {
+    setIsLoading(true);
     const response = await post(loginFields, "/api/user/login");
 
     const responseJson = await responseMessage(response);
@@ -42,10 +47,13 @@ export default function Login() {
       router.push("/");
       setUser(responseJson.user);
     }
+    setIsLoading(false);
   };
 
   return (
     <div className="Login-Form">
+      {isLoading && <LoadingOverlay />}
+
       <h1>Welcome Back</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-8">

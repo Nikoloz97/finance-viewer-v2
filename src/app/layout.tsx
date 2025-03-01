@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import Sidebar from "./sidebar";
 import { Providers } from "./providers";
-import { Slide, ToastContainer } from "react-toastify";
-import { Check, CircleAlert, Info, TriangleAlert } from "lucide-react";
 import "./globals.css";
 import { ToastProvider } from "@/toast-provider";
 import { Suspense } from "react";
