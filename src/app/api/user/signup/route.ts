@@ -9,14 +9,15 @@ import { BlobServiceClient } from "@azure/storage-blob";
 const client = await clientPromise;
 const users = client.db("FinanceViewer").collection<User>("Users");
 
-const blobServiceClient = BlobServiceClient.fromConnectionString(
-  process.env.AZURE_STORAGE_CONNECTION_STRING || ""
-);
-const containerName = process.env.AZURE_STORAGE_CONTAINER_NAME || "";
-const containerClient = blobServiceClient.getContainerClient(containerName);
-
 export async function POST(req: NextRequest) {
   try {
+    // Prevents using env variable during build time
+    const blobServiceClient = BlobServiceClient.fromConnectionString(
+      process.env.AZURE_STORAGE_CONNECTION_STRING || ""
+    );
+    const containerName = process.env.AZURE_STORAGE_CONTAINER_NAME || "";
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+
     const formData = await req.formData();
     const profileImageFile = formData.get("profileImageFile") as
       | File
