@@ -6,6 +6,8 @@ import { Slide, ToastContainer } from "react-toastify";
 import { Check, CircleAlert, Info, TriangleAlert } from "lucide-react";
 import "./globals.css";
 import { ToastProvider } from "@/toast-provider";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -31,9 +33,11 @@ export default function RootLayout({
         <Providers>
           <Sidebar />
           {/* flex-1 = takes up rest of container */}
-          <div className="flex-1 h-full flex justify-center items-center">
-            {children}
-          </div>
+          <Suspense fallback={<Loading />}>
+            <div className="flex-1 h-full flex justify-center items-center">
+              {children}
+            </div>
+          </Suspense>
           <ToastProvider />
         </Providers>
       </body>

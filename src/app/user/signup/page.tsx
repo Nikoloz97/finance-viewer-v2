@@ -52,7 +52,20 @@ export default function Signup() {
   });
 
   const handleSignup = async (signUpInfo: z.infer<typeof signupFormSchema>) => {
-    const response = await formDataPost(signUpInfo, "/api/user/signup");
+    const formData = new FormData();
+    formData.append("username", signUpInfo.username);
+    formData.append("password", signUpInfo.password);
+    formData.append("email", signUpInfo.email);
+    formData.append("firstName", signUpInfo.firstName);
+    formData.append("lastName", signUpInfo.lastName);
+    if (signUpInfo.occupation) {
+      formData.append("occupation", signUpInfo.occupation);
+    }
+    if (signUpInfo.profileImageFile) {
+      formData.append("profileImageFile", signUpInfo.profileImageFile as File);
+    }
+
+    const response = await formDataPost(formData, "/api/user/signup");
 
     responseMessage(response);
     if (response.ok) {
