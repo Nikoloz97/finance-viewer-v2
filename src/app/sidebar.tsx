@@ -12,7 +12,9 @@ export default function Sidebar() {
       <div className="navbar">
         <h2 className="mt-5 mb-3">Finance Viewer</h2>
         <div className="navbar-options">
-          <Link href={"/"}>Dashboard</Link>
+          <Link className={user ? "" : "navbar-disabled"} href={"/dashboard"}>
+            Dashboard
+          </Link>
           <Link className="navbar-disabled" aria-disabled href={"/budget"}>
             Budget
           </Link>
@@ -22,7 +24,9 @@ export default function Sidebar() {
           <Link className="navbar-disabled" aria-disabled href={"/debt"}>
             Debt
           </Link>
-          <Link href={"/investments"}>Investments</Link>
+          <Link className={user ? "" : "navbar-disabled"} href={"/investments"}>
+            Investments
+          </Link>
           {user ? (
             <Link href={"/profile"}>Profile</Link>
           ) : (

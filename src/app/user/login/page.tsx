@@ -44,7 +44,7 @@ export default function Login() {
     const responseJson = await responseMessage(response);
 
     if (response.ok) {
-      router.push("/");
+      router.push("/dashboard");
       setUser(responseJson.user);
     }
     setIsLoading(false);

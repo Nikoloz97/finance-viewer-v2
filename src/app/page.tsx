@@ -1,5 +1,5 @@
-import Dashboard from "./dashboard/page";
+import Login from "./user/login/page";
 
 export default async function Home() {
-  return <Dashboard />;
+  return <Login />;
 }
