@@ -61,6 +61,28 @@ export async function POST(req: NextRequest) {
       profileImagePath: imageFilePath,
     };
 
+    const redundantUsername = await users
+      .find({ username: username })
+      .toArray();
+    if (redundantUsername.length > 0) {
+      return NextResponse.json(
+        {
+          message: "Username already exists. Please choose a different one",
+        },
+        { status: 401 }
+      );
+    }
+
+    const redundantEmail = await users.find({ email: email }).toArray();
+    if (redundantEmail.length > 0) {
+      return NextResponse.json(
+        {
+          message: "Email already exists. Please choose a different one",
+        },
+        { status: 401 }
+      );
+    }
+
     const user = await users.insertOne(userData);
 
     if (user) {
@@ -69,9 +91,12 @@ export async function POST(req: NextRequest) {
         user: { ...userData, password: undefined }, // Don't return the hashed password
       });
     } else {
-      return NextResponse.json({
-        message: "Error inserting user into database",
-      });
+      return NextResponse.json(
+        {
+          message: "Error inserting user into database",
+        },
+        { status: 500 }
+      );
     }
   } catch (error) {
     console.error("Signup error:", error);

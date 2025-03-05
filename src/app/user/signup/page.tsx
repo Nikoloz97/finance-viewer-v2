@@ -35,6 +35,7 @@ import { signupFormSchema } from "../form-schemas";
 import { responseMessage } from "@/app/utils/default-response-message";
 import { formDataPost } from "@/app/utils/http-request-service";
 import { useState } from "react";
+import LoadingOverlay from "@/app/utils/loading-overlay/loading-overlay";
 
 export default function Signup() {
   const router = useRouter();
@@ -79,8 +80,9 @@ export default function Signup() {
   };
 
   return (
-    <div>
-      <h1>Welcome, New User</h1>
+    <div style={{ width: "50%" }}>
+      {isLoading && <LoadingOverlay />}
+      <h1 className="text-center">Welcome, New User</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSignup)}>
           <div className="Signup-Grid-Container">

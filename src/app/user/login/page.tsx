@@ -54,7 +54,7 @@ export default function Login() {
     <div className="Login-Form">
       {isLoading && <LoadingOverlay />}
 
-      <h1>Welcome Back</h1>
+      <h1 className="text-center">Welcome Back</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-8">
           <FormField
