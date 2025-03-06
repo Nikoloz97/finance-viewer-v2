@@ -11,29 +11,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import "./investments.css";
 
 interface InvestmentsListProps {
   investments: Investment[];
-  // handleAllClick: () => void;
-  // handleInvestmentCardClick: (investment: Investment) => void;
-  // selectedInvestment: SelectedInvestment | null;
-  // setIsInvestmentAddDialogCarouselOpen: (isOpen: boolean) => void;
+  handleAllClick: () => void;
+  handleInvestmentCardClick: (investment: Investment) => void;
+  selectedInvestment: SelectedInvestment | null;
+  setIsInvestmentAddDialogCarouselOpen: (isOpen: boolean) => void;
 }
 
 export default function InvestmentsList({
   investments,
-}: // handleAllClick,
-// handleInvestmentCardClick,
-// selectedInvestment,
-// setIsInvestmentAddDialogCarouselOpen,
-InvestmentsListProps) {
+  handleAllClick,
+  handleInvestmentCardClick,
+  selectedInvestment,
+  setIsInvestmentAddDialogCarouselOpen,
+}: InvestmentsListProps) {
   return (
     <>
       <ComingSoonOverlay
         containerStyle={{ width: "60%", padding: "0.3em" }}
         overlayTextStyle={{ fontSize: "1em" }}
       >
-        <div className="Investment-Filters-Container">
+        <div className="investment-filters-container">
           <h3 className="mb-0">Filter: </h3>
           <Badge className="dark">All</Badge>
           <Badge>Stocks</Badge>
@@ -44,18 +45,18 @@ InvestmentsListProps) {
         </div>
       </ComingSoonOverlay>
 
-      <div className="Investments-List-Rectangle">
+      <div className="investments-list-rectangle">
         <Button
-          // onClick={() => setIsInvestmentAddDialogCarouselOpen(true)}
-          className="dark Add-Investment-Button text-white"
+          onClick={() => setIsInvestmentAddDialogCarouselOpen(true)}
+          className="add-investment-button text-white"
         >
           <Plus />
         </Button>
         <Button
-        // className={`Add-Investment-Button text-white ${
-        //   selectedInvestment ? "" : "Selected-Investment-Card"
-        // }`}
-        // onClick={handleAllClick}
+          className={`add-investment-button text-white ${
+            selectedInvestment ? "" : "Selected-Investment-Card"
+          }`}
+          onClick={handleAllClick}
         >
           All
         </Button>
@@ -63,16 +64,16 @@ InvestmentsListProps) {
           <Button
             key={index}
             asChild
-            // className={`border-none ${
-            //   selectedInvestment
-            //     ? selectedInvestment.investmentId === investment._id
-            //       ? "Selected-Investment-Card"
-            //       : ""
-            //     : ""
-            // }`}
-            // onClick={() => handleInvestmentCardClick(investment)}
+            className={`border-none ${
+              selectedInvestment
+                ? selectedInvestment.investmentId === investment._id
+                  ? "selected-investment-card"
+                  : ""
+                : ""
+            }`}
+            onClick={() => handleInvestmentCardClick(investment)}
           >
-            <Card className="Investment-Card">
+            <Card className="investment-card">
               <CardHeader>
                 <CardTitle>{investment.brokerageName}</CardTitle>
                 <CardDescription>{`${investment.type} ${

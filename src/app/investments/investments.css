@@ -49,12 +49,21 @@
   background-color: var(--secondary-background-color);
 }
 
+.add-investment-button:hover {
+  color: black;
+}
+
 .investment-card {
   background-color: var(--secondary-background-color);
   text-align: center;
   margin: 0.2em;
   padding: 1em;
   height: 90%;
+  color: white;
+}
+
+.investment-card:hover {
+  color: black;
 }
 
 .investment-display-container {

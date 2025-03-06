@@ -1,6 +1,6 @@
 "use client";
 
-import { ParsedInvestmentData } from "@/lib/models/investments";
+import { NewInvestment, ParsedInvestmentData } from "@/lib/models/investments";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -44,10 +44,12 @@ import { investmentAddFormSchema } from "./form-schemas";
 
 type InvestmentAddFormProps = {
   parsedData?: ParsedInvestmentData;
+  handleAdd: (newInvestment: NewInvestment) => void;
 };
 
-export default function InvestmentAddDialogCarousel({
+export default function InvestmentAddForm({
   parsedData,
+  handleAdd,
 }: InvestmentAddFormProps) {
   // TODO: work on adding this check back in
   // Min + max possible value for type int32
@@ -92,22 +94,22 @@ export default function InvestmentAddDialogCarousel({
         },
   });
 
-  // TODO: make sure this works
-  async function onSubmit(formData: z.infer<typeof investmentAddFormSchema>) {
-    try {
-      const response = await fetch(`/api/investments`, {
-        method: "POST",
-        body: JSON.stringify(formData),
-      });
-    } catch (error) {
-      console.error();
-    }
-  }
+  // TODO: remove? (this was in the handleSubmit function of form)
+  // async function onSubmit(formData: z.infer<typeof investmentAddFormSchema>) {
+  //   try {
+  //     const response = await fetch(`/api/investments`, {
+  //       method: "POST",
+  //       body: JSON.stringify(formData),
+  //     });
+  //   } catch (error) {
+  //     console.error();
+  //   }
+  // }
 
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(handleAdd)}>
           <div className="Signup-Grid-Container">
             <FormField
               control={form.control}
