@@ -113,6 +113,16 @@ export default function Investments() {
         header="Add Statement"
         subheader="Please follow along steps for adding a statement:"
       />
+
+      {/* {selectedStatement && (
+        <EditStatementDialog
+          handleEditStatementSubmission={handleEditStatementSubmission}
+          isEditStatementDialogOpen={isEditStatementDialogOpen}
+          setIsEditStatementDialogOpen={setIsEditStatementDialogOpen}
+          selectedStatement={selectedStatement}
+          setSelectedStatement={setSelectedStatement}
+        />
+      )} */}
       <div className="investments-list-container">
         <InvestmentsList
           investments={investments}

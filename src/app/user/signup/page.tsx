@@ -72,10 +72,13 @@ export default function Signup() {
 
     const response = await formDataPost(formData, "/api/user/signup");
 
-    responseMessage(response);
-    if (response.ok) {
-      router.push("/user/login");
+    if (response) {
+      responseMessage(response);
+      if (response.ok) {
+        router.push("/user/login");
+      }
     }
+
     setIsLoading(false);
   };
 
