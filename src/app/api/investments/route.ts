@@ -25,14 +25,19 @@ export async function GET(
 
 export async function POST(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get("userId");
+
+    if (!userId) {
+      return NextResponse.json([]);
+    }
     const body = await req.json();
     const newInvestmentData = {
       brokerageName: body.brokerageName,
       type: body.type,
       subtype: body.subtype,
       color: body.color,
-      // TODO: Will need to send along userId from request
-      userId: "6623f7eb08a6b435b95a5dc3",
+      userId: userId,
       statements: [
         {
           statementId: new ObjectId().toString(),

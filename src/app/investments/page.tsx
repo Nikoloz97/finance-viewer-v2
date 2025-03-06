@@ -69,19 +69,18 @@ export default function Investments() {
     setInvestments(investments);
   };
 
-  // TODO: test if this works
   async function handleAddInvestment(
     formData:
-      | z.infer<typeof investmentAddFormSchema> // param should only be this type
+      | z.infer<typeof investmentAddFormSchema> // param should only be of this type (workaround to fix type error)
       | z.infer<typeof statementAddFormSchema>
   ) {
-    post(formData, "/api/investments");
+    post(formData, `/api/investments?userId=${user?._id}`);
   }
 
   // TODO: test if this works
   async function handleAddStatement(
     formData:
-      | z.infer<typeof statementAddFormSchema> // param should only be this type
+      | z.infer<typeof statementAddFormSchema> // param should only be of this type (workaround to fix type error)
       | z.infer<typeof investmentAddFormSchema>
   ) {
     post(formData, "/api/statements");
