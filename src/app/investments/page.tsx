@@ -61,7 +61,6 @@ export default function Investments() {
     });
   };
 
-  // TODO: test if this works
   const fetchInvestments = async () => {
     const investments = await get(
       `/api/investments?userId=${user?._id}`,
@@ -70,7 +69,7 @@ export default function Investments() {
     setInvestments(investments);
   };
 
-  // TODO: make sure this works
+  // TODO: test if this works
   async function handleAddInvestment(
     formData:
       | z.infer<typeof investmentAddFormSchema> // param should only be this type
@@ -79,7 +78,7 @@ export default function Investments() {
     post(formData, "/api/investments");
   }
 
-  // TODO: make sure this works
+  // TODO: test if this works
   async function handleAddStatement(
     formData:
       | z.infer<typeof statementAddFormSchema> // param should only be this type

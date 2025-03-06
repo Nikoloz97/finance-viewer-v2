@@ -9,10 +9,8 @@ const investments = client
   .db("FinanceViewer")
   .collection<Investment>("Investments");
 
-// TODO: change this to take in userID
 export async function GET(
-  request: Request,
-  { params }: { params: { userId: string } }
+  request: Request
 ): Promise<NextResponse<WithId<Investment>[]>> {
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get("userId");
