@@ -1,9 +1,9 @@
 export async function get(endpoint: string, errorMessage: string) {
   try {
-    const response = await fetch(`/api/investments`);
+    const response = await fetch(endpoint);
 
     if (!response.ok) {
-      throw new Error("Failed to fetch investments");
+      throw new Error(errorMessage);
     }
 
     return await response.json();

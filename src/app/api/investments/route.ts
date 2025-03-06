@@ -10,9 +10,19 @@ const investments = client
   .collection<Investment>("Investments");
 
 // TODO: change this to take in userID
-export async function GET(): Promise<NextResponse<WithId<Investment>[]>> {
-  const allInvestments = await investments.find({}).toArray();
-  return NextResponse.json(allInvestments);
+export async function GET(
+  request: Request,
+  { params }: { params: { userId: string } }
+): Promise<NextResponse<WithId<Investment>[]>> {
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get("userId");
+
+  if (!userId) {
+    return NextResponse.json([]);
+  }
+
+  const userInvestments = await investments.find({ userId: userId }).toArray();
+  return NextResponse.json(userInvestments);
 }
 
 export async function POST(req: NextRequest) {

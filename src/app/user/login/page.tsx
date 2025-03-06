@@ -41,12 +41,15 @@ export default function Login() {
     setIsLoading(true);
     const response = await post(loginFields, "/api/user/login");
 
-    const responseJson = await responseMessage(response);
+    if (response) {
+      const responseJson = await responseMessage(response);
 
-    if (response.ok) {
-      router.push("/dashboard");
-      setUser(responseJson.user);
+      if (response.ok) {
+        router.push("/dashboard");
+        setUser(responseJson.user);
+      }
     }
+
     setIsLoading(false);
   };
 

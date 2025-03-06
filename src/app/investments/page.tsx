@@ -61,9 +61,10 @@ export default function Investments() {
     });
   };
 
+  // TODO: test if this works
   const fetchInvestments = async () => {
     const investments = await get(
-      "/api/investments",
+      `/api/investments?userId=${user?._id}`,
       "Failed to fetch investments"
     );
     setInvestments(investments);
