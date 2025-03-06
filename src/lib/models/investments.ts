@@ -13,7 +13,7 @@ import { Decimal128 } from "mongodb";
 // }
 
 export interface Investment {
-  _id: string;
+  _id?: string;
   userId: string;
   brokerageName: string;
   type: string;
@@ -23,7 +23,7 @@ export interface Investment {
 }
 
 // TODO: figure out why we don't have a userId
-// TODO: get rid of this?? (see above todo)
+// TODO: get rid of this??
 export interface NewInvestment {
   brokerageName: string;
   type: string;

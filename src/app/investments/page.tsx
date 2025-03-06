@@ -54,7 +54,7 @@ export default function Investments() {
     );
     setSelectedInvestmentChartData(filteredInvestmentChartData);
     setSelectedInvestment({
-      investmentId: investment._id,
+      investmentId: investment._id!,
       brokerageName: investment.brokerageName,
       type: investment.type,
       subtype: investment.subtype,
