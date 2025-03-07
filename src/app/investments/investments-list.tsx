@@ -54,7 +54,7 @@ export default function InvestmentsList({
         </Button>
         <Button
           className={`add-investment-button text-white ${
-            selectedInvestment ? "" : "Selected-Investment-Card"
+            selectedInvestment ? "" : "selected-investment-card"
           }`}
           onClick={handleAllClick}
         >
@@ -64,7 +64,7 @@ export default function InvestmentsList({
           <Button
             key={index}
             asChild
-            className={`border-none ${
+            className={`border-none text-white ${
               selectedInvestment
                 ? selectedInvestment.investmentId === investment._id
                   ? "selected-investment-card"

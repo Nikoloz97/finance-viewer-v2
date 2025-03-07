@@ -29,6 +29,9 @@ export default function Investments() {
   const [selectedInvestment, setSelectedInvestment] =
     useState<SelectedInvestment | null>(null);
 
+  // const [selectedTableStatement, setSelectedTableStatement] =
+  //   useState<TableStatement | null>(null);
+
   const [selectedInvestmentChartData, setSelectedInvestmentChartData] =
     useState<InvestmentChartData[]>();
 

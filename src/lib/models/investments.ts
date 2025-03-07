@@ -1,17 +1,5 @@
 import { Decimal128 } from "mongodb";
 
-// TODO: see below todo
-
-// export interface Investment {
-//   _id: string;
-//   userId: string;
-//   brokerageName: string;
-//   type: string;
-//   subtype: string;
-//   color: string;
-//   statements: Statement[];
-// }
-
 export interface Investment {
   _id?: string;
   userId: string;
@@ -22,8 +10,6 @@ export interface Investment {
   statements: Statement[];
 }
 
-// TODO: figure out why we don't have a userId
-// TODO: get rid of this??
 export interface NewInvestment {
   brokerageName: string;
   type: string;
@@ -37,27 +23,14 @@ export interface NewInvestment {
   withdrawalAmount: number;
 }
 
-// TODO: figure out which of these versions to use
-
-// export interface Statement {
-//   statementId: string;
-//   startBalance: number;
-//   startDate: Date;
-//   endBalance: number;
-//   endDate: Date;
-//   depositAmount: number;
-//   withdrawalAmount: number;
-// }
-
 export interface Statement {
   __id?: string;
-  // TODO: clean up these or types?? (see createInvestment function)
-  startDate: string | Date;
-  endDate: string | Date;
-  startBalance: string | Decimal128;
-  depositAmount: string | Decimal128;
-  endBalance: string | Decimal128;
-  withdrawalAmount: object | Decimal128;
+  startDate: Date;
+  endDate: Date;
+  startBalance: Decimal128;
+  depositAmount: Decimal128;
+  endBalance: Decimal128;
+  withdrawalAmount: Decimal128;
 }
 
 export interface NewStatement {
