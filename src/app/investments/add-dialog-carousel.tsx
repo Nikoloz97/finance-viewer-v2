@@ -1,6 +1,6 @@
 import {
   NewInvestment,
-  StatementFormData,
+  AddStatementFormData,
   ParsedInvestmentData,
 } from "@/lib/models/investments";
 import { useState } from "react";
@@ -25,7 +25,7 @@ import StatementAddForm from "./statement-add-form";
 
 interface AddDialogCarouselProps {
   isAddDialogCarouselOpen: boolean;
-  handleAdd: (newData: NewInvestment | StatementFormData) => void;
+  handleAdd: (newData: NewInvestment | AddStatementFormData) => void;
   setIsAddDialogCarouselOpen: (isOpen: boolean) => void;
   type: "Statement" | "Investment";
   header: string;
