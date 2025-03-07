@@ -13,7 +13,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import {
-  StatementFormData,
+  AddStatementFormData,
   ParsedInvestmentData,
 } from "@/lib/models/investments";
 import { cn } from "@/lib/utils";
@@ -27,7 +27,7 @@ import { statementAddFormSchema } from "./form-schemas";
 
 interface StatementAddFormProps {
   parsedData?: ParsedInvestmentData;
-  handleAdd: (StatementFormData: StatementFormData) => void;
+  handleAdd: (StatementFormData: AddStatementFormData) => void;
 }
 
 export default function StatementAddForm({
