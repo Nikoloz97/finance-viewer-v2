@@ -27,19 +27,43 @@ export interface Statement {
   __id?: string;
   startDate: Date;
   endDate: Date;
-  startBalance: Decimal128;
-  depositAmount: Decimal128;
-  endBalance: Decimal128;
-  withdrawalAmount: Decimal128;
+  startBalance: Decimal128 | number;
+  depositAmount: Decimal128 | number;
+  endBalance: Decimal128 | number;
+  withdrawalAmount: Decimal128 | number;
 }
 
-export interface NewStatement {
+export interface TableStatement extends Statement {
+  investmentId: string;
+  brokerageName: string;
+  type: string;
+  subtype: string;
+}
+
+export interface AddStatementFormData {
   startBalance: number;
   startDate: Date;
   endBalance: number;
   endDate: Date;
   depositAmount: number;
   withdrawalAmount: number;
+}
+
+export interface EditStatementFormData {
+  _id: string;
+  startBalance: number;
+  startDate: Date;
+  endBalance: number;
+  endDate: Date;
+  depositAmount: number;
+  withdrawalAmount: number;
+}
+
+export interface EditTableStatementFormData extends EditStatementFormData {
+  investmentId: string;
+  brokerageName: string;
+  type: string;
+  subtype: string;
 }
 
 export interface SelectedInvestment {
@@ -55,7 +79,7 @@ export interface InvestmentChartData {
   [brokerageName: string]: number | string;
 }
 
-export type ParsedInvestmentData = {
+export interface ParsedInvestmentData {
   brokerageName: string;
   type: string;
   subtype: string;
@@ -65,4 +89,4 @@ export type ParsedInvestmentData = {
   endBalance: number;
   depositAmount: number;
   withdrawalAmount: number;
-};
+}

@@ -12,7 +12,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { NewStatement, ParsedInvestmentData } from "@/lib/models/investments";
+import {
+  StatementFormData,
+  ParsedInvestmentData,
+} from "@/lib/models/investments";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
@@ -24,7 +27,7 @@ import { statementAddFormSchema } from "./form-schemas";
 
 interface StatementAddFormProps {
   parsedData?: ParsedInvestmentData;
-  handleAdd: (newStatement: NewStatement) => void;
+  handleAdd: (StatementFormData: StatementFormData) => void;
 }
 
 export default function StatementAddForm({

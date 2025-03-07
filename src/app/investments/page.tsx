@@ -4,6 +4,7 @@ import {
   Investment,
   InvestmentChartData,
   SelectedInvestment,
+  TableStatement,
 } from "@/lib/models/investments";
 import InvestmentsList from "./investments-list";
 import { useContextCheck } from "@/use-context-check";
@@ -14,8 +15,10 @@ import { z } from "zod";
 import {
   investmentAddFormSchema,
   statementAddFormSchema,
+  statementEditFormSchema,
 } from "./form-schemas";
 import { get, post } from "../utils/http-request-service";
+import EditStatementDialog from "./edit-statement-dialog";
 
 export default function Investments() {
   const { user } = useContextCheck();
@@ -29,8 +32,8 @@ export default function Investments() {
   const [selectedInvestment, setSelectedInvestment] =
     useState<SelectedInvestment | null>(null);
 
-  // const [selectedTableStatement, setSelectedTableStatement] =
-  //   useState<TableStatement | null>(null);
+  const [selectedTableStatement, setSelectedTableStatement] =
+    useState<TableStatement | null>(null);
 
   const [selectedInvestmentChartData, setSelectedInvestmentChartData] =
     useState<InvestmentChartData[]>();
@@ -44,6 +47,9 @@ export default function Investments() {
     isStatementAddDialogCarouselOpen,
     setIsStatementAddDialogCarouselOpen,
   ] = useState<boolean>(false);
+
+  const [isEditStatementDialogOpen, setIsEditStatementDialogOpen] =
+    useState<boolean>(false);
 
   const handleInvestmentCardClick = (investment: Investment) => {
     const filteredInvestmentChartData = fetchedInvestmentChartData?.map(
@@ -89,6 +95,13 @@ export default function Investments() {
     post(formData, "/api/statements");
   }
 
+  // TODO: test if this works
+  async function handleEditStatement(
+    formData: z.infer<typeof statementEditFormSchema>
+  ) {
+    post(formData, "/api/statements");
+  }
+
   const handleAllClick = () => {
     setSelectedInvestmentChartData(fetchedInvestmentChartData);
     setSelectedInvestment(null);
@@ -97,6 +110,34 @@ export default function Investments() {
   useEffect(() => {
     if (user?._id) fetchInvestments();
   }, []);
+
+  let tableStatements: TableStatement[] | null = null;
+
+  if (selectedInvestment) {
+    tableStatements = investments
+      .filter(
+        (investment) => investment._id === selectedInvestment.investmentId
+      )
+      .flatMap((investment) =>
+        investment.statements.map((statement) => ({
+          investmentId: investment._id!,
+          brokerageName: investment.brokerageName,
+          type: investment.type,
+          subtype: investment.subtype,
+          ...statement,
+        }))
+      );
+  } else {
+    tableStatements = investments.flatMap((investment) =>
+      investment.statements.map((statement) => ({
+        investmentId: investment._id!,
+        brokerageName: investment.brokerageName,
+        type: investment.type,
+        subtype: investment.subtype,
+        ...statement,
+      }))
+    );
+  }
 
   return (
     <div className="investments-page">
@@ -117,15 +158,15 @@ export default function Investments() {
         subheader="Please follow along steps for adding a statement:"
       />
 
-      {/* {selectedStatement && (
+      {selectedTableStatement && (
         <EditStatementDialog
-          handleEditStatementSubmission={handleEditStatementSubmission}
-          isEditStatementDialogOpen={isEditStatementDialogOpen}
-          setIsEditStatementDialogOpen={setIsEditStatementDialogOpen}
-          selectedStatement={selectedStatement}
-          setSelectedStatement={setSelectedStatement}
+          handleEdit={handleEditStatement}
+          isOpen={isEditStatementDialogOpen}
+          setIsOpen={setIsEditStatementDialogOpen}
+          selectedTableStatement={selectedTableStatement}
+          setSelectedTableStatement={setSelectedTableStatement}
         />
-      )} */}
+      )}
       <div className="investments-list-container">
         <InvestmentsList
           investments={investments}
