@@ -55,7 +55,7 @@ export default function EditStatementDialog({
   const form = useForm<z.infer<typeof statementEditFormSchema>>({
     resolver: zodResolver(statementEditFormSchema),
     defaultValues: {
-      _id: selectedTableStatement.__id,
+      _id: selectedTableStatement._id,
       investmentId: selectedTableStatement.investmentId,
       brokerageName: selectedTableStatement.brokerageName,
       type: selectedTableStatement.type,
