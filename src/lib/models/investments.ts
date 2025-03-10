@@ -1,5 +1,3 @@
-import { Decimal128 } from "mongodb";
-
 export interface Investment {
   _id?: string;
   userId: string;
@@ -24,16 +22,32 @@ export interface NewInvestment {
 }
 
 export interface Statement {
-  __id?: string;
+  _id: string;
   startDate: Date;
   endDate: Date;
-  startBalance: Decimal128 | number;
-  depositAmount: Decimal128 | number;
-  endBalance: Decimal128 | number;
-  withdrawalAmount: Decimal128 | number;
+  startBalance: number;
+  depositAmount: number;
+  endBalance: number;
+  withdrawalAmount: number;
 }
 
-export interface TableStatement extends Statement {
+export interface NewStatement {
+  startDate: Date;
+  endDate: Date;
+  startBalance: number;
+  depositAmount: number;
+  endBalance: number;
+  withdrawalAmount: number;
+}
+
+export interface TableStatement {
+  _id: string;
+  startDate: Date;
+  endDate: Date;
+  startBalance: number;
+  depositAmount: number;
+  endBalance: number;
+  withdrawalAmount: number;
   investmentId: string;
   brokerageName: string;
   type: string;

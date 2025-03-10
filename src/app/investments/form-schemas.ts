@@ -161,10 +161,10 @@ export const statementEditFormSchema = z
   .object({
     // TODO: Prevent from being edited
     // Or remove from being displayed entirely?
-    investmentId: z.string().min(1, {
+    _id: z.string().min(1, {
       message: "Please enter a valid Id",
     }),
-    _id: z.string().min(1, {
+    investmentId: z.string().min(1, {
       message: "Please enter a valid Id",
     }),
 

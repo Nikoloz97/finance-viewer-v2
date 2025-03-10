@@ -17,8 +17,11 @@ import {
   statementAddFormSchema,
   statementEditFormSchema,
 } from "./form-schemas";
-import { get, post } from "../utils/http-request-service";
+import { deleteRequest, get, post } from "../utils/http-request-service";
 import EditStatementDialog from "./edit-statement-dialog";
+import CustomAlertDialog from "../utils/custom-alert-dialog";
+import { Button } from "@/components/ui/button";
+import { InvestmentsTable } from "./investments-table";
 
 export default function Investments() {
   const { user } = useContextCheck();
@@ -87,6 +90,11 @@ export default function Investments() {
   }
 
   // TODO: test if this works
+  async function handleDeleteInvestment(investmentId: string) {
+    deleteRequest(`/api/investments?investmentId=${investmentId}`);
+  }
+
+  // TODO: test if this works
   async function handleAddStatement(
     formData:
       | z.infer<typeof statementAddFormSchema> // param should only be of this type (workaround to fix type error)
@@ -99,7 +107,17 @@ export default function Investments() {
   async function handleEditStatement(
     formData: z.infer<typeof statementEditFormSchema>
   ) {
-    post(formData, "/api/statements");
+    post(formData, "/api/investments/statements");
+  }
+
+  // TODO: test if this works
+  async function handleDeleteStatement(
+    investmentId: string,
+    statementId: string
+  ) {
+    deleteRequest(
+      `/api/investments/statements?investmentId=${investmentId}&statementId=${statementId}`
+    );
   }
 
   const handleAllClick = () => {
@@ -111,7 +129,7 @@ export default function Investments() {
     if (user?._id) fetchInvestments();
   }, []);
 
-  let tableStatements: TableStatement[] | null = null;
+  let tableStatements: TableStatement[] = [];
 
   if (selectedInvestment) {
     tableStatements = investments
@@ -177,6 +195,43 @@ export default function Investments() {
             setIsInvestmentAddDialogCarouselOpen
           }
         />
+      </div>
+
+      <div className="investment-display-container">
+        <div className="investment-add-delete-table-container">
+          <div className="investments-add-delete-container">
+            <CustomAlertDialog
+              triggerText="Delete Investment"
+              title="Delete Investment?"
+              description="This action cannot be undone"
+              isTriggerDisabled={selectedInvestment === null}
+              triggerStyle={{
+                width: "40%",
+                height: "5em",
+                fontSize: "0.5em",
+              }}
+              onContinueClick={() =>
+                handleDeleteInvestment(selectedInvestment!.investmentId)
+              }
+            />
+            <Button
+              style={{ width: "40%", height: "5em", fontSize: "0.5em" }}
+              disabled={selectedInvestment === null}
+              onClick={() => setIsStatementAddDialogCarouselOpen(true)}
+            >
+              Add Statement
+            </Button>
+          </div>
+          <div className="investments-table-container">
+            {investments.length && (
+              <InvestmentsTable
+                data={tableStatements}
+                handleEditStatement={handleEditStatement}
+                handleDeleteStatement={handleDeleteStatement}
+              />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

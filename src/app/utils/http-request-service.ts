@@ -39,3 +39,15 @@ export async function formDataPost(formData: FormData, endpoint: string) {
     console.error();
   }
 }
+
+export async function deleteRequest(endpoint: string) {
+  try {
+    const response = await fetch(endpoint, {
+      method: "DELETE",
+    });
+
+    return response;
+  } catch (error) {
+    console.error();
+  }
+}

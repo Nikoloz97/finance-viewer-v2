@@ -1,4 +1,4 @@
-import { ObjectId, WithId } from "mongodb";
+import { ObjectId, OptionalId, WithId, WithoutId } from "mongodb";
 import clientPromise from "../mongodb";
 import { Investment } from "@/lib/models/investments";
 import { NextRequest, NextResponse } from "next/server";
@@ -11,19 +11,34 @@ const investments = client
 
 export async function GET(
   request: Request
-): Promise<NextResponse<WithId<Investment>[]>> {
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get("userId");
+): Promise<
+  NextResponse<WithId<Investment>[]> | NextResponse<{ message: string }>
+> {
+  try {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("userId");
 
-  if (!userId) {
-    return NextResponse.json([]);
+    if (!userId) {
+      return NextResponse.json([]);
+    }
+
+    const userInvestments = await investments
+      .find({ userId: userId })
+      .toArray();
+    return NextResponse.json(userInvestments);
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Internal Server Error" },
+      { status: 500 }
+    );
   }
-
-  const userInvestments = await investments.find({ userId: userId }).toArray();
-  return NextResponse.json(userInvestments);
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(
+  req: NextRequest
+): Promise<
+  NextResponse<OptionalId<Investment>[]> | NextResponse<{ message: string }>
+> {
   try {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
@@ -32,7 +47,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json([]);
     }
     const body = await req.json();
-    const newInvestmentData = {
+    const newInvestmentData: OptionalId<Investment> = {
       brokerageName: body.brokerageName,
       type: body.type,
       subtype: body.subtype,
@@ -40,7 +55,7 @@ export async function POST(req: NextRequest) {
       userId: userId,
       statements: [
         {
-          statementId: new ObjectId().toString(),
+          _id: new ObjectId().toString(),
           startDate: body.startDate,
           startBalance: toDollarAmount(body.startBalance),
           endDate: new Date(body.endDate),
@@ -99,4 +114,34 @@ export async function POST(req: NextRequest) {
   //   } else {
   //     res.status(400).json({ message: "Error creating new investment" });
   //   }
+}
+
+export async function DELETE(
+  request: Request
+): Promise<NextResponse<{ message: string }>> {
+  const { searchParams } = new URL(request.url);
+  const investmentId = searchParams.get("investmentId");
+
+  try {
+    if (!investmentId) {
+      return NextResponse.json({
+        message: "No investment found with the given investment Id",
+      });
+    }
+
+    const result = await investments.deleteOne({ _id: investmentId });
+
+    if (result.deletedCount === 0) {
+      return NextResponse.json({
+        message: "No investment found with the given investment Id",
+      });
+    } else {
+      return NextResponse.json({ message: "Investment deleted successfully!" });
+    }
+  } catch (error) {
+    console.error("Error deleting investment:", error);
+    NextResponse.json({ message: "Failed to delete investment" });
+  }
+
+  return NextResponse.json({ message: "Investment deleted successfully!" });
 }
