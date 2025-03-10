@@ -60,16 +60,12 @@ export default function EditStatementDialog({
       brokerageName: selectedTableStatement.brokerageName,
       type: selectedTableStatement.type,
       subtype: selectedTableStatement.subtype,
-      startBalance: parseFloat(selectedTableStatement.startBalance.toString()),
+      startBalance: selectedTableStatement.startBalance,
       startDate: selectedTableStatement.startDate,
-      endBalance: parseFloat(selectedTableStatement.endBalance.toString()),
+      endBalance: selectedTableStatement.endBalance,
       endDate: selectedTableStatement.endDate,
-      depositAmount: parseFloat(
-        selectedTableStatement.depositAmount.toString()
-      ),
-      withdrawalAmount: parseFloat(
-        selectedTableStatement.withdrawalAmount.toString()
-      ),
+      depositAmount: selectedTableStatement.depositAmount,
+      withdrawalAmount: selectedTableStatement.withdrawalAmount,
     },
   });
 
