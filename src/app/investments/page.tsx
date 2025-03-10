@@ -22,6 +22,7 @@ import EditStatementDialog from "./edit-statement-dialog";
 import CustomAlertDialog from "../utils/custom-alert-dialog";
 import { Button } from "@/components/ui/button";
 import { InvestmentsTable } from "./investments-table";
+import { responseMessage } from "../utils/default-response-message";
 
 export default function Investments() {
   const { user } = useContextCheck();
@@ -86,7 +87,13 @@ export default function Investments() {
       | z.infer<typeof investmentAddFormSchema> // param should only be of this type (workaround to fix type error)
       | z.infer<typeof statementAddFormSchema>
   ) {
-    post(formData, `/api/investments?userId=${user?._id}`);
+    const response = await post(
+      formData,
+      `/api/investments?userId=${user?._id}`
+    );
+    if (response) {
+      await responseMessage(response);
+    }
   }
 
   // TODO: test if this works
