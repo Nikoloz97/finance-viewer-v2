@@ -178,6 +178,11 @@ export default function Investments() {
     setSelectedInvestment(null);
   };
 
+  const handleEditStatementTableClick = (tableStatement: TableStatement) => {
+    setSelectedTableStatement(tableStatement);
+    setIsEditStatementDialogOpen(true);
+  };
+
   useEffect(() => {
     if (user && user._id) fetchInvestments();
   }, []);
@@ -239,7 +244,7 @@ export default function Investments() {
         subheader="Please follow along steps for adding a statement:"
       />
 
-      {selectedTableStatement && (
+      {selectedTableStatement && isEditStatementDialogOpen && (
         <EditStatementDialog
           handleEdit={handleEditStatement}
           isOpen={isEditStatementDialogOpen}
@@ -289,7 +294,7 @@ export default function Investments() {
             {investments.length && (
               <InvestmentsTable
                 data={tableStatements}
-                handleEditStatement={handleEditStatement}
+                handleEditStatementTableClick={handleEditStatementTableClick}
                 handleDeleteStatement={handleDeleteStatement}
               />
             )}

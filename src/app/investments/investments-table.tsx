@@ -37,13 +37,15 @@ import {
 
 interface DataTableProps {
   data: TableStatement[];
-  handleEditStatement: (tableStatement: EditTableStatementFormData) => void;
+  handleEditStatementTableClick: (
+    tableStatement: EditTableStatementFormData
+  ) => void;
   handleDeleteStatement: (investmentId: string, statementId: string) => void;
 }
 
 export function InvestmentsTable({
   data,
-  handleEditStatement,
+  handleEditStatementTableClick,
   handleDeleteStatement,
 }: DataTableProps) {
   const InvestmentsColumns: ColumnDef<TableStatement>[] = [
@@ -163,7 +165,7 @@ export function InvestmentsTable({
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                onClick={() => handleEditStatement(tableStatement)}
+                onClick={() => handleEditStatementTableClick(tableStatement)}
               >
                 Edit statement
               </DropdownMenuItem>
