@@ -93,6 +93,21 @@ export interface InvestmentChartData {
   [brokerageName: string]: number | string;
 }
 
+export interface InvestmentChartConfig {
+  [brokerageName: string]: {
+    label: string;
+    color: string;
+  };
+}
+
+export interface ChartDataStatement {
+  brokerageName: string;
+  startDate: Date;
+  endDate: Date;
+  startBalance: number;
+  endBalance: number;
+}
+
 export interface ParsedInvestmentData {
   brokerageName: string;
   type: string;

@@ -1,4 +1,4 @@
-import { ObjectId, OptionalId, WithId, WithoutId } from "mongodb";
+import { ObjectId, OptionalId, WithId } from "mongodb";
 import clientPromise from "../mongodb";
 import { Investment } from "@/lib/models/investments";
 import { NextRequest, NextResponse } from "next/server";

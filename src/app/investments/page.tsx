@@ -2,6 +2,7 @@
 
 import {
   Investment,
+  InvestmentChartConfig,
   InvestmentChartData,
   SelectedInvestment,
   TableStatement,
@@ -23,6 +24,7 @@ import CustomAlertDialog from "../utils/custom-alert-dialog";
 import { Button } from "@/components/ui/button";
 import { InvestmentsTable } from "./investments-table";
 import { responseMessage } from "../utils/default-response-message";
+import InvestmentDisplay from "./investment-display";
 
 export default function Investments() {
   const { user } = useContextCheck();
@@ -42,6 +44,9 @@ export default function Investments() {
   const [selectedInvestmentChartData, setSelectedInvestmentChartData] =
     useState<InvestmentChartData[]>();
 
+  const [selectedInvestmentChartConfig, setSelectedInvestmentChartConfig] =
+    useState<InvestmentChartConfig>();
+
   const [
     isInvestmentAddDialogCarouselOpen,
     setIsInvestmentAddDialogCarouselOpen,
@@ -54,6 +59,41 @@ export default function Investments() {
 
   const [isEditStatementDialogOpen, setIsEditStatementDialogOpen] =
     useState<boolean>(false);
+
+  // TODO: set up loading
+  const [areInvestmentsLoading, setAreInvestmentsLoading] = useState(true);
+
+  const fetchInvestments = async () => {
+    const investments: Investment[] = await get(
+      `/api/investments?userId=${user!._id}`,
+      "Failed to fetch investments"
+    );
+    setInvestments(investments);
+    setSelectedInvestment(null);
+    const chartConfig = investments.reduce<InvestmentChartConfig>(
+      (acc, investment) => {
+        const { brokerageName, color } = investment;
+        const joinedBrokerageName = brokerageName.replace(/\s+/g, ""); // join on whitespace
+        acc[joinedBrokerageName] = {
+          label: brokerageName,
+          color: color,
+        };
+        return acc;
+      },
+      {}
+    );
+
+    setSelectedInvestmentChartConfig(chartConfig);
+  };
+
+  const fetchInvestmentChartData = async () => {
+    const investmentChartData = await get(
+      `/api/investments/chart-data?userId=${user!._id}`,
+      "Failed to fetch investment chart data"
+    );
+    setFetchedInvestmentChartData(investmentChartData);
+    setSelectedInvestmentChartData(investmentChartData);
+  };
 
   const handleInvestmentCardClick = (investment: Investment) => {
     const filteredInvestmentChartData = fetchedInvestmentChartData?.map(
@@ -74,14 +114,6 @@ export default function Investments() {
     });
   };
 
-  const fetchInvestments = async () => {
-    const investments = await get(
-      `/api/investments?userId=${user?._id}`,
-      "Failed to fetch investments"
-    );
-    setInvestments(investments);
-  };
-
   async function handleAddInvestment(
     formData:
       | z.infer<typeof investmentAddFormSchema> // param should only be of this type (workaround to fix type error)
@@ -98,7 +130,12 @@ export default function Investments() {
 
   // TODO: test if this works
   async function handleDeleteInvestment(investmentId: string) {
-    deleteRequest(`/api/investments?investmentId=${investmentId}`);
+    const response = await deleteRequest(
+      `/api/investments?investmentId=${investmentId}`
+    );
+    if (response) {
+      await responseMessage(response);
+    }
   }
 
   // TODO: test if this works
@@ -107,14 +144,20 @@ export default function Investments() {
       | z.infer<typeof statementAddFormSchema> // param should only be of this type (workaround to fix type error)
       | z.infer<typeof investmentAddFormSchema>
   ) {
-    post(formData, "/api/statements");
+    const response = await post(formData, "/api/statements");
+    if (response) {
+      await responseMessage(response);
+    }
   }
 
   // TODO: test if this works
   async function handleEditStatement(
     formData: z.infer<typeof statementEditFormSchema>
   ) {
-    post(formData, "/api/investments/statements");
+    const response = await post(formData, "/api/investments/statements");
+    if (response) {
+      await responseMessage(response);
+    }
   }
 
   // TODO: test if this works
@@ -122,9 +165,12 @@ export default function Investments() {
     investmentId: string,
     statementId: string
   ) {
-    deleteRequest(
+    const response = await deleteRequest(
       `/api/investments/statements?investmentId=${investmentId}&statementId=${statementId}`
     );
+    if (response) {
+      await responseMessage(response);
+    }
   }
 
   const handleAllClick = () => {
@@ -133,7 +179,17 @@ export default function Investments() {
   };
 
   useEffect(() => {
-    if (user?._id) fetchInvestments();
+    if (user && user._id) fetchInvestments();
+  }, []);
+
+  useEffect(() => {
+    const fetchAllData = async () => {
+      await Promise.all([fetchInvestments(), fetchInvestmentChartData()]);
+    };
+
+    if (user && user._id) {
+      fetchAllData();
+    }
   }, []);
 
   let tableStatements: TableStatement[] = [];
@@ -238,6 +294,14 @@ export default function Investments() {
               />
             )}
           </div>
+        </div>
+
+        <div className="investments-display-container">
+          <InvestmentDisplay
+            selectedInvestmentsChartData={selectedInvestmentChartData}
+            selectedInvestmentChartConfig={selectedInvestmentChartConfig}
+            selectedInvestment={selectedInvestment}
+          />
         </div>
       </div>
     </div>
