@@ -28,7 +28,7 @@ export const getMonthsArray = (
 
   const monthsArray = [];
 
-  let startMonthIndex = latestMonthIndex - (totalMonths - 1);
+  const startMonthIndex = latestMonthIndex - (totalMonths - 1);
 
   for (let i = 0; i < totalMonths; i++) {
     const monthIndex = (startMonthIndex + i + 12) % 12; // e.g. 11 % 12 = 11 and 12 % 12 = 0

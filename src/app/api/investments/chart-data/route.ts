@@ -47,7 +47,10 @@ export async function GET(
 
     const latestMonthIndex = getMonthIndex(latestEndDateObject.latestEndDate);
 
-    let chartData: InvestmentChartData[] = getMonthsArray(latestMonthIndex, 3);
+    const chartData: InvestmentChartData[] = getMonthsArray(
+      latestMonthIndex,
+      3
+    );
 
     const cutoffDate = getCutOffDate(latestEndDateObject.latestEndDate, -2);
 
