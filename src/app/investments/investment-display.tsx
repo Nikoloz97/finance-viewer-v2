@@ -9,6 +9,7 @@ import {
   SelectedInvestment,
 } from "@/lib/models/investments";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import "./investments.css";
 
 interface InvestmentDisplayProps {
   selectedInvestmentsChartData: InvestmentChartData[] | undefined;

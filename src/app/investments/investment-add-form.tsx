@@ -41,6 +41,7 @@ import { Input } from "@/components/ui/input";
 import { brokerages } from "@/lib/brokerages";
 import { colors } from "@/lib/colors";
 import { investmentAddFormSchema } from "./form-schemas";
+import "./investments.css";
 
 type InvestmentAddFormProps = {
   parsedData?: ParsedInvestmentData;
@@ -110,7 +111,7 @@ export default function InvestmentAddForm({
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleAdd)}>
-          <div className="Signup-Grid-Container">
+          <div className="add-investment-grid-container">
             <FormField
               control={form.control}
               name="brokerageName"
@@ -397,7 +398,7 @@ export default function InvestmentAddForm({
             />
           </div>
 
-          <div className="Login-Button-Container">
+          <div className="add-investment-button-container">
             <Button className="dark" type="submit">
               Add
             </Button>

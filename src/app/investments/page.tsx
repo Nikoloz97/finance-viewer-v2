@@ -18,13 +18,14 @@ import {
   statementAddFormSchema,
   statementEditFormSchema,
 } from "./form-schemas";
-import { deleteRequest, get, post } from "../utils/http-request-service";
+import { deleteRequest, get, post, put } from "../utils/http-request-service";
 import EditStatementDialog from "./edit-statement-dialog";
 import CustomAlertDialog from "../utils/custom-alert-dialog";
 import { Button } from "@/components/ui/button";
 import { InvestmentsTable } from "./investments-table";
 import { responseMessage } from "../utils/default-response-message";
 import InvestmentDisplay from "./investment-display";
+import "./investments.css";
 
 export default function Investments() {
   const { user } = useContextCheck();
@@ -140,13 +141,13 @@ export default function Investments() {
     }
   }
 
-  // TODO: test if this works
+  // TODO: add investment Id
   async function handleAddStatement(
     formData:
       | z.infer<typeof statementAddFormSchema> // param should only be of this type (workaround to fix type error)
       | z.infer<typeof investmentAddFormSchema>
   ) {
-    const response = await post(formData, "/api/statements");
+    const response = await post(formData, "/api/investments/statements");
     if (response) {
       await responseMessage(response);
     }
@@ -156,7 +157,7 @@ export default function Investments() {
   async function handleEditStatement(
     formData: z.infer<typeof statementEditFormSchema>
   ) {
-    const response = await post(formData, "/api/investments/statements");
+    const response = await put(formData, "/api/investments/statements");
     if (response) {
       await responseMessage(response);
     }

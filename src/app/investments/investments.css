@@ -44,6 +44,13 @@
   color: black;
 }
 
+.add-investment-grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+}
+
 .add-investment-button {
   height: 90%;
   background-color: var(--secondary-background-color);
@@ -100,4 +107,23 @@
   width: 50%;
   height: 100%;
   padding: 1em 0 1em 0;
+}
+
+.add-statement-grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.add-investment-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.add-statement-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
 }

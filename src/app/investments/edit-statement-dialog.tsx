@@ -31,6 +31,7 @@ import { DayPicker } from "react-day-picker";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { statementEditFormSchema } from "./form-schemas";
+import "./investments.css";
 
 interface EditStatementDialogProps {
   setIsOpen: (isOpen: boolean) => void;

@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import StatementAddForm from "./statement-add-form";
+import "./investments.css";
 
 interface AddDialogCarouselProps {
   isAddDialogCarouselOpen: boolean;
@@ -57,10 +58,10 @@ export default function AddDialogCarousel({
   };
 
   // TODO: remove once automatic created
-  const addInvestmentSteps = [];
+  const addSteps = [];
 
   // TODO: uncomment once automatic created
-  // const addInvestmentSteps = [
+  // const addSteps = [
   //   <div className="flex gap-4">
   //     <Button onClick={handleManualButtonClick} disabled={isManualChosen}>
   //       Manual
@@ -72,75 +73,76 @@ export default function AddDialogCarousel({
   // ];
 
   if (isAutomaticChosen) {
-    addInvestmentSteps.push(
+    addSteps.push(
       <AutomaticFileDrop setParsedInvestmentData={setParsedInvestmentData} />
     );
   }
 
   if (type === "Investment") {
     if (parsedInvestmentData) {
-      addInvestmentSteps.push(
+      addSteps.push(
         <InvestmentAddForm
           parsedData={parsedInvestmentData}
           handleAdd={handleAdd}
         />
       );
     } else if (isManualChosen) {
-      addInvestmentSteps.push(<InvestmentAddForm handleAdd={handleAdd} />);
+      addSteps.push(<InvestmentAddForm handleAdd={handleAdd} />);
     }
     // TODO: remove once automatic created
-    addInvestmentSteps.push(<InvestmentAddForm handleAdd={handleAdd} />);
+    addSteps.push(<InvestmentAddForm handleAdd={handleAdd} />);
   } else if (type === "Statement") {
     if (parsedInvestmentData) {
-      addInvestmentSteps.push(
+      addSteps.push(
         <StatementAddForm
           parsedData={parsedInvestmentData}
           handleAdd={handleAdd}
         />
       );
     } else if (isManualChosen) {
-      addInvestmentSteps.push(<StatementAddForm handleAdd={handleAdd} />);
+      addSteps.push(<StatementAddForm handleAdd={handleAdd} />);
     }
     // TODO: remove once automatic created
-    addInvestmentSteps.push(<StatementAddForm handleAdd={handleAdd} />);
+    addSteps.push(<StatementAddForm handleAdd={handleAdd} />);
   }
 
   return (
-    <Dialog
-      open={isAddDialogCarouselOpen}
-      onOpenChange={setIsAddDialogCarouselOpen}
-    >
-      <DialogContent
-        onInteractOutside={(event) => event.preventDefault()}
-        className=" dark"
+    <div>
+      <Dialog
+        open={isAddDialogCarouselOpen}
+        onOpenChange={setIsAddDialogCarouselOpen}
       >
-        <DialogHeader>
-          <DialogTitle className="text-white text-4xl">{header}</DialogTitle>
-          <DialogDescription className="text-white text-lg">
-            {subheader}
-          </DialogDescription>
-        </DialogHeader>
-
-        <div className="w-full flex justify-center px-10">
-          <Carousel className="max-w-5xl" style={{ minWidth: "64em" }}>
-            <CarouselContent style={{ height: "40rem" }}>
-              {addInvestmentSteps.map((step, index) => (
-                <CarouselItem key={index}>
-                  <div className="p-1 h-full">
-                    <Card className="h-full">
-                      <CardContent className="flex h-full w-full aspect-square items-center justify-center p-6">
-                        {step}
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
-      </DialogContent>
-    </Dialog>
+        <DialogContent
+          onInteractOutside={(event) => event.preventDefault()}
+          className="left-[57%] dark"
+        >
+          <DialogHeader>
+            <DialogTitle className="text-white text-4xl">{header}</DialogTitle>
+            <DialogDescription className="text-white text-lg">
+              {subheader}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="w-full flex justify-center px-10">
+            <Carousel className="max-w-5xl" style={{ minWidth: "64em" }}>
+              <CarouselContent style={{ height: "40rem" }}>
+                {addSteps.map((step, index) => (
+                  <CarouselItem key={index}>
+                    <div className="p-1 h-full w-full">
+                      <Card className="h-full">
+                        <CardContent className="flex h-full w-full aspect-square items-center justify-center p-6">
+                          {step}
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }

@@ -40,6 +40,21 @@ export async function formDataPost(formData: FormData, endpoint: string) {
   }
 }
 
+export async function put(data: unknown, endpoint: string) {
+  try {
+    const response = await fetch(endpoint, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response;
+  } catch (error) {
+    console.error();
+  }
+}
+
 export async function deleteRequest(endpoint: string) {
   try {
     const response = await fetch(endpoint, {

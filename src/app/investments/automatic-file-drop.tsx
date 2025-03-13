@@ -11,6 +11,7 @@ import { ParsedInvestmentData } from "@/lib/models/investments";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, useForm } from "react-hook-form";
 import { z } from "zod";
+import "./investments.css";
 
 interface AutomaticFileDropProps {
   setParsedInvestmentData: React.Dispatch<

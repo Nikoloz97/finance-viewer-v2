@@ -34,6 +34,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import "./investments.css";
 
 interface DataTableProps {
   data: TableStatement[];
