@@ -13,7 +13,10 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Finance Viewer",
+  title:
+    process.env.NODE_ENV === "production"
+      ? "Finance Viewer"
+      : "Finance Viewer (Development)",
   description: "Fintech app for investment, budget, and debt management",
 };
 

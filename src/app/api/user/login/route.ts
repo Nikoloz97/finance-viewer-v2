@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     const user = await users.findOne({ username });
 
-    // Intentionally same message as to increase security
+    // intentionally same message as to increase security
     if (!user) {
       return NextResponse.json(
         { message: "Invalid credentials" },
