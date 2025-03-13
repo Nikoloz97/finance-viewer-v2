@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     // Intentionally same message as to increase security
     if (!user) {
       return NextResponse.json(
-        { message: "Invalid credentials." },
+        { message: "Invalid credentials" },
         { status: 401 }
       );
     }

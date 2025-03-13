@@ -44,9 +44,42 @@ export async function POST(
     const userId = searchParams.get("userId");
 
     if (!userId) {
-      return NextResponse.json([]);
+      return NextResponse.json(
+        { message: "No user Id was passed" },
+        { status: 400 }
+      );
     }
+
     const body = await req.json();
+
+    const redundantInvestment = await investments
+      .aggregate([
+        {
+          $match: {
+            userId: userId,
+            brokerageName: body.brokerageName,
+            type: body.type,
+            subtype: body.subtype,
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            brokerageName: 1,
+            type: 1,
+            subtype: 1,
+          },
+        },
+      ])
+      .toArray();
+
+    if (redundantInvestment.length > 0) {
+      return NextResponse.json(
+        { message: "Investment already exists for user" },
+        { status: 400 }
+      );
+    }
+
     const newInvestmentData: OptionalId<Investment> = {
       brokerageName: body.brokerageName,
       type: body.type,
@@ -73,47 +106,10 @@ export async function POST(
     });
   } catch (error) {
     return NextResponse.json(
-      { message: "Internal Server Error" },
+      { message: "Error creating new investment" },
       { status: 500 }
     );
   }
-
-  // TODO: uncomment once above is figured out
-  //   const redundantInvestment = await investments
-  //     .aggregate([
-  //       {
-  //         $match: {
-  //           userId: userId,
-  //           brokerageName: brokerageName,
-  //           type: type,
-  //           subtype: subtype,
-  //         },
-  //       },
-  //       {
-  //         $project: {
-  //           _id: 1,
-  //           brokerageName: 1,
-  //           type: 1,
-  //           subtype: 1,
-  //         },
-  //       },
-  //     ])
-  //     .toArray();
-  // TODO: figure out error handling
-  //   if (redundantInvestment.length > 0) {
-  //     return res.status(400).json({
-  //       message:
-  //         "Brokerage name, investment type, and investment subtype combination already exists",
-  //     });
-  //   }
-  // TODO: uncomment once deconstruction is figured out
-  //   const newlyCreatedInvestment = await investments.insertOne(newInvestmentData);
-  // TODO: uncomment once above todo is figured out
-  //   if (newlyCreatedInvestment) {
-  //     res.send(newlyCreatedInvestment);
-  //   } else {
-  //     res.status(400).json({ message: "Error creating new investment" });
-  //   }
 }
 
 export async function DELETE(
@@ -124,9 +120,12 @@ export async function DELETE(
 
   try {
     if (!investmentId) {
-      return NextResponse.json({
-        message: "No investment found with the given investment Id",
-      });
+      return NextResponse.json(
+        {
+          message: "No investment found with the given investment Id",
+        },
+        { status: 400 }
+      );
     }
 
     const result = await investments.deleteOne({ _id: investmentId });

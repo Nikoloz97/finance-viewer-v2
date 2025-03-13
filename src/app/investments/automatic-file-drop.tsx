@@ -43,7 +43,7 @@ const AutomaticFileDrop = ({
   });
 
   const handleStatementParsing = () => {
-    // TODO: Implement parsing here
+    // TODO: eventually implement parsing here
 
     const dummyParsedStatementData = {
       brokerageName: "Webull",
