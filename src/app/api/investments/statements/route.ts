@@ -79,7 +79,7 @@ export async function PUT(
 
     const updateResult = await investments.updateOne(
       {
-        _id: investmentObjectId.toString(),
+        _id: investmentObjectId,
         "statements.statementId": new ObjectId(body.statementId),
       },
       {
