@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb";
+
 export interface Investment {
-  _id?: string;
+  _id?: ObjectId;
   userId: string;
   brokerageName: string;
   type: string;

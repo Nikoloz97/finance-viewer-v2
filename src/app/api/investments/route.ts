@@ -122,13 +122,15 @@ export async function DELETE(
     if (!investmentId) {
       return NextResponse.json(
         {
-          message: "No investment found with the given investment Id",
+          message: "No investment Id was passed",
         },
         { status: 400 }
       );
     }
 
-    const result = await investments.deleteOne({ _id: investmentId });
+    const result = await investments.deleteOne({
+      _id: new ObjectId(investmentId),
+    });
 
     if (result.deletedCount === 0) {
       return NextResponse.json({

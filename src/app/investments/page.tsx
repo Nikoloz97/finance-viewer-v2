@@ -107,7 +107,7 @@ export default function Investments() {
     );
     setSelectedInvestmentChartData(filteredInvestmentChartData);
     setSelectedInvestment({
-      investmentId: investment._id!,
+      investmentId: investment._id!.toString(),
       brokerageName: investment.brokerageName,
       type: investment.type,
       subtype: investment.subtype,
@@ -125,16 +125,18 @@ export default function Investments() {
     );
     if (response) {
       await responseMessage(response);
+      fetchAllData();
+      setIsInvestmentAddDialogCarouselOpen(false);
     }
   }
 
-  // TODO: test if this works
   async function handleDeleteInvestment(investmentId: string) {
     const response = await deleteRequest(
       `/api/investments?investmentId=${investmentId}`
     );
     if (response) {
       await responseMessage(response);
+      fetchAllData();
     }
   }
 
@@ -183,15 +185,11 @@ export default function Investments() {
     setIsEditStatementDialogOpen(true);
   };
 
-  useEffect(() => {
-    if (user && user._id) fetchInvestments();
-  }, []);
+  const fetchAllData = async () => {
+    await Promise.all([fetchInvestments(), fetchInvestmentChartData()]);
+  };
 
   useEffect(() => {
-    const fetchAllData = async () => {
-      await Promise.all([fetchInvestments(), fetchInvestmentChartData()]);
-    };
-
     if (user && user._id) {
       fetchAllData();
     }
@@ -202,11 +200,12 @@ export default function Investments() {
   if (selectedInvestment) {
     tableStatements = investments
       .filter(
-        (investment) => investment._id === selectedInvestment.investmentId
+        (investment) =>
+          investment._id!.toString() === selectedInvestment.investmentId
       )
       .flatMap((investment) =>
         investment.statements.map((statement) => ({
-          investmentId: investment._id!,
+          investmentId: investment._id!.toString(),
           brokerageName: investment.brokerageName,
           type: investment.type,
           subtype: investment.subtype,
@@ -216,7 +215,7 @@ export default function Investments() {
   } else {
     tableStatements = investments.flatMap((investment) =>
       investment.statements.map((statement) => ({
-        investmentId: investment._id!,
+        investmentId: investment._id!.toString(),
         brokerageName: investment.brokerageName,
         type: investment.type,
         subtype: investment.subtype,
