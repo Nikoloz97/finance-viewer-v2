@@ -23,6 +23,7 @@ export interface NewInvestment {
   withdrawalAmount: number;
 }
 
+// TODO: change this to ObjectId?
 export interface Statement {
   _id: string;
   startDate: Date;
@@ -83,7 +84,7 @@ export interface EditTableStatementFormData extends EditStatementFormData {
 }
 
 export interface SelectedInvestment {
-  investmentId: string;
+  investmentId: ObjectId;
   brokerageName: string;
   type: string;
   subtype: string;

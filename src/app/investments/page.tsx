@@ -26,6 +26,7 @@ import { InvestmentsTable } from "./investments-table";
 import { responseMessage } from "../utils/default-response-message";
 import InvestmentDisplay from "./investment-display";
 import "./investments.css";
+import { ObjectId } from "mongodb";
 
 export default function Investments() {
   const { user } = useContextCheck();
@@ -108,7 +109,7 @@ export default function Investments() {
     );
     setSelectedInvestmentChartData(filteredInvestmentChartData);
     setSelectedInvestment({
-      investmentId: investment._id!.toString(),
+      investmentId: investment._id!,
       brokerageName: investment.brokerageName,
       type: investment.type,
       subtype: investment.subtype,
@@ -131,7 +132,7 @@ export default function Investments() {
     }
   }
 
-  async function handleDeleteInvestment(investmentId: string) {
+  async function handleDeleteInvestment(investmentId: ObjectId) {
     const response = await deleteRequest(
       `/api/investments?investmentId=${investmentId}`
     );
@@ -141,13 +142,16 @@ export default function Investments() {
     }
   }
 
-  // TODO: add investment Id
+  // TODO: test if this works
   async function handleAddStatement(
     formData:
       | z.infer<typeof statementAddFormSchema> // param should only be of this type (workaround to fix type error)
       | z.infer<typeof investmentAddFormSchema>
   ) {
-    const response = await post(formData, "/api/investments/statements");
+    const response = await post(
+      formData,
+      `/api/investments/statements?investmentId=${selectedInvestment?.investmentId}`
+    );
     if (response) {
       await responseMessage(response);
     }
@@ -201,8 +205,7 @@ export default function Investments() {
   if (selectedInvestment) {
     tableStatements = investments
       .filter(
-        (investment) =>
-          investment._id!.toString() === selectedInvestment.investmentId
+        (investment) => investment._id! === selectedInvestment.investmentId
       )
       .flatMap((investment) =>
         investment.statements.map((statement) => ({

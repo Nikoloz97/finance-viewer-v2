@@ -15,17 +15,13 @@ export async function POST(
   try {
     const body = await req.json();
 
-    // TODO: resolve this deprecation problem
-    // TODO: is this necessary?
-    const investmentObjectId = new ObjectId(body.investmentId);
-
     // TODO: is this necessary?
     const startDate = new Date(body.startDate);
     const endDate = new Date(body.endDate);
 
     const statementOverlaps = await investments
       .aggregate([
-        { $match: { _id: investmentObjectId } },
+        { $match: { _id: body.investmentId } },
         { $unwind: "$statements" },
         {
           $match: {
@@ -80,7 +76,7 @@ export async function POST(
 
     const updateResult = await investments.updateOne(
       {
-        _id: investmentObjectId,
+        _id: body.investmentId,
         "statements.statementId": new ObjectId(body.statementId),
       },
       {
