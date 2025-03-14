@@ -25,7 +25,7 @@ export interface NewInvestment {
 
 // TODO: change this to ObjectId?
 export interface Statement {
-  _id: string;
+  _id: ObjectId;
   startDate: Date;
   endDate: Date;
   startBalance: number;

@@ -15,13 +15,21 @@ export async function POST(
   try {
     const body = await req.json();
 
+    const { searchParams } = new URL(req.url);
+
+    const investmentId = searchParams.get("investmentId");
+    let investmentObjectId = null;
+    if (investmentId) {
+      investmentObjectId = new ObjectId(investmentId);
+    }
+
     // TODO: is this necessary?
     const startDate = new Date(body.startDate);
     const endDate = new Date(body.endDate);
 
     const statementOverlaps = await investments
       .aggregate([
-        { $match: { _id: body.investmentId } },
+        { $match: { _id: investmentObjectId } },
         { $unwind: "$statements" },
         {
           $match: {
@@ -74,40 +82,36 @@ export async function POST(
       );
     }
 
-    const updateResult = await investments.updateOne(
-      {
-        _id: body.investmentId,
-        "statements.statementId": new ObjectId(body.statementId),
-      },
-      {
-        $set: {
-          "statements.$.startDate": startDate,
-          "statements.$.startBalance": toDollarAmount(body.startBalance),
-          "statements.$.endDate": endDate,
-          "statements.$.endBalance": toDollarAmount(body.endBalance),
-          "statements.$.depositAmount": toDollarAmount(body.depositAmount),
-          "statements.$.withdrawalAmount": toDollarAmount(
-            body.withdrawalAmount
-          ),
-        },
-      }
+    const newStatementData = {
+      _id: new ObjectId(),
+      startDate: startDate,
+      startBalance: toDollarAmount(body.startBalance),
+      endDate: endDate,
+      endBalance: toDollarAmount(body.endBalance),
+      depositAmount: toDollarAmount(body.depositAmount),
+      withdrawalAmount: toDollarAmount(body.withdrawalAmount),
+    };
+
+    const newlyAddedStatement = await investments.updateOne(
+      { _id: investmentObjectId! },
+      { $push: { statements: newStatementData } }
     );
 
-    if (updateResult.modifiedCount === 0) {
+    if (newlyAddedStatement) {
       return NextResponse.json(
-        { message: "No statement found with given investment or statement ID" },
-        { status: 400 }
+        { message: "Statement added successfully" },
+        { status: 200 }
       );
     } else {
       return NextResponse.json(
-        { message: "Statement updated successfully!" },
-        { status: 200 }
+        { message: "There was an issue adding the statement" },
+        { status: 500 }
       );
     }
   } catch (error) {
-    console.error("Failed to update statement:", error);
+    console.error("Failed to add statement:", error);
     return NextResponse.json(
-      { message: "Error updating statement" },
+      { message: "Error adding statement" },
       { status: 500 }
     );
   }
@@ -130,7 +134,7 @@ export async function PUT(
       .aggregate([
         { $match: { _id: investmentObjectId } },
         { $unwind: "$statements" },
-        { $match: { "statements.statementId": { $ne: statementObjectId } } },
+        { $match: { "statements._id": { $ne: statementObjectId } } },
         {
           $match: {
             $or: [
@@ -185,7 +189,7 @@ export async function PUT(
     const updateResult = await investments.updateOne(
       {
         _id: investmentObjectId,
-        "statements.statementId": new ObjectId(body.statementId),
+        "statements._id": new ObjectId(body.statementId),
       },
       {
         $set: {

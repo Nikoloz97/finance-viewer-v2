@@ -88,7 +88,7 @@ export async function POST(
       userId: userId,
       statements: [
         {
-          _id: new ObjectId().toString(),
+          _id: new ObjectId(),
           startDate: body.startDate,
           startBalance: toDollarAmount(body.startBalance),
           endDate: new Date(body.endDate),

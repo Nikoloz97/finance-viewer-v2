@@ -142,7 +142,6 @@ export default function Investments() {
     }
   }
 
-  // TODO: test if this works
   async function handleAddStatement(
     formData:
       | z.infer<typeof statementAddFormSchema> // param should only be of this type (workaround to fix type error)
@@ -214,6 +213,7 @@ export default function Investments() {
           type: investment.type,
           subtype: investment.subtype,
           ...statement,
+          _id: statement._id.toString(),
         }))
       );
   } else {
@@ -224,6 +224,7 @@ export default function Investments() {
         type: investment.type,
         subtype: investment.subtype,
         ...statement,
+        _id: statement._id.toString(),
       }))
     );
   }
