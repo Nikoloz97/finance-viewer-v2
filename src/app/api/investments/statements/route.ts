@@ -23,7 +23,6 @@ export async function POST(
       investmentObjectId = new ObjectId(investmentId);
     }
 
-    // TODO: is this necessary?
     const startDate = new Date(body.startDate);
     const endDate = new Date(body.endDate);
 

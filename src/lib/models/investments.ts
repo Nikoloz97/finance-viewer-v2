@@ -23,7 +23,6 @@ export interface NewInvestment {
   withdrawalAmount: number;
 }
 
-// TODO: change this to ObjectId?
 export interface Statement {
   _id: ObjectId;
   startDate: Date;
