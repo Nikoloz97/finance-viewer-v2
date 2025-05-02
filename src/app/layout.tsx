@@ -29,13 +29,13 @@ export default function RootLayout({
     <html lang="en">
       {/* TODO: create dark mode button, which works by conditionally adding "dark" classname here */}
       <body
-        className={`${openSans.className} antialiased dark flex h-screen items-center p-10`}
+        className={`${openSans.className} antialiased dark flex h-screen items-center`}
       >
         <Providers>
           <Sidebar />
           {/* flex-1 = takes up rest of container */}
           <Suspense fallback={<Loading />}>
-            <div className="flex-1 h-full flex justify-center items-center">
+            <div className="flex-1 h-full flex justify-center items-center p-10">
               {children}
             </div>
           </Suspense>

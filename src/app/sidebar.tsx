@@ -8,7 +8,7 @@ export default function Sidebar() {
   const { user } = useContextCheck();
 
   return (
-    <div className="navbar-container">
+    <div className="navbar-container pt-10 pb-10">
       <div className="navbar">
         <h2 className="mt-5 mb-3">Finance Viewer</h2>
         <div className="navbar-options">
