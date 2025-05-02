@@ -66,7 +66,7 @@ export default function InvestmentsList({
             asChild
             className={`border-none text-white ${
               selectedInvestment
-                ? selectedInvestment.investmentId === investment._id?.toString()
+                ? selectedInvestment.investmentId === investment._id
                   ? "selected-investment-card"
                   : ""
                 : ""

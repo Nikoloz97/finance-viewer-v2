@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import Sidebar from "./sidebar";
 import { Providers } from "./providers";
-import "./globals.css";
 import { ToastProvider } from "@/toast-provider";
 import { Suspense } from "react";
 import Loading from "./loading";
+import "./globals.css";
 
 const openSans = Open_Sans({
   subsets: ["latin"],

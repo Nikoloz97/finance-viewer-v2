@@ -107,42 +107,40 @@ export default function AddDialogCarousel({
   }
 
   return (
-    <div>
-      <Dialog
-        open={isAddDialogCarouselOpen}
-        onOpenChange={setIsAddDialogCarouselOpen}
+    <Dialog
+      open={isAddDialogCarouselOpen}
+      onOpenChange={setIsAddDialogCarouselOpen}
+    >
+      <DialogContent
+        onInteractOutside={(event) => event.preventDefault()}
+        className="left-[57%] dark"
       >
-        <DialogContent
-          onInteractOutside={(event) => event.preventDefault()}
-          className="left-[57%] dark"
-        >
-          <DialogHeader>
-            <DialogTitle className="text-white text-4xl">{header}</DialogTitle>
-            <DialogDescription className="text-white text-lg">
-              {subheader}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="w-full flex justify-center px-10">
-            <Carousel className="max-w-5xl" style={{ minWidth: "64em" }}>
-              <CarouselContent style={{ height: "40rem" }}>
-                {addSteps.map((step, index) => (
-                  <CarouselItem key={index}>
-                    <div className="p-1 h-full w-full">
-                      <Card className="h-full">
-                        <CardContent className="flex h-full w-full aspect-square items-center justify-center p-6">
-                          {step}
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
-          </div>
-        </DialogContent>
-      </Dialog>
-    </div>
+        <DialogHeader>
+          <DialogTitle className="text-white text-4xl">{header}</DialogTitle>
+          <DialogDescription className="text-white text-lg">
+            {subheader}
+          </DialogDescription>
+        </DialogHeader>
+        <div className="w-full flex justify-center px-10">
+          <Carousel className="max-w-5xl" style={{ minWidth: "64em" }}>
+            <CarouselContent style={{ height: "40rem" }}>
+              {addSteps.map((step, index) => (
+                <CarouselItem key={index}>
+                  <div className="p-1 h-full w-full">
+                    <Card className="h-full">
+                      <CardContent className="flex h-full w-full aspect-square items-center justify-center p-6">
+                        {step}
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

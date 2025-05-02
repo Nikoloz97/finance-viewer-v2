@@ -108,7 +108,7 @@ export default function InvestmentAddForm({
   // }
 
   return (
-    <div>
+    <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleAdd)}>
           <div className="add-investment-grid-container">
@@ -405,6 +405,6 @@ export default function InvestmentAddForm({
           </div>
         </form>
       </Form>
-    </div>
+    </>
   );
 }

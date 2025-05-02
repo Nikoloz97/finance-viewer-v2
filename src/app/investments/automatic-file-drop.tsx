@@ -61,28 +61,26 @@ const AutomaticFileDrop = ({
   };
 
   return (
-    <div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleStatementParsing)}>
-          <FormField
-            control={form.control}
-            name="statementFilePath"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Drop Statement Here:</FormLabel>
-                <FormControl>
-                  <Input {...field} type="file" className="text-black" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button className="dark" type="submit">
-            Add
-          </Button>
-        </form>
-      </Form>
-    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleStatementParsing)}>
+        <FormField
+          control={form.control}
+          name="statementFilePath"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Drop Statement Here:</FormLabel>
+              <FormControl>
+                <Input {...field} type="file" className="text-black" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button className="dark" type="submit">
+          Add
+        </Button>
+      </form>
+    </Form>
   );
 };
 

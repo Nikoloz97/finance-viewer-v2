@@ -194,10 +194,14 @@ export default function Investments() {
   };
 
   useEffect(() => {
-    if (user && user._id) {
-      fetchAllData();
-    }
+    fetchInvestments();
   }, []);
+
+  useEffect(() => {
+    if (investments.length) {
+      fetchInvestmentChartData();
+    }
+  }, [investments]);
 
   let tableStatements: TableStatement[] = [];
 
