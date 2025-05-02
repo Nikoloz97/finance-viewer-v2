@@ -261,7 +261,7 @@ export default function Investments() {
           setSelectedTableStatement={setSelectedTableStatement}
         />
       )}
-      <div className="investments-list-container">
+      <div className="investments-list-container rounded-scrollbar">
         <InvestmentsList
           investments={investments}
           handleAllClick={handleAllClick}
