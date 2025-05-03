@@ -225,7 +225,7 @@ export function InvestmentsTable({
 
   return (
     <div
-      className="rounded-md text-center"
+      className="rounded-md text-center h-full"
       style={{ border: "1px solid rgba(255, 255, 255, 0.2)" }}
     >
       <div className="flex py-4 justify-between">

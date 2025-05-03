@@ -35,7 +35,7 @@ export default function RootLayout({
           <Sidebar />
           {/* flex-1 = takes up rest of container */}
           <Suspense fallback={<Loading />}>
-            <div className="flex-1 h-full flex justify-center items-center p-10">
+            <div className="flex-1 h-full flex justify-center items-center py-10 pr-10">
               {children}
             </div>
           </Suspense>

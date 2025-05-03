@@ -24,13 +24,13 @@ export default function InvestmentDisplay({
 }: InvestmentDisplayProps) {
   return (
     <>
-      <div style={{ height: "4em", marginLeft: "2.2em", marginBottom: "1em" }}>
-        <h1 style={{ fontWeight: "500" }}>
+      <div className="ml-9 mb-2 text-center p-1">
+        <h1 className="text-xl font-semibold">
           {selectedInvestment?.brokerageName
             ? selectedInvestment?.brokerageName
             : "All Investments"}
         </h1>
-        <p style={{ fontWeight: "100", fontSize: "0.7em", opacity: "0.8" }}>
+        <p className="font-semibold text-xs p-1 min-h-[24px]">
           {selectedInvestment?.type}
           {selectedInvestment?.subtype
             ? ` (${selectedInvestment?.subtype})`
@@ -38,7 +38,7 @@ export default function InvestmentDisplay({
         </p>
 
         {selectedInvestmentsChartData && (
-          <h3 style={{ fontWeight: "100", opacity: "0.8", marginTop: "0" }}>{`${
+          <h3 className="font-thin opacity-80 mt-1">{`${
             selectedInvestmentsChartData[0].month
           } - ${
             selectedInvestmentsChartData[
