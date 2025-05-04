@@ -42,6 +42,7 @@ import { brokerages } from "@/lib/brokerages";
 import { colors } from "@/lib/colors";
 import { investmentAddFormSchema } from "./form-schemas";
 import "./investments.css";
+import { useState } from "react";
 
 type InvestmentAddFormProps = {
   parsedData?: ParsedInvestmentData;
@@ -107,6 +108,8 @@ export default function InvestmentAddForm({
   //   }
   // }
 
+  const [isBrokerageOpen, setIsBrokerageOpen] = useState(false);
+
   return (
     <>
       <Form {...form}>
@@ -118,37 +121,48 @@ export default function InvestmentAddForm({
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Brokerage</FormLabel>
-                  <Popover>
+                  <Popover
+                    open={isBrokerageOpen}
+                    onOpenChange={setIsBrokerageOpen}
+                  >
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
                           variant="outline"
                           role="combobox"
                           className={cn(
-                            "w-[200px] justify-between",
+                            "flex text-start w-[200px]",
                             !field.value && "text-muted-foreground"
                           )}
                         >
-                          {field.value
-                            ? brokerages.find(
-                                (brokerage) => brokerage === field.value
-                              )
-                            : "Select brokerage"}
+                          <span className="flex-1 min-w-0 truncate">
+                            {field.value
+                              ? brokerages.find(
+                                  (brokerage) => brokerage === field.value
+                                )
+                              : "Select brokerage"}
+                          </span>
                           <ChevronsUpDown />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
-                      <Command>
-                        <CommandInput
-                          placeholder="Search brokerage..."
-                          className="h-9"
-                        />
+                    <PopoverContent
+                      className="w-[200px] p-0 pointer-events-auto z-[9999]"
+                      onOpenAutoFocus={(e) => e.preventDefault()}
+                    >
+                      <Command className="pointer-events-auto">
+                        <div className="pointer-events-auto focus-within:outline-none">
+                          <CommandInput
+                            placeholder="Search brokerage..."
+                            className="h-9 pointer-events-auto border-red-500"
+                          />
+                        </div>
                         <CommandList>
                           <CommandEmpty>No brokerage found.</CommandEmpty>
                           <CommandGroup>
                             {brokerages.map((brokerage) => (
                               <CommandItem
+                                className="cursor-pointer"
                                 value={brokerage}
                                 key={brokerage}
                                 onSelect={() => {
