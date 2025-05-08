@@ -19,7 +19,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
+import {
+  CalendarIcon,
+  Check,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsUpDown,
+} from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -306,6 +312,35 @@ export default function InvestmentAddForm({
                         disabled={(date) =>
                           date > new Date() || date < new Date("1900-01-01")
                         }
+                        classNames={{
+                          disabled: "text-gray-400 line-through opacity-50",
+                        }}
+                        components={{
+                          Chevron(props) {
+                            return (
+                              <svg
+                                {...props}
+                                className={`w-5 h-4 ${props.className ?? ""}`}
+                                viewBox="0 0 20 20"
+                                fill="white"
+                              >
+                                {props.orientation === "right" ? (
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M12.293 15.707a1 1 0 010-1.414L16.586 10l-4.293-4.293a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                                    clipRule="evenodd"
+                                  />
+                                ) : (
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M7.707 4.293a1 1 0 010 1.414L3.414 10l4.293 4.293a1 1 0 01-1.414 1.414l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 0z"
+                                    clipRule="evenodd"
+                                  />
+                                )}
+                              </svg>
+                            );
+                          },
+                        }}
                       />
                     </PopoverContent>
                   </Popover>
@@ -362,6 +397,35 @@ export default function InvestmentAddForm({
                         disabled={(date) =>
                           date > new Date() || date < new Date("1900-01-01")
                         }
+                        classNames={{
+                          disabled: "text-gray-400 line-through opacity-50",
+                        }}
+                        components={{
+                          Chevron(props) {
+                            return (
+                              <svg
+                                {...props}
+                                className={`w-5 h-4 ${props.className ?? ""}`}
+                                viewBox="0 0 20 20"
+                                fill="white"
+                              >
+                                {props.orientation === "right" ? (
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M12.293 15.707a1 1 0 010-1.414L16.586 10l-4.293-4.293a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                                    clipRule="evenodd"
+                                  />
+                                ) : (
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M7.707 4.293a1 1 0 010 1.414L3.414 10l4.293 4.293a1 1 0 01-1.414 1.414l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 0z"
+                                    clipRule="evenodd"
+                                  />
+                                )}
+                              </svg>
+                            );
+                          },
+                        }}
                       />
                     </PopoverContent>
                   </Popover>
