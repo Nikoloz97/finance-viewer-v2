@@ -119,7 +119,7 @@ export default function InvestmentAddForm({
               control={form.control}
               name="brokerageName"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className="flex flex-col justify-end">
                   <FormLabel>Brokerage</FormLabel>
                   <Popover
                     open={isBrokerageOpen}
@@ -147,7 +147,7 @@ export default function InvestmentAddForm({
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent
-                      className="w-[200px] p-0 pointer-events-auto z-[9999]"
+                      className="w-[200px] p-0 pointer-events-auto"
                       onOpenAutoFocus={(e) => e.preventDefault()}
                     >
                       <Command className="pointer-events-auto">
@@ -199,7 +199,7 @@ export default function InvestmentAddForm({
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger className="w-[200px]">
                         <SelectValue placeholder="Select Color" />
                       </SelectTrigger>
                     </FormControl>
@@ -227,7 +227,7 @@ export default function InvestmentAddForm({
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger className="w-[200px]">
                         <SelectValue placeholder="Select Type" />
                       </SelectTrigger>
                     </FormControl>
@@ -255,7 +255,7 @@ export default function InvestmentAddForm({
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger className="w-[200px]">
                         <SelectValue placeholder="Select a Subtype" />
                       </SelectTrigger>
                     </FormControl>
@@ -276,7 +276,7 @@ export default function InvestmentAddForm({
               control={form.control}
               name="startDate"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className="flex flex-col justify-end">
                   <FormLabel>Statement Start Date</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -284,7 +284,7 @@ export default function InvestmentAddForm({
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
+                            "w-[200px] pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"
                           )}
                         >
@@ -332,7 +332,7 @@ export default function InvestmentAddForm({
               control={form.control}
               name="endDate"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className="flex flex-col justify-end">
                   <FormLabel>Statement End Date</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -340,7 +340,7 @@ export default function InvestmentAddForm({
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
+                            "w-[200px] pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"
                           )}
                         >
