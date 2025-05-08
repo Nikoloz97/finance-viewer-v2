@@ -129,7 +129,7 @@ export default function Investments() {
     );
     if (response) {
       await responseMessage(response);
-      fetchAllData();
+      fetchInvestments();
       setIsInvestmentAddDialogCarouselOpen(false);
     }
   }
@@ -140,7 +140,7 @@ export default function Investments() {
     );
     if (response) {
       await responseMessage(response);
-      fetchAllData();
+      fetchInvestments();
     }
   }
 
@@ -191,9 +191,12 @@ export default function Investments() {
     setIsEditStatementDialogOpen(true);
   };
 
-  const fetchAllData = async () => {
-    await Promise.all([fetchInvestments(), fetchInvestmentChartData()]);
-  };
+  // TODO: promise all or the two useEffects below?
+  // const fetchAllData = async () => {
+  //   if (user) {
+  //     await Promise.all([fetchInvestments(), fetchInvestmentChartData()]);
+  //   }
+  // };
 
   useEffect(() => {
     fetchInvestments();

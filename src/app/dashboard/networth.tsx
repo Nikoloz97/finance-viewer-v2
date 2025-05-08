@@ -1,58 +1,135 @@
 "use client";
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+
+import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect, useState } from "react";
 import {
-  ChartConfig,
+  Investment,
+  InvestmentChartConfig,
+  InvestmentChartData,
+  SelectedInvestment,
+} from "@/lib/models/investments";
+import { get } from "../utils/http-request-service";
+import { useContextCheck } from "@/use-context-check";
+import "./dashboard.css";
+import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Monitor, Smartphone } from "lucide-react";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 export default function Networth() {
-  const chartConfig = {
-    desktop: {
-      label: "Desktop",
-      icon: Monitor,
-      color: "blue",
-    },
-    mobile: {
-      label: "Mobile",
-      icon: Smartphone,
-      color: "pink",
-    },
-  } satisfies ChartConfig;
+  const { user } = useContextCheck();
 
-  const chartData = [
-    { month: "January", desktop: 186, mobile: 80 },
-    { month: "February", desktop: 305, mobile: 200 },
-    { month: "March", desktop: 237, mobile: 120 },
-    { month: "April", desktop: 73, mobile: 190 },
-    { month: "May", desktop: 209, mobile: 130 },
-    { month: "June", desktop: 214, mobile: 140 },
-  ];
+  const [investments, setInvestments] = useState<Investment[]>([]);
+
+  const [selectedInvestment, setSelectedInvestment] =
+    useState<SelectedInvestment | null>(null);
+
+  const [areInvestmentsLoading, setAreInvestmentsLoading] = useState(true);
+
+  const [selectedInvestmentChartConfig, setSelectedInvestmentChartConfig] =
+    useState<InvestmentChartConfig>();
+
+  const [selectedInvestmentChartData, setSelectedInvestmentChartData] =
+    useState<InvestmentChartData[]>();
+
+  const fetchInvestments = async () => {
+    setAreInvestmentsLoading(true);
+    const investments: Investment[] = await get(
+      `/api/investments?userId=${user!._id}`,
+      "Failed to fetch investments"
+    );
+    setInvestments(investments);
+    setSelectedInvestment(null);
+    const chartConfig = investments.reduce<InvestmentChartConfig>(
+      (acc, investment) => {
+        const { brokerageName, color } = investment;
+        const joinedBrokerageName = brokerageName.replace(/\s+/g, ""); // join on whitespace
+        acc[joinedBrokerageName] = {
+          label: brokerageName,
+          color: color,
+        };
+        return acc;
+      },
+      {}
+    );
+
+    setSelectedInvestmentChartConfig(chartConfig);
+    setAreInvestmentsLoading(false);
+  };
+
+  const fetchInvestmentChartData = async () => {
+    const investmentChartData = await get(
+      `/api/investments/chart-data?userId=${user!._id}`,
+      "Failed to fetch investment chart data"
+    );
+    setSelectedInvestmentChartData(investmentChartData);
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchInvestments();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (investments.length) {
+      fetchInvestmentChartData();
+    }
+  }, [investments]);
 
   return (
-    <div style={{ width: "50%" }}>
-      <p style={{ textAlign: "center" }}>Total Net Worth</p>
-      <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-        <LineChart accessibilityLayer data={chartData}>
-          <CartesianGrid vertical={false} />
-          <XAxis
-            dataKey="month"
-            tickLine={false}
-            tickMargin={10}
-            axisLine={false}
-            tickFormatter={(value) => value.slice(0, 3)}
-          />
-          <YAxis dataKey="desktop" tickLine={false} tickMargin={10} />
-          <ChartTooltip content={<ChartTooltipContent />} />
-          <ChartLegend content={<ChartLegendContent />} />
-          <Line dataKey="desktop" fill="var(--color-desktop)" stroke="blue" />
-          <Line dataKey="mobile" fill="var(--color-mobile)" stroke="pink" />
-        </LineChart>
-      </ChartContainer>
-    </div>
+    <>
+      {areInvestmentsLoading ? (
+        <Skeleton className="h-full w-full" />
+      ) : (
+        <div className="flex flex-row justify-center items-center h-full w-full">
+          <div className="text-center h-[4rem]">
+            <h1 className="text-xl font-semibold">
+              {selectedInvestment?.brokerageName
+                ? selectedInvestment?.brokerageName
+                : "Net Worth"}
+            </h1>
+            {selectedInvestmentChartData && (
+              <h3 className="font-thin opacity-80 mt-1">{`${
+                selectedInvestmentChartData[0].month
+              } - ${
+                selectedInvestmentChartData[
+                  selectedInvestmentChartData.length - 1
+                ].month
+              }`}</h3>
+            )}
+          </div>
+          {selectedInvestmentChartConfig && (
+            <div className="w-[600px] h-[300px]">
+              <ChartContainer config={selectedInvestmentChartConfig}>
+                <BarChart accessibilityLayer data={selectedInvestmentChartData}>
+                  <CartesianGrid vertical={false} />
+                  <XAxis
+                    dataKey="month"
+                    tickLine={false}
+                    tickMargin={10}
+                    axisLine={false}
+                  />
+                  <YAxis type="number" tickLine={false} tickMargin={10} />
+                  {/* TODO: fix the white background this gives (or just get rid of it) */}
+                  {/* <ChartTooltip content={<ChartTooltipContent />} /> */}
+                  <ChartLegend content={<ChartLegendContent />} />
+                  {Object.keys(selectedInvestmentChartConfig).map((key) => (
+                    <Bar
+                      key={key}
+                      dataKey={key}
+                      stackId="a"
+                      fill={`var(--color-${key})`}
+                    />
+                  ))}
+                </BarChart>
+              </ChartContainer>
+            </div>
+          )}
+        </div>
+      )}
+    </>
   );
 }
