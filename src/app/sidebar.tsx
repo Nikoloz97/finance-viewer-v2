@@ -30,7 +30,7 @@ export default function Sidebar() {
           {user ? (
             <Link href={"/profile"}>Profile</Link>
           ) : (
-            <Link href={"/user/login"}>Login</Link>
+            <Link href={"/"}>Login</Link>
           )}
           <Link className="navbar-disabled" aria-disabled href={"/settings"}>
             Settings

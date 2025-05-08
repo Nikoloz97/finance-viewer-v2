@@ -36,6 +36,7 @@ import { responseMessage } from "@/app/utils/default-response-message";
 import { formDataPost } from "@/app/utils/http-request-service";
 import { useState } from "react";
 import LoadingOverlay from "@/app/utils/loading-overlay/loading-overlay";
+import Link from "next/link";
 
 export default function Signup() {
   const router = useRouter();
@@ -246,6 +247,9 @@ export default function Signup() {
           </div>
         </form>
       </Form>
+      <Link className="w-full block text-center mt-4" href={"/"}>
+        {`Have an account? Log in here`}
+      </Link>
     </div>
   );
 }

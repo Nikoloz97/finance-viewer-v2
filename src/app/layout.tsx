@@ -6,6 +6,7 @@ import { ToastProvider } from "@/toast-provider";
 import { Suspense } from "react";
 import Loading from "./loading";
 import "./globals.css";
+import LayoutWrapper from "./layout-wrapper";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -32,12 +33,8 @@ export default function RootLayout({
         className={`${openSans.className} antialiased dark flex h-screen items-center`}
       >
         <Providers>
-          <Sidebar />
-          {/* flex-1 = takes up rest of container */}
           <Suspense fallback={<Loading />}>
-            <div className="flex-1 h-full flex justify-center items-center py-10 pr-10">
-              {children}
-            </div>
+            <LayoutWrapper>{children}</LayoutWrapper>
           </Suspense>
           <ToastProvider />
         </Providers>
