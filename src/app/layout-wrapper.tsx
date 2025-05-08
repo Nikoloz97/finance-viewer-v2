@@ -12,8 +12,6 @@ export default function LayoutWrapper({
 }) {
   const pathname = usePathname();
 
-  console.log(pathname);
-
   const isSidebarHidden = pathname === "/" || pathname === "/user/signup";
 
   return (

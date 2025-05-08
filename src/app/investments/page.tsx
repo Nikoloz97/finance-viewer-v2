@@ -27,6 +27,7 @@ import { responseMessage } from "../utils/default-response-message";
 import InvestmentDisplay from "./investment-display";
 import "./investments.css";
 import { ObjectId } from "mongodb";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Investments() {
   const { user } = useContextCheck();
@@ -62,10 +63,10 @@ export default function Investments() {
   const [isEditStatementDialogOpen, setIsEditStatementDialogOpen] =
     useState<boolean>(false);
 
-  // TODO: set up loading
   const [areInvestmentsLoading, setAreInvestmentsLoading] = useState(true);
 
   const fetchInvestments = async () => {
+    setAreInvestmentsLoading(true);
     const investments: Investment[] = await get(
       `/api/investments?userId=${user!._id}`,
       "Failed to fetch investments"
@@ -86,6 +87,7 @@ export default function Investments() {
     );
 
     setSelectedInvestmentChartConfig(chartConfig);
+    setAreInvestmentsLoading(false);
   };
 
   const fetchInvestmentChartData = async () => {
@@ -262,59 +264,75 @@ export default function Investments() {
         />
       )}
       <div className="investments-list-container rounded-scrollbar">
-        <InvestmentsList
-          investments={investments}
-          handleAllClick={handleAllClick}
-          handleInvestmentCardClick={handleInvestmentCardClick}
-          selectedInvestment={selectedInvestment}
-          setIsInvestmentAddDialogCarouselOpen={
-            setIsInvestmentAddDialogCarouselOpen
-          }
-        />
+        {areInvestmentsLoading ? (
+          <Skeleton className="h-full w-full" />
+        ) : (
+          <InvestmentsList
+            investments={investments}
+            handleAllClick={handleAllClick}
+            handleInvestmentCardClick={handleInvestmentCardClick}
+            selectedInvestment={selectedInvestment}
+            setIsInvestmentAddDialogCarouselOpen={
+              setIsInvestmentAddDialogCarouselOpen
+            }
+          />
+        )}
       </div>
 
       <div className="investment-display-container">
         <div className="investment-add-delete-table-container">
-          <div className="investments-add-delete-container">
-            <CustomAlertDialog
-              triggerText="Delete Investment"
-              title="Delete Investment?"
-              description="This action cannot be undone"
-              isTriggerDisabled={selectedInvestment === null}
-              triggerStyle={{
-                width: "40%",
-                height: "5em",
-                fontSize: "0.5em",
-              }}
-              onContinueClick={() =>
-                handleDeleteInvestment(selectedInvestment!.investmentId)
-              }
-            />
-            <Button
-              style={{ width: "40%", height: "5em", fontSize: "0.5em" }}
-              disabled={selectedInvestment === null}
-              onClick={() => setIsStatementAddDialogCarouselOpen(true)}
-            >
-              Add Statement
-            </Button>
-          </div>
-          <div className="investments-table-container">
-            {investments.length && (
-              <InvestmentsTable
-                data={tableStatements}
-                handleEditStatementTableClick={handleEditStatementTableClick}
-                handleDeleteStatement={handleDeleteStatement}
-              />
-            )}
-          </div>
+          {areInvestmentsLoading ? (
+            <Skeleton className="h-full w-full" />
+          ) : (
+            <>
+              <div className="investments-add-delete-container">
+                <CustomAlertDialog
+                  triggerText="Delete Investment"
+                  title="Delete Investment?"
+                  description="This action cannot be undone"
+                  isTriggerDisabled={selectedInvestment === null}
+                  triggerStyle={{
+                    width: "40%",
+                    height: "5em",
+                    fontSize: "0.5em",
+                  }}
+                  onContinueClick={() =>
+                    handleDeleteInvestment(selectedInvestment!.investmentId)
+                  }
+                />
+                <Button
+                  style={{ width: "40%", height: "5em", fontSize: "0.5em" }}
+                  disabled={selectedInvestment === null}
+                  onClick={() => setIsStatementAddDialogCarouselOpen(true)}
+                >
+                  Add Statement
+                </Button>
+              </div>
+              <div className="investments-table-container">
+                {investments.length && (
+                  <InvestmentsTable
+                    data={tableStatements}
+                    handleEditStatementTableClick={
+                      handleEditStatementTableClick
+                    }
+                    handleDeleteStatement={handleDeleteStatement}
+                  />
+                )}
+              </div>
+            </>
+          )}
         </div>
 
         <div className="investments-display-container">
-          <InvestmentDisplay
-            selectedInvestmentsChartData={selectedInvestmentChartData}
-            selectedInvestmentChartConfig={selectedInvestmentChartConfig}
-            selectedInvestment={selectedInvestment}
-          />
+          {areInvestmentsLoading ? (
+            <Skeleton className="h-full w-full" />
+          ) : (
+            <InvestmentDisplay
+              selectedInvestmentsChartData={selectedInvestmentChartData}
+              selectedInvestmentChartConfig={selectedInvestmentChartConfig}
+              selectedInvestment={selectedInvestment}
+            />
+          )}
         </div>
       </div>
     </div>

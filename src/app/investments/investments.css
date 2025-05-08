@@ -16,6 +16,7 @@
   height: 25%;
   background-color: var(--primary-background-color);
   border-radius: var(--primary-border-radius);
+  padding: 1em;
 }
 
 .investment-filters-container {
@@ -106,7 +107,7 @@
 .investments-display-container {
   width: 50%;
   height: 100%;
-  padding: 1em 0 0 0;
+  padding: 1em 1em 1em 0;
 }
 
 .add-statement-grid-container {
