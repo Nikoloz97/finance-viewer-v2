@@ -4,7 +4,7 @@ import "./dashboard.css";
 import Investments from "./investments";
 import Networth from "./networth";
 import Profile from "./profile";
-import RecentActivity from "./recent-activity";
+import FinancialCalendar from "./finanical-calendar";
 
 export default function Dashboard() {
   return (
@@ -19,7 +19,7 @@ export default function Dashboard() {
       </div>
       <div className="recent-activity-investments-summary-container">
         <div className="recent-activity-container">
-          <RecentActivity />
+          <FinancialCalendar />
         </div>
         <div className="investments-summary-container">
           <Investments />
