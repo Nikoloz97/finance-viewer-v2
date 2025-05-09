@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Check, Plus, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Define the Todo type
 interface Todo {
   id: string;
   text: string;
@@ -40,7 +39,6 @@ export default function FinancialCalendar() {
   ]);
   const [newTodoText, setNewTodoText] = React.useState("");
 
-  // Filter todos for the selected date
   const todosForSelectedDate = React.useMemo(() => {
     if (!date) return [];
 
@@ -52,7 +50,6 @@ export default function FinancialCalendar() {
     );
   }, [todos, date]);
 
-  // Add a new todo
   const addTodo = () => {
     if (!newTodoText.trim() || !date) return;
 
@@ -67,7 +64,6 @@ export default function FinancialCalendar() {
     setNewTodoText("");
   };
 
-  // Toggle todo completion
   const toggleTodo = (id: string) => {
     setTodos(
       todos.map((todo) =>
@@ -76,19 +72,16 @@ export default function FinancialCalendar() {
     );
   };
 
-  // Delete a todo
   const deleteTodo = (id: string) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  // Handle key press for adding todo
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       addTodo();
     }
   };
 
-  // Check if a date has todos
   const hasTodos = React.useCallback(
     (day: Date) => {
       return todos.some(
