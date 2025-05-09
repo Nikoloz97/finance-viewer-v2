@@ -1,10 +1,10 @@
 "use client";
 
 import "./dashboard.css";
-import Investments from "./investments";
+import Trends from "./trends";
 import Networth from "./networth";
 import Profile from "./profile";
-import FinancialCalendar from "./finanical-calendar";
+import FinancialCalendar from "./financial-calendar";
 
 export default function Dashboard() {
   return (
@@ -17,12 +17,12 @@ export default function Dashboard() {
           <Profile />
         </div>
       </div>
-      <div className="recent-activity-investments-summary-container">
-        <div className="recent-activity-container">
+      <div className="financial-calendar-trends-container">
+        <div className="financial-calendar-container">
           <FinancialCalendar />
         </div>
-        <div className="investments-summary-container">
-          <Investments />
+        <div className="trends-container">
+          <Trends />
         </div>
       </div>
     </div>

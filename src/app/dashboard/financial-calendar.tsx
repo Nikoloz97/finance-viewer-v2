@@ -95,7 +95,7 @@ export default function FinancialCalendar() {
   );
 
   return (
-    <div className="flex flex-col md:flex-row gap-6 w-full h-full max-w-2xl mx-auto p-4">
+    <div className="flex flex-col md:flex-row gap-6 w-full h-full  mx-auto p-4">
       <div className="flex items-center h-full">
         <Calendar
           mode="single"
@@ -112,7 +112,7 @@ export default function FinancialCalendar() {
         />
       </div>
 
-      <Card className="md:w-1/2 p-4 shadow-md bg-transparent">
+      <Card className="p-4 shadow-md bg-transparent w-full">
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold">

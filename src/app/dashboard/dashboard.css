@@ -33,15 +33,15 @@
   border-radius: var(--primary-border-radius);
 }
 
-.recent-activity-investments-summary-container {
+.financial-calendar-trends-container {
   display: flex;
-  flex-direction: column;
   height: 50%;
   gap: 1em;
 }
 
-.recent-activity-container {
-  height: 80%;
+.financial-calendar-container {
+  height: 100%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,8 +50,9 @@
   border-radius: var(--primary-border-radius);
 }
 
-.investments-summary-container {
-  height: 20%;
+.trends-container {
+  height: 100%;
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
