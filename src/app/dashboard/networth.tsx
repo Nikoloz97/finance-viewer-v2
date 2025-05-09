@@ -84,7 +84,7 @@ export default function Networth() {
       {areInvestmentsLoading ? (
         <Skeleton className="h-full w-full" />
       ) : (
-        <div className="flex flex-row justify-center items-center h-full w-full">
+        <div className="flex flex-row justify-center items-center w-full">
           <div className="text-center h-[4rem]">
             <h1 className="text-xl font-semibold">
               {selectedInvestment?.brokerageName
@@ -102,7 +102,7 @@ export default function Networth() {
             )}
           </div>
           {selectedInvestmentChartConfig && (
-            <div className="w-[600px] h-[300px]">
+            <div className="w-[50%]">
               <ChartContainer config={selectedInvestmentChartConfig}>
                 <BarChart accessibilityLayer data={selectedInvestmentChartData}>
                   <CartesianGrid vertical={false} />
