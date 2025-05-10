@@ -19,7 +19,7 @@ const trendData = [
   {
     name: "Debt",
     percentage: 3.7,
-    isPositive: false, // For debt, a decrease is positive
+    isPositive: false,
   },
 ];
 
@@ -30,7 +30,7 @@ const goalProgression = {
 
 export default function Trends() {
   return (
-    <Card className="w-[90%] h-[90%] bg-zinc-900/90 border-zinc-800 text-zinc-100">
+    <Card className="w-[90%] h-[90%] bg-zinc-900/90 border-zinc-800 text-zinc-100 overflow-y-auto">
       <CardHeader className="pb-2">
         <CardTitle className="text-xl font-medium text-center">
           Trends
@@ -65,6 +65,12 @@ export default function Trends() {
               <AccordionContent>
                 Yes. It adheres to the WAI-ARIA design pattern.
               </AccordionContent>
+              <AccordionContent>
+                Yes. It adheres to the WAI-ARIA design pattern.
+              </AccordionContent>
+              <AccordionContent>
+                Yes. It adheres to the WAI-ARIA design pattern.
+              </AccordionContent>
             </AccordionItem>
           ))}
           <AccordionItem value={goalProgression.name}>
@@ -84,6 +90,12 @@ export default function Trends() {
                 </div>
               </div>
             </AccordionTrigger>
+            <AccordionContent>
+              Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
+            <AccordionContent>
+              Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
             <AccordionContent>
               Yes. It adheres to the WAI-ARIA design pattern.
             </AccordionContent>
