@@ -115,7 +115,7 @@ export default function FinancialCalendar() {
       <Card className="p-4 shadow-md bg-transparent w-full">
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">
+            <h2 className="text-xl">
               {date
                 ? date.toLocaleDateString("en-US", {
                     weekday: "long",

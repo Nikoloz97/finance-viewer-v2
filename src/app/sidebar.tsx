@@ -15,11 +15,11 @@ export default function Sidebar() {
           <Link className={user ? "" : "navbar-disabled"} href={"/dashboard"}>
             Dashboard
           </Link>
-          <Link className="navbar-disabled" aria-disabled href={"/budget"}>
-            Budget
+          <Link className="navbar-disabled" aria-disabled href={"/expenses"}>
+            Expenses
           </Link>
           <Link className="navbar-disabled" aria-disabled href={"/allocation"}>
-            Allocation
+            Allocation & Goals
           </Link>
           <Link className="navbar-disabled" aria-disabled href={"/debt"}>
             Debt

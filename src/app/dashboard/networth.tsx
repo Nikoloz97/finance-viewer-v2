@@ -86,7 +86,7 @@ export default function Networth() {
       ) : (
         <div className="flex flex-row justify-center items-center w-full">
           <div className="text-center h-[4rem]">
-            <h1 className="text-xl font-semibold">
+            <h1 className="text-xl">
               {selectedInvestment?.brokerageName
                 ? selectedInvestment?.brokerageName
                 : "Net Worth"}
