@@ -155,6 +155,8 @@ export default function Investments() {
     );
     if (response) {
       await responseMessage(response);
+      fetchInvestments();
+      setIsStatementAddDialogCarouselOpen(false);
     }
   }
 

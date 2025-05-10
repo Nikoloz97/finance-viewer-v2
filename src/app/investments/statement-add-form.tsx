@@ -204,7 +204,7 @@ export default function StatementAddForm({
           />
         </div>
         <div className="add-statement-button-container">
-          <Button className="dark" onClick={form.handleSubmit(handleAdd)}>
+          <Button className="dark" type="submit">
             Add
           </Button>
         </div>
