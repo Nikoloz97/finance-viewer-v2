@@ -101,7 +101,7 @@ export default function Trends() {
               </div>
             </AccordionTrigger>
             {investments.subsets.map((subset) => (
-              <AccordionContent>
+              <AccordionContent key={subset.name}>
                 <div className="flex items-center gap-1.5 pl-4">
                   {subset.name}
                   {subset.percentage > 0 ? (
@@ -149,7 +149,7 @@ export default function Trends() {
               </div>
             </AccordionTrigger>
             {debts.subsets.map((subset) => (
-              <AccordionContent>
+              <AccordionContent key={subset.name}>
                 <div className="flex items-center gap-1.5 pl-4">
                   {subset.name}
                   {subset.percentage > 0 ? (
@@ -192,8 +192,8 @@ export default function Trends() {
               </div>
             </AccordionTrigger>
             {goals.subsets.map((subset) => (
-              <AccordionContent className="pl-4">
-                <div className="flex items-center gap-10">
+              <AccordionContent key={subset.name}>
+                <div className="flex items-center gap-10 pl-4">
                   <span className="text-sm">{subset.name}</span>
                   <div className="flex gap-2">
                     <div className="text-xs mt-0.5">{subset.percentage}%</div>
