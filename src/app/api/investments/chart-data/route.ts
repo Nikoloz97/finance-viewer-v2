@@ -78,6 +78,7 @@ export async function GET(
       .toArray()) as ChartDataStatement[];
 
     eligibleChartDataStatements.forEach((statement) => {
+      // TODO: account for statements that span multiple months here
       chartData.forEach((chartDataPoint) => {
         if (
           chartDataPoint.month ===
