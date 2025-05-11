@@ -84,7 +84,7 @@ export default function EditStatementDialog({
                   control={form.control}
                   name="startDate"
                   render={({ field }) => (
-                    <FormItem className="flex flex-col">
+                    <FormItem className="flex flex-col justify-end">
                       <FormLabel>Statement Start Date</FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
@@ -139,7 +139,7 @@ export default function EditStatementDialog({
                   control={form.control}
                   name="endDate"
                   render={({ field }) => (
-                    <FormItem className="flex flex-col">
+                    <FormItem className="flex flex-col justify-end">
                       <FormLabel>Statement End Date</FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
