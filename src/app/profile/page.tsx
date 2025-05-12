@@ -16,7 +16,7 @@ export default function Profile() {
     toast.success("Sign out successful");
   };
   return (
-    <div className="profile-page">
+    <div>
       <div>Profile page</div>
       <Button onClick={handleSignOut}>Sign out</Button>
     </div>
