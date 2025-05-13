@@ -8,20 +8,23 @@ import FinancialCalendar from "./financial-calendar";
 
 export default function Dashboard() {
   return (
-    <div className="dashboard-container">
-      <div className="networth-profile-container">
-        <div className="networth-container">
+    <div className="flex flex-col gap-5 w-full h-full">
+      {/* Networth + Profile */}
+      <div className="flex flex-col md:flex-row gap-5 h-full md:h-1/2">
+        <div className="flex flex-1 justify-center items-center bg-primary-background rounded-md p-2">
           <Networth />
         </div>
-        <div className="profile-container">
+        <div className="flex md:w-[30%] justify-center items-center bg-primary-background rounded-md">
           <Profile />
         </div>
       </div>
-      <div className="financial-calendar-trends-container">
-        <div className="financial-calendar-container">
+
+      {/* Financial Calendar + Trends */}
+      <div className="flex flex-col md:flex-row gap-5 h-full md:h-1/2">
+        <div className="flex flex-1 justify-center items-center bg-primary-background rounded-md">
           <FinancialCalendar />
         </div>
-        <div className="trends-container">
+        <div className="flex flex-1 justify-center items-center bg-primary-background rounded-md">
           <Trends />
         </div>
       </div>

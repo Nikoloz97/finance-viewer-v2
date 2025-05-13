@@ -95,13 +95,13 @@ export default function FinancialCalendar() {
   );
 
   return (
-    <div className="flex flex-col md:flex-row gap-6 w-full h-full  mx-auto p-4">
-      <div className="flex items-center h-full">
+    <div className="flex flex-col md:flex-row gap-6 w-full h-full mx-auto p-4">
+      <div className="flex justify-center items-center h-full">
         <Calendar
           mode="single"
           selected={date}
           onSelect={setDate}
-          className="rounded-md border shadow overflow-y-auto h-full"
+          className="rounded-md border shadow overflow-y-auto h-full w-full flex justify-center"
           modifiers={{ hasEvent: hasTodos }}
           modifiersStyles={{
             hasEvent: {

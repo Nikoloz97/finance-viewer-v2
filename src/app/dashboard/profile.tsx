@@ -6,7 +6,7 @@ export default function Profile() {
   const { user } = useContextCheck();
 
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center text-center gap-3">
+    <div className="h-full w-full flex flex-col items-center justify-center text-center gap-3 p-5">
       <Avatar className="w-[6em] h-[6em]">
         <AvatarImage
           src={
