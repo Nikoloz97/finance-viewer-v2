@@ -1,7 +1,6 @@
 "use client";
 
 import { useContextCheck } from "@/use-context-check";
-import "./sidebar.css";
 import Link from "next/link";
 import {
   Sidebar,

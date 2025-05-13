@@ -268,7 +268,7 @@ export default function Investments() {
           setSelectedTableStatement={setSelectedTableStatement}
         />
       )}
-      <div className="investments-list-container rounded-scrollbar">
+      <div className="investments-list-container rounded-scrollbar border">
         {areInvestmentsLoading ? (
           <Skeleton className="h-full w-full" />
         ) : (
@@ -284,7 +284,7 @@ export default function Investments() {
         )}
       </div>
 
-      <div className="investment-display-container">
+      <div className="investment-display-container border">
         <div className="investment-add-delete-table-container">
           {areInvestmentsLoading ? (
             <Skeleton className="h-full w-full" />
