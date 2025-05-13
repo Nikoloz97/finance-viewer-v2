@@ -1,7 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Sidebar from "./sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import AppSidebar from "./app-sidebar";
 
 // conditionally renders sidebar
 
@@ -16,14 +17,17 @@ export default function LayoutWrapper({
 
   return (
     <>
-      {!isSidebarHidden && <Sidebar />}
-      <div
-        className={`flex-1 h-full flex justify-center items-center py-10 pr-10 ${
-          isSidebarHidden ? "pl-10" : ""
-        }`}
-      >
-        {children}
-      </div>
+      <SidebarProvider>
+        <AppSidebar />
+        {!isSidebarHidden && <SidebarTrigger />}
+        <div
+          className={`flex-1 h-[100vh] flex justify-center items-center py-5 pr-5 ${
+            isSidebarHidden ? "pl-5" : ""
+          }`}
+        >
+          {children}
+        </div>
+      </SidebarProvider>
     </>
   );
 }
