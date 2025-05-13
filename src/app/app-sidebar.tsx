@@ -20,15 +20,14 @@ export default function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Finance Viewer</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xl text-white mb-2 font-semibold">
+            Finance Viewer
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="flex gap-3">
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link
-                    className={user ? "" : "navbar-disabled"}
-                    href={"/dashboard"}
-                  >
+                  <Link className="text-xl" href={"/dashboard"}>
                     Dashboard
                   </Link>
                 </SidebarMenuButton>
@@ -36,7 +35,7 @@ export default function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link
-                    className="navbar-disabled"
+                    className="navbar-disabled text-xl"
                     aria-disabled
                     href={"/expenses"}
                   >
@@ -47,7 +46,7 @@ export default function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link
-                    className="navbar-disabled"
+                    className="navbar-disabled text-xl"
                     aria-disabled
                     href={"/allocation"}
                   >
@@ -58,7 +57,7 @@ export default function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link
-                    className="navbar-disabled"
+                    className="navbar-disabled text-xl"
                     aria-disabled
                     href={"/debt"}
                   >
@@ -68,10 +67,7 @@ export default function AppSidebar() {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link
-                    className={user ? "" : "navbar-disabled"}
-                    href={"/investments"}
-                  >
+                  <Link className="text-xl" href={"/investments"}>
                     Investments
                   </Link>
                 </SidebarMenuButton>
@@ -79,19 +75,19 @@ export default function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   {user ? (
-                    <Link href={"/profile"}>Profile</Link>
+                    <Link className="text-xl" href={"/profile"}>
+                      Profile
+                    </Link>
                   ) : (
-                    <Link href={"/"}>Login</Link>
+                    <Link className="text-xl" href={"/"}>
+                      Login
+                    </Link>
                   )}
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link
-                    className="navbar-disabled"
-                    aria-disabled
-                    href={"/settings"}
-                  >
+                  <Link className="text-xl" aria-disabled href={"/settings"}>
                     Settings
                   </Link>
                 </SidebarMenuButton>
