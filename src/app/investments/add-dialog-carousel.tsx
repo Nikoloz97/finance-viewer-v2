@@ -113,7 +113,7 @@ export default function AddDialogCarousel({
     >
       <DialogContent
         onInteractOutside={(event) => event.preventDefault()}
-        className="left-[57%] dark"
+        className="dark w-full max-w-screen-sm sm:max-w-screen-md md:max-w-screen-lg overflow-y-auto max-h-[90vh] rounded-lg p-4 sm:p-6"
       >
         <DialogHeader>
           <DialogTitle className="text-white text-4xl">{header}</DialogTitle>
@@ -121,14 +121,14 @@ export default function AddDialogCarousel({
             {subheader}
           </DialogDescription>
         </DialogHeader>
-        <div className="w-full flex justify-center px-10">
-          <Carousel className="max-w-5xl" style={{ minWidth: "64em" }}>
-            <CarouselContent style={{ height: "40rem" }}>
+        <div className="w-full h-full flex justify-center px-10">
+          <Carousel>
+            <CarouselContent>
               {addSteps.map((step, index) => (
                 <CarouselItem key={index}>
                   <div className="p-1 h-full w-full">
-                    <Card className="h-full">
-                      <CardContent className="flex h-full w-full aspect-square items-center justify-center p-6">
+                    <Card>
+                      <CardContent className="flex h-full w-full aspect-square items-center justify-center p-12">
                         {step}
                       </CardContent>
                     </Card>
