@@ -25,7 +25,7 @@ export default function InvestmentDisplay({
   return (
     <>
       <div className="ml-9 mb-2 text-center p-1">
-        <h1 className="text-xl font-semibold">
+        <h1 className="text-3xl font-semibold">
           {selectedInvestment?.brokerageName
             ? selectedInvestment?.brokerageName
             : "All Investments"}

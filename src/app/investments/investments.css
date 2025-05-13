@@ -35,7 +35,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--primary-border-radius);
   padding: 0.2rem 1rem;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
 }
 
@@ -76,16 +76,13 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
   border-radius: var(--primary-border-radius);
-  height: 75%;
 }
 
 .investment-add-delete-table-container {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  width: 55%;
   height: 100%;
   padding: 1em;
 }
@@ -101,12 +98,6 @@
   height: 100%;
   margin-top: 1em;
   overflow-y: auto;
-}
-
-.investments-display-container {
-  width: 50%;
-  height: 100%;
-  padding: 1em 1em 1em 0;
 }
 
 .add-statement-grid-container {
