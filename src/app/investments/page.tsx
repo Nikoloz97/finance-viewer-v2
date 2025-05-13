@@ -285,12 +285,23 @@ export default function Investments() {
       </div>
 
       <div className="investment-display-container flex flex-col lg:flex-row w-full h-auto lg:h-[75%] border rounded-scrollbar">
+        <div className="investments-display-container w-[100%] lg:m-10">
+          {areInvestmentsLoading ? (
+            <Skeleton className="h-full w-full" />
+          ) : (
+            <InvestmentDisplay
+              selectedInvestmentsChartData={selectedInvestmentChartData}
+              selectedInvestmentChartConfig={selectedInvestmentChartConfig}
+              selectedInvestment={selectedInvestment}
+            />
+          )}
+        </div>
         <div className="investment-add-delete-table-container w-full lg:w-1/2 h-auto p-4">
           {areInvestmentsLoading ? (
             <Skeleton className="h-full w-full" />
           ) : (
             <>
-              <div className="investments-add-delete-container w-full lg:w-1/2 h-auto p-4">
+              <div className="investments-add-delete-container w-full h-auto p-4">
                 <CustomAlertDialog
                   triggerText="Delete Investment"
                   title="Delete Investment?"
@@ -325,18 +336,6 @@ export default function Investments() {
                 )}
               </div>
             </>
-          )}
-        </div>
-
-        <div className="investments-display-container w-full p-10">
-          {areInvestmentsLoading ? (
-            <Skeleton className="h-full w-full" />
-          ) : (
-            <InvestmentDisplay
-              selectedInvestmentsChartData={selectedInvestmentChartData}
-              selectedInvestmentChartConfig={selectedInvestmentChartConfig}
-              selectedInvestment={selectedInvestment}
-            />
           )}
         </div>
       </div>
