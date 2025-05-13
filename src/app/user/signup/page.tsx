@@ -20,7 +20,15 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  Briefcase,
+  Check,
+  ChevronsUpDown,
+  Lock,
+  Mail,
+  User,
+  UserCircle,
+} from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -37,6 +45,14 @@ import { formDataPost } from "@/app/utils/http-request-service";
 import { useState } from "react";
 import LoadingOverlay from "@/app/utils/loading-overlay/loading-overlay";
 import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function Signup() {
   const router = useRouter();
@@ -84,172 +100,219 @@ export default function Signup() {
   };
 
   return (
-    <div style={{ width: "50%" }}>
+    <div className="min-h-screen p-4 flex justify-center py-8">
       {isLoading && <LoadingOverlay />}
-      <h1 className="text-center">Welcome, New User</h1>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSignup)}>
-          <div className="Signup-Grid-Container">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username:</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password:</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email:</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="firstName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>First Name:</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Last Name:</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="occupation"
-              render={({ field }) => (
-                <FormItem className="flex flex-col justify-end">
-                  <FormLabel>Occupation:</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
+
+      <Card className="w-full max-w-2xl shadow-lg bg-transparent p-4">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold text-center">
+            Welcome, New User
+          </CardTitle>
+          <CardDescription className="text-center">
+            Create your Finance Viewer account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleSignup)}
+              className="space-y-6"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Username</FormLabel>
                       <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "w-full justify-between h-10",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? occupations.find(
-                                (occupation) => occupation.value === field.value
-                              )?.label
-                            : "Select category"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
+                        <div className="relative">
+                          <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                          <Input className="pl-10" {...field} />
+                        </div>
                       </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
-                      <Command>
-                        <CommandInput placeholder="Search category..." />
-                        <CommandList>
-                          <CommandEmpty>No language found.</CommandEmpty>
-                          <CommandGroup>
-                            {occupations.map((occupation) => (
-                              <CommandItem
-                                value={occupation.label}
-                                key={occupation.value}
-                                onSelect={() => {
-                                  form.setValue("occupation", occupation.value);
-                                }}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                          <Input className="pl-10" type="password" {...field} />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                          <Input className="pl-10" {...field} />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>First Name</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <UserCircle className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                          <Input className="pl-10" {...field} />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Last Name</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <UserCircle className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                          <Input className="pl-10" {...field} />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="occupation"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Occupation</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <div className="relative">
+                              <Briefcase className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className={cn(
+                                  "w-full justify-between h-10 pl-10",
+                                  !field.value && "text-muted-foreground"
+                                )}
                               >
-                                {occupation.label}
-                                <Check
-                                  className={cn(
-                                    "ml-auto text-black",
-                                    occupation.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </CommandList>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+                                {field.value
+                                  ? occupations.find(
+                                      (occupation) =>
+                                        occupation.value === field.value
+                                    )?.label
+                                  : "Select occupation"}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </div>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-full p-0">
+                          <Command>
+                            <CommandInput placeholder="Search occupation..." />
+                            <CommandList>
+                              <CommandEmpty>No occupation found.</CommandEmpty>
+                              <CommandGroup>
+                                {occupations.map((occupation) => (
+                                  <CommandItem
+                                    value={occupation.label}
+                                    key={occupation.value}
+                                    onSelect={() => {
+                                      form.setValue(
+                                        "occupation",
+                                        occupation.value
+                                      );
+                                    }}
+                                  >
+                                    {occupation.label}
+                                    <Check
+                                      className={cn(
+                                        "ml-auto",
+                                        occupation.value === field.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-          <FormField
-            control={form.control}
-            name="profileImageFile"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Profile Image:</FormLabel>
-                <FormControl>
-                  <Input
-                    type="file"
-                    onBlur={field.onBlur}
-                    name={field.name}
-                    ref={field.ref}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const file = e.target.files ? e.target.files[0] : null;
-                      field.onChange(file);
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+              <FormField
+                control={form.control}
+                name="profileImageFile"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Profile Image</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          type="file"
+                          className="file:mr-4 file:py-1 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+                          onBlur={field.onBlur}
+                          name={field.name}
+                          ref={field.ref}
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            const file = e.target.files
+                              ? e.target.files[0]
+                              : null;
+                            field.onChange(file);
+                          }}
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <div className="Login-Button-Container">
-            <Button className="dark" type="submit">
-              Sign Up
-            </Button>
+              <Button className="w-full" type="submit">
+                Create Account
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter>
+          <div className="w-full text-center text-sm">
+            Already have an account?{" "}
+            <Link href="/" className="text-primary font-medium hover:underline">
+              Log in here
+            </Link>
           </div>
-        </form>
-      </Form>
-      <Link className="w-full block text-center mt-4" href={"/"}>
-        {`Have an account? Log in here`}
-      </Link>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

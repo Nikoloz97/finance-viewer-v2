@@ -22,6 +22,15 @@ import { responseMessage } from "@/app/utils/default-response-message";
 import { post } from "@/app/utils/http-request-service";
 import LoadingOverlay from "@/app/utils/loading-overlay/loading-overlay";
 import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { LockKeyhole, User } from "lucide-react";
 
 export default function Login() {
   const { setUser } = useContextCheck();
@@ -54,58 +63,84 @@ export default function Login() {
   };
 
   return (
-    <div className="Login-Form">
+    <div className="min-h-screen flex items-center justify-center p-4 w-full">
       {isLoading && <LoadingOverlay />}
 
-      <h1 className="text-center">Welcome Back</h1>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username:</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password:</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      <Card className="w-full max-w-md shadow-lg bg-transparent">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold text-center">
+            Finance Viewer
+          </CardTitle>
+          <CardDescription className="text-center">
+            Please enter your credentials to access your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleLogin)}
+              className="space-y-4"
+            >
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Input className="pl-10" {...field} />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <LockKeyhole className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Input className="pl-10" type="password" {...field} />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          {/* TODO: eventually build this out  */}
-          {/* <FormField className="Remember-Forgot-Container">
-            <Checkbox label="Remember me" />
-            <Link style={{ color: "white" }} to={"/user/forgot-password"}>
-              Forgot Password?
+              <div className="flex justify-end">
+                <Link
+                  href="/user/forgot-password"
+                  className="text-sm text-primary hover:underline"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+
+              <Button className="w-full" type="submit">
+                Sign In
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter>
+          <div className="w-full text-center text-sm">
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/user/signup"
+              className="text-primary font-medium hover:underline"
+            >
+              Sign up here
             </Link>
-          </FormField> */}
-
-          <div className="Login-Button-Container">
-            <Button className="dark" type="submit">
-              Login
-            </Button>
           </div>
-        </form>
-      </Form>
-
-      <Link className="No-Account-Container" href={"/user/signup"}>
-        {`Don't have an account? Sign up here`}
-      </Link>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

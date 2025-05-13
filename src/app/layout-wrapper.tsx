@@ -18,7 +18,7 @@ export default function LayoutWrapper({
   return (
     <>
       <SidebarProvider>
-        <AppSidebar />
+        {!isSidebarHidden && <AppSidebar />}
         {!isSidebarHidden && <SidebarTrigger />}
         <div
           className={`flex-1 h-[100vh] flex justify-center items-center py-5 pr-5 ${
