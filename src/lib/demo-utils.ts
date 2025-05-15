@@ -113,9 +113,8 @@ export function addDemoInvestment(
   demoData: DemoData,
   formData: z.infer<typeof investmentAddFormSchema>
 ) {
-  // TODO: fix this hardcoding
   const investment: Investment = {
-    _id: "demo-investment-id-999",
+    _id: Date.now().toString(),
     brokerageName: formData.brokerageName,
     type: formData.type,
     subtype: formData.subtype,
@@ -123,7 +122,7 @@ export function addDemoInvestment(
     userId: demoData.user._id!,
     statements: [
       {
-        _id: "demo-statement-id-999",
+        _id: Date.now().toString(),
         startDate: formData.startDate,
         endDate: new Date(formData.endDate),
         startBalance: toDollarAmount(formData.startBalance),
@@ -156,7 +155,7 @@ export function addDemoStatement(
   const inv = demoData.investments.find((i) => i._id === investmentId);
   if (!inv) return failureResponse();
   const statement: Statement = {
-    _id: "demo-statement-id-9999",
+    _id: Date.now().toString(),
     startDate: new Date(formData.startDate),
     endDate: new Date(formData.endDate),
     startBalance: toDollarAmount(formData.startBalance),

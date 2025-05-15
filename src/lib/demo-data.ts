@@ -22,6 +22,15 @@ export const initialDemoData: DemoData = {
       statements: [
         {
           _id: "demo-statement-id-1",
+          startDate: new Date(2025, 0, 1),
+          startBalance: 3324.72,
+          endDate: new Date(2025, 1, 28),
+          endBalance: 3324.72,
+          depositAmount: 0,
+          withdrawalAmount: 0,
+        },
+        {
+          _id: "demo-statement-id-1",
           startDate: new Date(2025, 1, 1),
           startBalance: 3324.72,
           endDate: new Date(2025, 1, 28),
