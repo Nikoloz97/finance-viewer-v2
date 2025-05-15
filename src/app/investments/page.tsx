@@ -27,14 +27,21 @@ import InvestmentDisplay from "./investment-display";
 import "./investments.css";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useHttpService } from "@/hooks/use-http-service";
-import { UseDemoService } from "@/hooks/use-demo-service";
 import { useDemo } from "@/demo-context";
+import {
+  addDemoInvestment,
+  addDemoStatement,
+  deleteDemoInvestment,
+  deleteDemoStatement,
+  fetchDemoInvestmentChartData,
+  fetchDemoInvestments,
+  updateDemoStatement,
+} from "@/lib/demo-utils";
 
 export default function Investments() {
   const { user } = useContextCheck();
   const httpService = useHttpService();
-  const { isDemo } = useDemo();
-  const demoService = UseDemoService();
+  const { demoData, isDemo } = useDemo();
 
   const [investments, setInvestments] = useState<Investment[]>([]);
 
@@ -72,7 +79,7 @@ export default function Investments() {
   const fetchInvestments = async () => {
     setAreInvestmentsLoading(true);
     const investments: Investment[] = isDemo
-      ? await demoService.fetchInvestments()
+      ? fetchDemoInvestments(demoData)
       : await httpService.get(`/api/investments?userId=${user!._id}`);
     setInvestments(investments);
     setSelectedInvestment(null);
@@ -95,7 +102,7 @@ export default function Investments() {
 
   const fetchInvestmentChartData = async (investments: Investment[]) => {
     const investmentChartData = isDemo
-      ? await demoService.fetchInvestmentChartData(investments)
+      ? fetchDemoInvestmentChartData(investments)
       : await httpService.get<InvestmentChartData[]>(
           `/api/investments/chart-data?userId=${user!._id}`
         );
@@ -128,7 +135,8 @@ export default function Investments() {
       | z.infer<typeof statementAddFormSchema>
   ) {
     const response = isDemo
-      ? demoService.addInvestment(
+      ? addDemoInvestment(
+          demoData,
           formData as z.infer<typeof investmentAddFormSchema>
         )
       : await httpService.post(
@@ -144,7 +152,7 @@ export default function Investments() {
 
   async function handleDeleteInvestment(investmentId: string) {
     const response = isDemo
-      ? demoService.deleteInvestment(investmentId.toString())
+      ? deleteDemoInvestment(demoData, investmentId.toString())
       : await httpService.deleteRequest(
           `/api/investments?investmentId=${investmentId}`
         );
@@ -160,7 +168,8 @@ export default function Investments() {
       | z.infer<typeof investmentAddFormSchema>
   ) {
     const response = isDemo
-      ? demoService.addStatement(
+      ? addDemoStatement(
+          demoData,
           formData as z.infer<typeof statementAddFormSchema>,
           selectedInvestment?.investmentId as string
         )
@@ -181,7 +190,7 @@ export default function Investments() {
     formData: z.infer<typeof statementEditFormSchema>
   ) {
     const response = isDemo
-      ? demoService.updateStatement(formData)
+      ? updateDemoStatement(demoData, formData)
       : await httpService.put(formData, "/api/investments/statements");
     if (response) {
       await responseMessage(response);
@@ -194,7 +203,7 @@ export default function Investments() {
     statementId: string
   ) {
     const response = isDemo
-      ? demoService.deleteStatement(investmentId, statementId)
+      ? deleteDemoStatement(demoData, investmentId, statementId)
       : await httpService.deleteRequest(
           `/api/investments/statements?investmentId=${investmentId}&statementId=${statementId}`
         );

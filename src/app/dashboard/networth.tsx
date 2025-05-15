@@ -18,13 +18,15 @@ import {
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { useHttpService } from "@/hooks/use-http-service";
 import { useDemo } from "@/demo-context";
-import { UseDemoService } from "@/hooks/use-demo-service";
+import {
+  fetchDemoInvestmentChartData,
+  fetchDemoInvestments,
+} from "@/lib/demo-utils";
 
 export default function Networth() {
   const { user } = useContextCheck();
   const httpService = useHttpService();
-  const demoService = UseDemoService();
-  const { isDemo } = useDemo();
+  const { isDemo, demoData } = useDemo();
 
   const [investments, setInvestments] = useState<Investment[]>([]);
 
@@ -42,7 +44,7 @@ export default function Networth() {
   const fetchInvestments = async () => {
     setAreInvestmentsLoading(true);
     const investments: Investment[] = isDemo
-      ? await demoService.fetchInvestments()
+      ? fetchDemoInvestments(demoData)
       : await httpService.get(`/api/investments?userId=${user!._id}`);
     setInvestments(investments);
     setSelectedInvestment(null);
@@ -65,7 +67,7 @@ export default function Networth() {
 
   const fetchInvestmentChartData = async (investments: Investment[]) => {
     const investmentChartData = isDemo
-      ? await demoService.fetchInvestmentChartData(investments)
+      ? fetchDemoInvestmentChartData(investments)
       : await httpService.get<InvestmentChartData[]>(
           `/api/investments/chart-data?userId=${user!._id}`
         );
