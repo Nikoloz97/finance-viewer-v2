@@ -1,8 +1,8 @@
-import { Investment } from "@/lib/models/investments";
 import clientPromise from "../../mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import { ObjectId } from "mongodb";
 import { toDollarAmount } from "@/app/utils/formatters";
+import { Investment } from "@/lib/database-models/investments";
 
 const client = await clientPromise;
 const investments = client
