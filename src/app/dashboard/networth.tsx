@@ -17,10 +17,14 @@ import {
 } from "@/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { useHttpService } from "@/hooks/use-http-service";
+import { useDemo } from "@/demo-context";
+import { UseDemoService } from "@/hooks/use-demo-service";
 
 export default function Networth() {
   const { user } = useContextCheck();
   const httpService = useHttpService();
+  const demoService = UseDemoService();
+  const { isDemo } = useDemo();
 
   const [investments, setInvestments] = useState<Investment[]>([]);
 
@@ -37,10 +41,9 @@ export default function Networth() {
 
   const fetchInvestments = async () => {
     setAreInvestmentsLoading(true);
-    const investments: Investment[] = await httpService.get(
-      `/api/investments?userId=${user!._id}`,
-      "investments"
-    );
+    const investments: Investment[] = isDemo
+      ? demoService.fetchInvestments()
+      : await httpService.get(`/api/investments?userId=${user!._id}`);
     setInvestments(investments);
     setSelectedInvestment(null);
     const chartConfig = investments.reduce<InvestmentChartConfig>(
@@ -61,10 +64,11 @@ export default function Networth() {
   };
 
   const fetchInvestmentChartData = async () => {
-    const investmentChartData = await httpService.get<InvestmentChartData[]>(
-      `/api/investments/chart-data?userId=${user!._id}`,
-      "investments"
-    );
+    const investmentChartData = isDemo
+      ? demoService.fetchInvestmentChartData()
+      : await httpService.get<InvestmentChartData[]>(
+          `/api/investments/chart-data?userId=${user!._id}`
+        );
     setSelectedInvestmentChartData(investmentChartData);
   };
 

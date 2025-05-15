@@ -162,7 +162,7 @@ export default function Investments() {
     const response = isDemo
       ? demoService.addStatement(
           formData as z.infer<typeof statementAddFormSchema>,
-          selectedInvestment?.investmentId!
+          selectedInvestment?.investmentId as string
         )
       : await httpService.post(
           formData,

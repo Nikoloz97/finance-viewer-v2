@@ -3,13 +3,20 @@ import {
   statementAddFormSchema,
   statementEditFormSchema,
 } from "@/app/investments/form-schemas";
+import {
+  getCutOffDate,
+  getMonthIndex,
+  getMonthsArray,
+} from "@/app/utils/dates";
 import { toDollarAmount } from "@/app/utils/formatters";
 import { DemoData } from "@/demo-context";
 import {
+  ChartDataStatement,
   Investment,
   InvestmentChartData,
   Statement,
 } from "@/lib/models/investments";
+import { months } from "@/lib/months";
 import { z } from "zod";
 
 export class DemoService {
@@ -39,9 +46,92 @@ export class DemoService {
   }
 
   fetchInvestmentChartData(): InvestmentChartData[] {
-    // TODO: get the latest end date object
-    //
-    return [];
+    const investments = this.demoData["investments"];
+    // get the latest end date
+    let latestEndDate: Date | null = null;
+
+    for (const investment of investments) {
+      if (investment.statements && investment.statements.length > 0) {
+        for (const statement of investment.statements) {
+          const currentEndDate = statement.endDate;
+
+          if (!latestEndDate || currentEndDate > latestEndDate) {
+            latestEndDate = currentEndDate;
+          }
+        }
+      }
+    }
+
+    // get latest month index + initialize chart data
+    let latestMonthIndex = null;
+    if (latestEndDate) {
+      latestMonthIndex = getMonthIndex(latestEndDate);
+    }
+
+    let chartData: InvestmentChartData[] | null = null;
+
+    if (latestMonthIndex) {
+      chartData = getMonthsArray(latestMonthIndex, 3);
+    }
+
+    // get cut off date
+    let cutOffDate = null;
+    if (latestEndDate) {
+      cutOffDate = getCutOffDate(latestEndDate, -2);
+    }
+
+    // get eligible chart data statements
+    const eligibleChartDataStatements: ChartDataStatement[] = [];
+
+    if (cutOffDate) {
+      for (const investment of investments) {
+        const brokerageName = investment.brokerageName;
+
+        if (investment.statements && investment.statements.length > 0) {
+          for (const statement of investment.statements) {
+            const statementEndDate = statement.endDate;
+
+            if (statementEndDate >= cutOffDate) {
+              eligibleChartDataStatements.push({
+                brokerageName,
+                startDate: new Date(statement.startDate),
+                endDate: statementEndDate,
+                startBalance: statement.startBalance,
+                endBalance: statement.endBalance,
+              });
+            }
+          }
+        }
+      }
+    }
+
+    // build out chart data
+    if (chartData) {
+      eligibleChartDataStatements.forEach((statement) => {
+        // TODO: account for statements that span multiple months here
+        chartData.forEach((chartDataPoint) => {
+          if (
+            chartDataPoint.month ===
+            months[getMonthIndex(new Date(statement.startDate))]
+          ) {
+            chartDataPoint[statement.brokerageName.replace(/\s+/g, "")] =
+              parseFloat(statement.startBalance.toString());
+          } else if (
+            chartDataPoint.month ===
+            months[getMonthIndex(new Date(statement.endDate))]
+          ) {
+            chartDataPoint[statement.brokerageName.replace(/\s+/g, "")] =
+              parseFloat(statement.endBalance.toString());
+          }
+        });
+      });
+    }
+
+    if (chartData) {
+      return chartData;
+    } else {
+      return [];
+    }
   }
 
   addInvestment(formData: z.infer<typeof investmentAddFormSchema>): Response {
