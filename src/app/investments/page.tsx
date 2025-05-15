@@ -18,7 +18,6 @@ import {
   statementAddFormSchema,
   statementEditFormSchema,
 } from "./form-schemas";
-import { deleteRequest, get, post, put } from "../utils/http-request-service";
 import EditStatementDialog from "./edit-statement-dialog";
 import CustomAlertDialog from "../utils/custom-alert-dialog";
 import { Button } from "@/components/ui/button";
@@ -26,11 +25,16 @@ import { InvestmentsTable } from "./investments-table";
 import { responseMessage } from "../utils/default-response-message";
 import InvestmentDisplay from "./investment-display";
 import "./investments.css";
-import { ObjectId } from "mongodb";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useHttpService } from "@/hooks/use-http-service";
+import { UseDemoService } from "@/hooks/use-demo-service";
+import { useDemo } from "@/demo-context";
 
 export default function Investments() {
   const { user } = useContextCheck();
+  const httpService = useHttpService();
+  const { isDemo } = useDemo();
+  const demoService = UseDemoService();
 
   const [investments, setInvestments] = useState<Investment[]>([]);
 
@@ -67,10 +71,9 @@ export default function Investments() {
 
   const fetchInvestments = async () => {
     setAreInvestmentsLoading(true);
-    const investments: Investment[] = await get(
-      `/api/investments?userId=${user!._id}`,
-      "Failed to fetch investments"
-    );
+    const investments: Investment[] = isDemo
+      ? demoService.fetchInvestments()
+      : await httpService.get(`/api/investments?userId=${user!._id}`);
     setInvestments(investments);
     setSelectedInvestment(null);
     const chartConfig = investments.reduce<InvestmentChartConfig>(
@@ -91,10 +94,11 @@ export default function Investments() {
   };
 
   const fetchInvestmentChartData = async () => {
-    const investmentChartData = await get(
-      `/api/investments/chart-data?userId=${user!._id}`,
-      "Failed to fetch investment chart data"
-    );
+    const investmentChartData = isDemo
+      ? demoService.fetchInvestmentChartData()
+      : await httpService.get<InvestmentChartData[]>(
+          `/api/investments/chart-data?userId=${user!._id}`
+        );
     setFetchedInvestmentChartData(investmentChartData);
     setSelectedInvestmentChartData(investmentChartData);
   };
@@ -123,10 +127,14 @@ export default function Investments() {
       | z.infer<typeof investmentAddFormSchema> // param should only be of this type (workaround to fix type error)
       | z.infer<typeof statementAddFormSchema>
   ) {
-    const response = await post(
-      formData,
-      `/api/investments?userId=${user?._id}`
-    );
+    const response = isDemo
+      ? demoService.addInvestment(
+          formData as z.infer<typeof investmentAddFormSchema>
+        )
+      : await httpService.post(
+          formData,
+          `/api/investments?userId=${user?._id}`
+        );
     if (response) {
       await responseMessage(response);
       fetchInvestments();
@@ -134,10 +142,12 @@ export default function Investments() {
     }
   }
 
-  async function handleDeleteInvestment(investmentId: ObjectId) {
-    const response = await deleteRequest(
-      `/api/investments?investmentId=${investmentId}`
-    );
+  async function handleDeleteInvestment(investmentId: string) {
+    const response = isDemo
+      ? demoService.deleteInvestment(investmentId.toString())
+      : await httpService.deleteRequest(
+          `/api/investments?investmentId=${investmentId}`
+        );
     if (response) {
       await responseMessage(response);
       fetchInvestments();
@@ -149,10 +159,16 @@ export default function Investments() {
       | z.infer<typeof statementAddFormSchema> // param should only be of this type (workaround to fix type error)
       | z.infer<typeof investmentAddFormSchema>
   ) {
-    const response = await post(
-      formData,
-      `/api/investments/statements?investmentId=${selectedInvestment?.investmentId}`
-    );
+    const response = isDemo
+      ? demoService.addStatement(
+          formData as z.infer<typeof statementAddFormSchema>,
+          selectedInvestment?.investmentId!
+        )
+      : await httpService.post(
+          formData,
+          `/api/investments/statements?investmentId=${selectedInvestment?.investmentId}`,
+          "investments"
+        );
     if (response) {
       await responseMessage(response);
       fetchInvestments();
@@ -164,20 +180,24 @@ export default function Investments() {
   async function handleEditStatement(
     formData: z.infer<typeof statementEditFormSchema>
   ) {
-    const response = await put(formData, "/api/investments/statements");
+    const response = isDemo
+      ? demoService.updateStatement(formData)
+      : await httpService.put(formData, "/api/investments/statements");
     if (response) {
       await responseMessage(response);
     }
   }
 
-  // TODO: test if this works
+  // TODO: create this endpoint
   async function handleDeleteStatement(
     investmentId: string,
     statementId: string
   ) {
-    const response = await deleteRequest(
-      `/api/investments/statements?investmentId=${investmentId}&statementId=${statementId}`
-    );
+    const response = isDemo
+      ? demoService.deleteStatement(investmentId, statementId)
+      : await httpService.deleteRequest(
+          `/api/investments/statements?investmentId=${investmentId}&statementId=${statementId}`
+        );
     if (response) {
       await responseMessage(response);
     }

@@ -10,7 +10,7 @@ import {
   getMonthIndex,
   getMonthsArray,
 } from "@/app/utils/dates";
-import { months } from "@/app/utils/months";
+import { months } from "@/lib/months";
 
 const client = await clientPromise;
 const investments = client

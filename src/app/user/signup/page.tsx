@@ -41,7 +41,6 @@ import { occupations } from "@/lib/occupations";
 import "../user.css";
 import { signupFormSchema } from "../form-schemas";
 import { responseMessage } from "@/app/utils/default-response-message";
-import { formDataPost } from "@/app/utils/http-request-service";
 import { useState } from "react";
 import LoadingOverlay from "@/app/utils/loading-overlay/loading-overlay";
 import Link from "next/link";
@@ -53,9 +52,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useHttpService } from "@/hooks/use-http-service";
 
 export default function Signup() {
   const router = useRouter();
+  const httpService = useHttpService();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -87,7 +88,10 @@ export default function Signup() {
       formData.append("profileImageFile", signUpInfo.profileImageFile as File);
     }
 
-    const response = await formDataPost(formData, "/api/user/signup");
+    const response = await httpService.formDataPost(
+      formData,
+      "/api/user/signup"
+    );
 
     if (response) {
       responseMessage(response);

@@ -124,7 +124,7 @@ export async function PUT(
 
     // TODO: resolve this deprecation problem
     const investmentObjectId = new ObjectId(body.investmentId);
-    const statementObjectId = new ObjectId(body.statementId);
+    const statementObjectId = new ObjectId(body._id);
 
     const startDateDate = new Date(body.startDate);
     const endDateDate = new Date(body.endDate);
@@ -188,7 +188,7 @@ export async function PUT(
     const updateResult = await investments.updateOne(
       {
         _id: investmentObjectId,
-        "statements._id": new ObjectId(body.statementId),
+        "statements._id": new ObjectId(body._id),
       },
       {
         $set: {

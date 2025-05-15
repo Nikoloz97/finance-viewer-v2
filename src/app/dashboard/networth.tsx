@@ -8,7 +8,6 @@ import {
   InvestmentChartData,
   SelectedInvestment,
 } from "@/lib/models/investments";
-import { get } from "../utils/http-request-service";
 import { useContextCheck } from "@/use-context-check";
 import "./dashboard.css";
 import {
@@ -17,9 +16,11 @@ import {
   ChartLegendContent,
 } from "@/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { useHttpService } from "@/hooks/use-http-service";
 
 export default function Networth() {
   const { user } = useContextCheck();
+  const httpService = useHttpService();
 
   const [investments, setInvestments] = useState<Investment[]>([]);
 
@@ -36,9 +37,9 @@ export default function Networth() {
 
   const fetchInvestments = async () => {
     setAreInvestmentsLoading(true);
-    const investments: Investment[] = await get(
+    const investments: Investment[] = await httpService.get(
       `/api/investments?userId=${user!._id}`,
-      "Failed to fetch investments"
+      "investments"
     );
     setInvestments(investments);
     setSelectedInvestment(null);
@@ -60,9 +61,9 @@ export default function Networth() {
   };
 
   const fetchInvestmentChartData = async () => {
-    const investmentChartData = await get(
+    const investmentChartData = await httpService.get<InvestmentChartData[]>(
       `/api/investments/chart-data?userId=${user!._id}`,
-      "Failed to fetch investment chart data"
+      "investments"
     );
     setSelectedInvestmentChartData(investmentChartData);
   };

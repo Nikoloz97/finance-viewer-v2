@@ -19,7 +19,6 @@ import { z } from "zod";
 import { loginFormSchema } from "../form-schemas";
 import "../user.css";
 import { responseMessage } from "@/app/utils/default-response-message";
-import { post } from "@/app/utils/http-request-service";
 import LoadingOverlay from "@/app/utils/loading-overlay/loading-overlay";
 import { useState } from "react";
 import {
@@ -31,10 +30,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { LockKeyhole, User } from "lucide-react";
+import { useHttpService } from "../../../hooks/use-http-service";
+import { useDemo } from "@/demo-context";
 
 export default function Login() {
   const { setUser } = useContextCheck();
   const router = useRouter();
+  const httpService = useHttpService();
+  const { startDemo } = useDemo();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,9 +49,18 @@ export default function Login() {
     },
   });
 
+  const handleStartDemo = () => {
+    startDemo();
+    router.push("/dashboard");
+  };
+
   const handleLogin = async (loginFields: z.infer<typeof loginFormSchema>) => {
     setIsLoading(true);
-    const response = await post(loginFields, "/api/user/login");
+    const response = await httpService.post(
+      loginFields,
+      "/api/user/login",
+      "user"
+    );
 
     if (response) {
       const responseJson = await responseMessage(response);
@@ -141,6 +153,7 @@ export default function Login() {
           </div>
         </CardFooter>
       </Card>
+      <Button onClick={handleStartDemo}>Start Demo</Button>
     </div>
   );
 }

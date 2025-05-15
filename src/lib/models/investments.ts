@@ -1,7 +1,5 @@
-import { ObjectId } from "mongodb";
-
 export interface Investment {
-  _id?: ObjectId;
+  _id?: string;
   userId: string;
   brokerageName: string;
   type: string;
@@ -24,7 +22,7 @@ export interface NewInvestment {
 }
 
 export interface Statement {
-  _id: ObjectId;
+  _id: string;
   startDate: Date;
   endDate: Date;
   startBalance: number;
@@ -83,7 +81,7 @@ export interface EditTableStatementFormData extends EditStatementFormData {
 }
 
 export interface SelectedInvestment {
-  investmentId: ObjectId;
+  investmentId: string;
   brokerageName: string;
   type: string;
   subtype: string;

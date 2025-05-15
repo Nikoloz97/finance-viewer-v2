@@ -1,4 +1,4 @@
-import { months } from "./months";
+import { months } from "../../lib/months";
 
 export const getMonthIndex = (dateInput: Date) => {
   const month = dateInput.getMonth(); // note: months are 0-indexed (0 = jan, 11 = dec)

@@ -1,19 +1,12 @@
 import { ObjectId, OptionalId, WithId } from "mongodb";
 import clientPromise from "../mongodb";
-import { Investment } from "@/lib/models/investments";
 import { NextRequest, NextResponse } from "next/server";
 import { toDollarAmount } from "@/app/utils/formatters";
 
 const client = await clientPromise;
-const investments = client
-  .db("FinanceViewer")
-  .collection<Investment>("Investments");
+const investments = client.db("FinanceViewer").collection("Investments");
 
-export async function GET(
-  request: Request
-): Promise<
-  NextResponse<WithId<Investment>[]> | NextResponse<{ message: string }>
-> {
+export async function GET(request: Request): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("userId");
@@ -34,11 +27,7 @@ export async function GET(
   }
 }
 
-export async function POST(
-  req: NextRequest
-): Promise<
-  NextResponse<OptionalId<Investment>[]> | NextResponse<{ message: string }>
-> {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
@@ -80,7 +69,7 @@ export async function POST(
       );
     }
 
-    const newInvestmentData: OptionalId<Investment> = {
+    const newInvestmentData = {
       brokerageName: body.brokerageName,
       type: body.type,
       subtype: body.subtype,
