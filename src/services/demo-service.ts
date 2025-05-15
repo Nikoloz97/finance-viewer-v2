@@ -41,12 +41,14 @@ export class DemoService {
     this.updateDemoData = updateDemoData;
   }
 
-  fetchInvestments(): Investment[] {
+  async fetchInvestments(): Promise<Investment[]> {
+    // console.log(JSON.stringify(this.demoData["investments"], null, 2));
     return this.demoData["investments"] as Investment[];
   }
 
-  fetchInvestmentChartData(): InvestmentChartData[] {
-    const investments = this.demoData["investments"];
+  async fetchInvestmentChartData(
+    investments: Investment[]
+  ): Promise<InvestmentChartData[]> {
     // get the latest end date
     let latestEndDate: Date | null = null;
 

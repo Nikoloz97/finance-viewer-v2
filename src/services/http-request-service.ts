@@ -35,7 +35,7 @@ export class HttpRequestService {
         throw new Error(errorMessage);
       }
 
-      return await response.json();
+      return response;
     } catch (error) {
       console.error(`POST request failed:`, error);
       throw error;

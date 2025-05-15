@@ -72,7 +72,7 @@ export default function Investments() {
   const fetchInvestments = async () => {
     setAreInvestmentsLoading(true);
     const investments: Investment[] = isDemo
-      ? demoService.fetchInvestments()
+      ? await demoService.fetchInvestments()
       : await httpService.get(`/api/investments?userId=${user!._id}`);
     setInvestments(investments);
     setSelectedInvestment(null);
@@ -93,9 +93,9 @@ export default function Investments() {
     setAreInvestmentsLoading(false);
   };
 
-  const fetchInvestmentChartData = async () => {
+  const fetchInvestmentChartData = async (investments: Investment[]) => {
     const investmentChartData = isDemo
-      ? demoService.fetchInvestmentChartData()
+      ? await demoService.fetchInvestmentChartData(investments)
       : await httpService.get<InvestmentChartData[]>(
           `/api/investments/chart-data?userId=${user!._id}`
         );
@@ -226,7 +226,7 @@ export default function Investments() {
 
   useEffect(() => {
     if (investments.length) {
-      fetchInvestmentChartData();
+      fetchInvestmentChartData(investments);
     }
   }, [investments]);
 

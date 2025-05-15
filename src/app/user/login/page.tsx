@@ -37,7 +37,7 @@ export default function Login() {
   const { setUser } = useContextCheck();
   const router = useRouter();
   const httpService = useHttpService();
-  const { startDemo } = useDemo();
+  const { startDemo, exitDemo } = useDemo();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -56,6 +56,10 @@ export default function Login() {
 
   const handleLogin = async (loginFields: z.infer<typeof loginFormSchema>) => {
     setIsLoading(true);
+    // in case demo mode wasn't exited properly
+    if (localStorage.getItem("demoMode")) {
+      exitDemo();
+    }
     const response = await httpService.post(
       loginFields,
       "/api/user/login",
