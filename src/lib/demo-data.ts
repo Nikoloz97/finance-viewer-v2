@@ -1,6 +1,5 @@
 import { DemoData } from "@/demo-context";
 
-// TODO: fix _id hard-coding
 export const initialDemoData: DemoData = {
   user: {
     _id: "demo-user-1",

@@ -2,8 +2,6 @@
 
 import { Investment, SelectedInvestment } from "@/lib/models/investments";
 import { Plus } from "lucide-react";
-import ComingSoonOverlay from "../utils/coming-soon-overlay/coming-soon-overlay";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -30,7 +28,8 @@ export default function InvestmentsList({
 }: InvestmentsListProps) {
   return (
     <>
-      <ComingSoonOverlay
+      {/* TODO: uncomment once ready to implement */}
+      {/* <ComingSoonOverlay
         containerStyle={{ width: "60%", padding: "0.3em" }}
         overlayTextStyle={{ fontSize: "1em" }}
       >
@@ -43,7 +42,7 @@ export default function InvestmentsList({
           <Badge>Bonds</Badge>
           <Badge>Retirement</Badge>
         </div>
-      </ComingSoonOverlay>
+      </ComingSoonOverlay> */}
 
       <div className="investments-list-rectangle">
         <Button
