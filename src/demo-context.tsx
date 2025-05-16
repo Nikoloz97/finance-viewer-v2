@@ -11,6 +11,7 @@ import { User } from "./lib/models/user";
 import { Investment } from "./lib/models/investments";
 import { useContextCheck } from "./use-context-check";
 import { initialDemoData } from "./lib/demo-data";
+import { useRouter } from "next/navigation";
 
 export interface DemoData {
   user: User;
@@ -34,6 +35,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
   const [isDemo, setIsDemo] = useState(false);
   const [demoData, setDemoData] = useState<DemoData>(initialDemoData);
   const { setUser } = useContextCheck();
+  const router = useRouter();
 
   useEffect(() => {
     const isDemoMode = localStorage.getItem("demoMode") === "true";
@@ -47,6 +49,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
     setDemoData(initialDemoData);
     localStorage.setItem("demoMode", "true");
     setUser(initialDemoData["user"]);
+    router.push("/dashboard");
   };
 
   const exitDemo = () => {
@@ -55,6 +58,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
     setUser(undefined);
   };
 
+  // TODO: utilize this?? Or get rid of it
   const updateDemoData = <K extends keyof DemoData>(
     key: K,
     newData: DemoData[K]
@@ -80,6 +84,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// TODO: implement something like this for userContext
 export const useDemo = () => {
   const context = useContext(DemoContext);
   if (context === undefined) {

@@ -37,7 +37,7 @@ export default function Login() {
   const { setUser } = useContextCheck();
   const router = useRouter();
   const httpService = useHttpService();
-  const { startDemo, exitDemo } = useDemo();
+  const { exitDemo } = useDemo();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -48,11 +48,6 @@ export default function Login() {
       password: "",
     },
   });
-
-  const handleStartDemo = () => {
-    startDemo();
-    router.push("/dashboard");
-  };
 
   const handleLogin = async (loginFields: z.infer<typeof loginFormSchema>) => {
     setIsLoading(true);
@@ -157,7 +152,6 @@ export default function Login() {
           </div>
         </CardFooter>
       </Card>
-      <Button onClick={handleStartDemo}>Start Demo</Button>
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
-import Sidebar from "./app-sidebar";
 import { Providers } from "./providers";
 import { ToastProvider } from "@/toast-provider";
 import { Suspense } from "react";

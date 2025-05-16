@@ -3,8 +3,8 @@
 import { usePathname } from "next/navigation";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "./app-sidebar";
-
-// conditionally renders sidebar
+import { DemoRibbon } from "./demo-ribbon";
+import { useDemo } from "@/demo-context";
 
 export default function LayoutWrapper({
   children,
@@ -12,7 +12,7 @@ export default function LayoutWrapper({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-
+  const { isDemo, startDemo, exitDemo } = useDemo();
   const isSidebarHidden = pathname === "/" || pathname === "/user/signup";
 
   return (
@@ -28,6 +28,7 @@ export default function LayoutWrapper({
           {children}
         </div>
       </SidebarProvider>
+      <DemoRibbon isDemo={isDemo} startDemo={startDemo} exitDemo={exitDemo} />
     </>
   );
 }

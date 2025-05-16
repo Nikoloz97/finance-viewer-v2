@@ -104,13 +104,13 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen p-4 flex justify-center py-8">
+    <div className="p-4 flex justify-center py-8">
       {isLoading && <LoadingOverlay />}
 
       <Card className="w-full max-w-2xl shadow-lg bg-transparent p-4">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            Welcome, New User
+            Welcome New User
           </CardTitle>
           <CardDescription className="text-center">
             Create your Finance Viewer account
