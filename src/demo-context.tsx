@@ -56,6 +56,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
     setIsDemo(false);
     localStorage.removeItem("demoMode");
     setUser(undefined);
+    router.push("/");
   };
 
   // TODO: utilize this?? Or get rid of it

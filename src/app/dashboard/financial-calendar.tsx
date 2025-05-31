@@ -20,20 +20,20 @@ export default function FinancialCalendar() {
   const [todos, setTodos] = React.useState<Todo[]>([
     {
       id: "1",
-      text: "Team meeting",
+      text: "Submit financial statements",
       date: new Date(),
       completed: false,
     },
     {
       id: "2",
-      text: "Complete project proposal",
+      text: "Calculate monthly expenses",
       date: new Date(),
       completed: true,
     },
     {
       id: "3",
-      text: "Send weekly report",
-      date: new Date(),
+      text: "Allocate funds to investments",
+      date: new Date(2025, 4, 20),
       completed: false,
     },
   ]);
